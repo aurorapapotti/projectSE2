@@ -1,8 +1,27 @@
-"scripts": {
-	"test":"jest"
-}
-
-"jest": {
-	"verbose": true,
-	"collectCoverage": true
+{
+  "name": "projectse2",
+  "version": "1.0.0",
+  "description": "Modifica by Elena Tomaiuolo",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aurorapapotti/projectSE2.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aurorapapotti/projectSE2/issues"
+  },
+  "homepage": "https://github.com/aurorapapotti/projectSE2#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverage": true
+  }
 }
