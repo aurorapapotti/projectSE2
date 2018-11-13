@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: "semaprojectse2"
-  description: Polls is a simple API allowing consumers to view polls and vote in them.
+  description: Group Project of De Cet Martina(188315), Morselli Silvia(185783), Papotti Aurora(188534), Tomaiuolo Elena(186410)
   license:
     name: MIT
     url: https://github.com/apiaryio/polls-api/blob/master/LICENSE
@@ -14,107 +14,82 @@ consumes:
 - application/json
 produces:
 - application/json
+#the APIs
 paths:
-  /questions:
-    x-summary: Questions Collection
+  /:
     get:
-      summary: List All Questions
+      summary: HomePage
+      description: It provides login and register functionalities.
       responses:
         200:
-          description: Successful Response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Question'
-          examples:
-            application/json:
-              - question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 2048
-                  - choice: Python
-                    votes: 1024
-                  - choice: Objective-C
-                    votes: 512
-                  - choice: Ruby
-                    votes: 256
+          description: The server returns the HomePage.
+          
+  /create_task:
     post:
-      description: >-
-        You may create your own question using this action. It takes a JSON
-        object containing a question and a collection of answers in the
-        form of choices.
-      summary: Create a New Question
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/QuestionRequest'
+      summary: Create Task
+      description: It allows the teacher to create a task for an exam
       responses:
-        201:
-          description: ''
-          schema:
-            $ref: '#/definitions/Question'
-          examples:
-            application/json:
-                question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 0
-                  - choice: Python
-                    votes: 0
-                  - choice: Objective-C
-                    votes: 0
-                  - choice: Ruby
-                    votes: 0
-definitions:
-  Question:
-    title: Question
-    type: object
-    properties:
-      question:
-        type: string
-      published_at:
-        type: string
-      choices:
-        type: array
-        items:
-          $ref: '#/definitions/Choice'
-    required:
-      - question
-      - published_at
-      - choices
-  Choice:
-    title: Choice
-    type: object
-    properties:
-      votes:
-        type: integer
-        format: int32
-      choice:
-        type: string
-    required:
-      - votes
-      - choice
-  QuestionRequest:
-    title: Question Request
-    type: object
-    properties:
-      question:
-        type: string
-      choices:
-        type: array
-        items:
-          type: string
-    required:
-      - question
-      - choices
-    example:
-      question: Favourite programming language?
-      choices:
-        - Swift
-        - Python
-        - Objective-C
-        - Ruby
+        200:
+          description: The server returns the user template page with the new task
+        500:
+          description: The server returns an error page with the proper error message.
+  
+  /create_taskAssignment:
+    post:
+      summary: Create Task Assignment
+      description: It allows the teacher to create a task assignment for a particolar user group
+      responses:
+        200:
+          description: The server returns the user template page with the new task assignment
+        500:
+          description: The server returns an error page with the proper error message.
+  
+  /create_taskGroup:
+    post:
+      summary: Create Task Group
+      description: It allows the teacher to create a group of tasks
+      responses:
+        200:
+          description: The server returns the user template page with the new task group
+        500:
+          description: The server returns an error page with the proper error message.
+  
+  /create_userGroup:
+    post:
+      summary: Create User Group
+      description: It allows the teacher to create a group of user, so he can assigns a task assignment to this group
+      responses:
+        200:
+          description: The server returns the user template page with the new user group
+        500:
+          description: The server returns an error page with the proper error message.
+  
+  /complete_TaskAssignment:
+    post:
+      summary: Complete Task Assignment
+      description: It allows the student to complete a task assignment
+      responses:
+        200:
+          description: The server receive the task assignment completed from the student.
+        500:
+          description: The server returns an error page with the proper error message.
+     
+  /login:
+    post:
+      summary: Login User
+      description: It checks the paramaters via db, then it returns the user template page.
+      responses:
+        200:
+          description: The server returns the user template page with the user data if he was registere, otherwise an error page with the propper error message.
+        500:
+          description: The server returns an error page with the proper error message.
+  
+  /register:
+    post:
+      summary: Register User.
+      description: It checks the parameters consistency, then it redirects the user to its new profile page.
+      responses:
+        200:
+          description: The server returns the user template page with the user data if the nickname wasn't yet used, otherwise an error page with the proper error message.
+        500:
+          description: The server returns an error page with the proper error message.
