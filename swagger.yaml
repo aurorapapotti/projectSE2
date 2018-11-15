@@ -16,15 +16,8 @@ produces:
 - application/json
 #the APIs
 paths:
-  /:
-    get:
-      summary: HomePage
-      description: It provides login and register functionalities.
-      responses:
-        200:
-          description: The server returns the HomePage.
-          
-  /create_task:
+ 
+  /v1/task:
     post:
       summary: Create Task
       description: It allows the teacher to create a task for an exam
@@ -33,8 +26,26 @@ paths:
           description: The server returns the user template page with the new task
         500:
           description: The server returns an error page with the proper error message.
+     
+  /v1/task/id:
+    put:
+      summary: Edit a Task
+      description: It allows the teacher to edit a task knowing the id of the task
+      responses:
+        200:
+          description: The server returns the user template page with the new task
+        500:
+          description: The server returns an error page with the proper error message.
+     delete:
+        summary: Delete Task
+        description: It allows the teacher to delete a task
+        responses:
+          200:
+            description: The server returns the user template page with a message of confirmation message
+          500:
+            description: The server returns an error page with the proper error message.
   
-  /create_taskAssignment:
+  /v1/task_assignment:
     post:
       summary: Create Task Assignment
       description: It allows the teacher to create a task assignment for a particolar user group
@@ -43,8 +54,16 @@ paths:
           description: The server returns the user template page with the new task assignment
         500:
           description: The server returns an error page with the proper error message.
+     delete:
+        summary: Delete Task Assignment
+        description: It allows the teacher to delete a task assignment to cancel it
+        responses:
+          200:
+            description: The server returns the user template page with the confirm message
+          500:
+            description: The server returns an error page with the proper error message.
   
-  /create_taskGroup:
+  /v1/task_group:
     post:
       summary: Create Task Group
       description: It allows the teacher to create a group of tasks
@@ -53,11 +72,41 @@ paths:
           description: The server returns the user template page with the new task group
         500:
           description: The server returns an error page with the proper error message.
+     get:
+        summary: Get the list of Task Group
+        description: It allows the teacher to have the list of group of tasks
+        responses:
+          200:
+            description: The server returns the user template page with the list of the task's group
+          500:
+            description: The server returns an error page qwith the proper error message
+    
+  /v1/task_group/id
+    delete:
+      summary: Delete Task Group
+      description: It allows the teacher to delete a group of tasks
+      responses:
+        200:
+          description: The server returns the user template page with the confirm message.
+        500:
+          description: The server returns an error page with the proper error message.
+     get:
+      summary: List Tasks of a Task Group
   
-  /create_userGroup:
+  /v1/user_group:
     post:
       summary: Create User Group
-      description: It allows the teacher to create a group of user, so he can assigns a task assignment to this group
+      description: It allows the teacher to create a group of users
+      responses:
+        200:
+          description: The server returns the user template page with the new user group
+        500:
+          description: The server returns an error page with the proper error message.
+  
+  /v1/user_group/id:
+    delete:
+      summary: Delete User Group
+      description: It allows the teacher to delete a group of users
       responses:
         200:
           description: The server returns the user template page with the new user group
