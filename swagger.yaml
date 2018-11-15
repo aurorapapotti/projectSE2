@@ -17,7 +17,7 @@ produces:
 #the APIs
 paths:
  
-  /v1/task:
+  /v1/tasks:
     post:
       summary: Create Task
       description: It allows the teacher to create a task for an exam
@@ -26,8 +26,16 @@ paths:
           description: The server returns the user template page with the new task
         500:
           description: The server returns an error page with the proper error message.
+    get:
+      summary: List of tasks
+      description: It allows the users to have the list of task
+      responses:
+        200: 
+          description: The server returns the user template page with the new list of tasks
+        500:
+          description: The server returns an error page with the proper error message.
      
-  /v1/task/id:
+  /v1/tasks/id:
     put:
       summary: Edit a Task
       description: It allows the teacher to edit a task knowing the id of the task
@@ -45,7 +53,7 @@ paths:
         500:
           description: The server returns an error page with the proper error message.
   
-  /v1/task_assignment:
+  /v1/task_assignments:
     post:
       summary: Create Task Assignment
       description: It allows the teacher to create a task assignment for a particolar user group
@@ -54,6 +62,16 @@ paths:
           description: The server returns the user template page with the new task assignment
         500:
           description: The server returns an error page with the proper error message.
+    get:
+      summary: List of Task Assignment
+      description: It allows users to have the list of task assignment
+      responses:
+        200:
+          description: The server returns the user template page with the list of task assignment
+        500:
+          description: The server returns an error page with the proper error message.  
+    
+  /v1/task_assignments/id:
     delete:
       summary: Delete Task Assignment
       description: It allows the teacher to delete a task assignment to cancel it
@@ -62,8 +80,16 @@ paths:
           description: The server returns the user template page with the confirm message
         500:
           description: The server returns an error page with the proper error message.
+    get:
+      summary: Description of Task Assignment
+      description: It allows the users to have the description of a task assignment
+      responses:
+        200:
+          description: The server returns the user templae page with the description of the task assignment
+        500:
+          description: The server returns n error page with the proper error message
   
-  /v1/task_group:
+  /v1/task_groups:
     post:
       summary: Create Task Group
       description: It allows the teacher to create a group of tasks
@@ -81,7 +107,7 @@ paths:
         500:
           description: The server returns an error page qwith the proper error message
     
-  /v1/task_group/id:
+  /v1/task_groups/id:
     delete:
       summary: Delete Task Group
       description: It allows the teacher to delete a group of tasks
@@ -92,14 +118,14 @@ paths:
           description: The server returns an error page with the proper error message.
     get:
       summary: List Tasks of a Task Group
-      description: It allows the teacher to have the list of group of tasks
+      description: It allows the teacher to have the list of tasks in a group of tasks
       responses:
         200:
-          description: The server returns the user template page with the list of the task's group
+          description: The server returns the user template page with the list of tasks in a task group
         500:
-          description: The server returns an error page qwith the proper error message
+          description: The server returns an error page with the proper error message
   
-  /v1/user_group:
+  /v1/user_groups:
     post:
       summary: Create User Group
       description: It allows the teacher to create a group of users
@@ -109,7 +135,7 @@ paths:
         500:
           description: The server returns an error page with the proper error message.
   
-  /v1/user_group/id:
+  /v1/user_groups/id:
     delete:
       summary: Delete User Group
       description: It allows the teacher to delete a group of users
@@ -118,18 +144,16 @@ paths:
           description: The server returns the user template page with the new user group
         500:
           description: The server returns an error page with the proper error message.
-  
-  /complete_TaskAssignment:
-    post:
-      summary: Complete Task Assignment
-      description: It allows the student to complete a task assignment
+    get:
+      summary: List of user in a user group
+      description: It allows to have the list of user in a user group
       responses:
         200:
-          description: The server receive the task assignment completed from the student.
+          description: The server returns the user template page with the list of users in a user group
         500:
-          description: The server returns an error page with the proper error message.
-     
-  /login:
+          description: The server returns an error page with the proper error message
+        
+  /v1/login:
     post:
       summary: Login User
       description: It checks the paramaters via db, then it returns the user template page.
@@ -139,7 +163,7 @@ paths:
         500:
           description: The server returns an error page with the proper error message.
   
-  /register:
+  /v1/register:
     post:
       summary: Register User.
       description: It checks the parameters consistency, then it redirects the user to its new profile page.
