@@ -402,3 +402,154 @@ paths:
             $ref: "#/definitions/Exam"
         404:
           description: Assignement NOT found
+  
+  ############
+  #USER GROUP#
+  ############
+  
+  /userGroup:
+    get:
+      summary: List of the User Group
+      description: Returns the list of all group of users
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: query
+        name: "user group"
+        type: string
+        description: The names of the user groups
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserGroup"
+        404:
+          description: Error!
+          
+    post:
+      summary: New User Group
+      description: Create a new group of users
+      tags:
+      - "User Group"
+      responses:
+        201:
+          description: The new group of users is created
+          schema:
+            type: object
+            properties:
+              userGroupId:
+                type: integer
+        400:
+          description: Error!
+  
+  /userGroup/{userGroupId}:
+    get:
+      summary: User Group by ID
+      description: Returns the specific user group mapping with the id
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: userGroupId
+        type: integer
+        required: true
+      
+      responses:
+        200:
+          description: Everything is ok!
+        404:
+          description: Error! User Group NOT found
+    
+    delete:
+      summary: Delete a User Group
+      description: Deletes the entire group of users mapping with the id
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: "userGroupId"
+        type: integer
+        required: true
+      
+      responses:
+        204:
+          description: The group of users was successfully deleted
+        404:
+          description: The group of users to delete was not found
+    
+  /userGroup/{userGroupId}/users:
+    parameters:
+      - in: path
+        name: "userGroupId"
+        type: integer
+        required: true
+    
+    get:
+      summary: Users of a User Group
+      description: Returns all the users of a user group
+      tags:
+      - "User Group"
+        
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        404:
+          description: Error!
+    
+    put:
+      summary: New User for a User Group
+      description: Add a new user for a specific group of users
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          type: object
+          properties:
+            userId:
+              type: integer
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema: 
+            $ref: "#/definitions/UserGroup"
+        409:
+          description: Error!
+  
+  /userGroup/{userGroupId}/users/{userId}:
+    parameters:
+      - in: path
+        name: "userGroupId"
+        type: integer
+        required: true
+      
+      - in: path
+        name: "userId"
+        type: integer
+        required: true
+        
+    delete:
+      summary: Delete a User from a group of users
+      description: Removes a user from a specific User Group
+      tags:
+      - "User Group"
+
+      responses: 
+        204:
+          description: The user was successfully remove from the group of users
+        400:
+          description: Could not remove the user from the group of users
