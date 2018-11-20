@@ -178,10 +178,7 @@ definitions:
 #the APIs
 paths:
   
-##################
-##AUTHENTICATION##
-##################
-          
+#AUTHENTICATION
   /register/:
     post:
       summary: Register User.
@@ -230,10 +227,7 @@ paths:
         400:
           description: Error! Invalid credentials.
 
-#########
-##USERS##
-#########
-
+#USER
   /user:
     get:
       summary: All the users
@@ -403,10 +397,7 @@ paths:
         404:
           description: Assignement NOT found
   
-  ############
-  #USER GROUP#
-  ############
-  
+#USER GROUP
   /userGroup:
     get:
       summary: List of the User Group
@@ -553,3 +544,80 @@ paths:
           description: The user was successfully remove from the group of users
         400:
           description: Could not remove the user from the group of users
+
+#TASK
+  /task:
+    get:
+      summary: List of all the tasks
+      description: Returns a list of all the tasks
+      tags:
+      - "Task"
+    
+      parameters:
+        - in: query
+          name: "task"
+          type: string
+          description: The names of the tasks
+    
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        404:
+          description: Error!
+  
+  /task/{taskId}:
+    parameters:
+    - in: path
+      required: true
+      name: "taskId"
+      type: integer
+      
+    get:
+      summary: Task by Id
+      description: Returns a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        404: 
+          description: Task NOT found
+    
+    put:
+      summary: Update Task
+      description: Updates a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        409:
+          description: Impossible to update the task
+    
+    delete:
+      summary: Delete Task
+      description: Deletes a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      responses:
+        200: 
+          description: Everything is ok
+        409:
+          description: Errortask
