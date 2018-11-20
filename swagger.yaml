@@ -7,168 +7,398 @@ info:
     name: MIT
     url: https://github.com/apiaryio/polls-api/blob/master/LICENSE
 host: polls.apiblueprint.org
-basePath: /
+basePath: /v1
 schemes:
 - http
 consumes:
 - application/json
 produces:
 - application/json
+
+definitions:
+  User:
+    title: User
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The id of the user, it univocally identifies the user
+      name:
+        type: string
+        description: The name of the user
+      surname:
+        type: string
+        description: The surname of the user
+      badgeNumber:
+        type: integer
+        description: The badge number of the user, it identifies if a user is a student or a teacher
+      email:
+        type: string
+        description: The email of the user
+    
+    required:
+    - id
+    - name
+    - surname
+    - badgeNumber
+    - email
+  
+  UserGroup:
+    title: User Group
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The identifier of the group of user, it's unique
+      name:
+        type: string
+        description: The name of the group of users
+      author:
+        $ref: "#/definitions/User"
+    
+    required:
+    - id
+    - name
+    - author
+    
+  Task:
+    title: Task
+    type: object
+    properties: 
+      id: 
+        type: integer
+        description: The id of the task, it univocally identifies the task
+      argument:
+        type: string
+        description: The argument of the task
+      text:
+        type: string
+        description: The text of the task, the question
+      taskType: 
+        type: string
+        enum: [multiple_choice, normal]
+        description: The type of the task, it tells you if the task is a multiple choice or not.
+      author:
+        $ref: "#/definitions/Task"
+    
+    required:
+    - id
+    - argument
+    - text
+    - taskType
+    - author
+    
+  TaskGroup:
+    title: Task Group
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The id that univocally identifies a task group
+      name:
+        type: string
+        description: The name of a task group
+      author:
+        $ref: "#/definitions/User"
+      tasks:
+        type: array
+        items:
+          $ref: "#/definitions/Task"
+        description: The list of tasks of a task group
+    
+    required: 
+    - id
+    - name
+    - author
+    - tasks
+  
+  TaskAnswer:
+    title: Task Answer
+    type: object
+    properties:
+      id:
+        type: integer
+      task:
+        $ref: "#/definitions/Task"
+      comment:
+        type: string
+      user:
+        $ref: "#/definitions/User"
+      userReview:
+        $ref: "#/definitions/User"
+    
+    required:
+    - id
+    - task
+    - comment
+    - user
+    - userReview
+  
+  Exam:
+    title: Exam
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The id that univocally identifies an exam
+      name:
+        type: string
+        description: The name of an exam
+      professor:
+        $ref: "#/definitions/User"
+        description: The professor who creates the exam
+      tasks:
+        $ref: "#/definitions/TaskGroup"
+      class:
+        $ref: "#/definitions/UserGroup"
+      start:
+        type: string
+      deadline:
+        type: string
+  
+  Delivery:
+    title: Delivery
+    type: object
+    properties:
+      id:
+        type: integer
+      exam:
+        $ref: "#/definitions/Exam"
+      date:
+        type: string
+      mark:
+        type: integer
+      tasks:
+        type: array
+        items:
+          $ref: "#/definitions/TaskAnswer"
+        
+
+
 #the APIs
 paths:
- 
-  /v1/tasks:
-    post:
-      summary: Create Task
-      description: It allows the teacher to create a task for an exam
-      responses:
-        200:
-          description: The server returns the user template page with the new task
-        500:
-          description: The server returns an error page with the proper error message.
-    get:
-      summary: List of tasks
-      description: It allows the users to have the list of task
-      responses:
-        200: 
-          description: The server returns the user template page with the new list of tasks
-        500:
-          description: The server returns an error page with the proper error message.
-     
-  /v1/tasks/id:
-    put:
-      summary: Edit a Task
-      description: It allows the teacher to edit a task knowing the id of the task
-      responses:
-        200:
-          description: The server returns the user template page with the new task
-        500:
-          description: The server returns an error page with the proper error message.
-    delete:
-      summary: Delete Task
-      description: It allows the teacher to delete a task
-      responses:
-        200:
-          description: The server returns the user template page with a message of confirmation message
-        500:
-          description: The server returns an error page with the proper error message.
   
-  /v1/task_assignments:
-    post:
-      summary: Create Task Assignment
-      description: It allows the teacher to create a task assignment for a particolar user group
-      responses:
-        200:
-          description: The server returns the user template page with the new task assignment
-        500:
-          description: The server returns an error page with the proper error message.
-    get:
-      summary: List of Task Assignment
-      description: It allows users to have the list of task assignment
-      responses:
-        200:
-          description: The server returns the user template page with the list of task assignment
-        500:
-          description: The server returns an error page with the proper error message.  
-    
-  /v1/task_assignments/id:
-    delete:
-      summary: Delete Task Assignment
-      description: It allows the teacher to delete a task assignment to cancel it
-      responses:
-        200:
-          description: The server returns the user template page with the confirm message
-        500:
-          description: The server returns an error page with the proper error message.
-    get:
-      summary: Description of Task Assignment
-      description: It allows the users to have the description of a task assignment
-      responses:
-        200:
-          description: The server returns the user templae page with the description of the task assignment
-        500:
-          description: The server returns n error page with the proper error message
-  
-  /v1/task_groups:
-    post:
-      summary: Create Task Group
-      description: It allows the teacher to create a group of tasks
-      responses:
-        200:
-          description: The server returns the user template page with the new task group
-        500:
-          description: The server returns an error page with the proper error message.
-    get:
-      summary: Get the list of Task Group
-      description: It allows the teacher to have the list of group of tasks
-      responses:
-        200:
-          description: The server returns the user template page with the list of the task's group
-        500:
-          description: The server returns an error page qwith the proper error message
-    
-  /v1/task_groups/id:
-    delete:
-      summary: Delete Task Group
-      description: It allows the teacher to delete a group of tasks
-      responses:
-        200:
-          description: The server returns the user template page with the confirm message.
-        500:
-          description: The server returns an error page with the proper error message.
-    get:
-      summary: List Tasks of a Task Group
-      description: It allows the teacher to have the list of tasks in a group of tasks
-      responses:
-        200:
-          description: The server returns the user template page with the list of tasks in a task group
-        500:
-          description: The server returns an error page with the proper error message
-  
-  /v1/user_groups:
-    post:
-      summary: Create User Group
-      description: It allows the teacher to create a group of users
-      responses:
-        200:
-          description: The server returns the user template page with the new user group
-        500:
-          description: The server returns an error page with the proper error message.
-  
-  /v1/user_groups/id:
-    delete:
-      summary: Delete User Group
-      description: It allows the teacher to delete a group of users
-      responses:
-        200:
-          description: The server returns the user template page with the new user group
-        500:
-          description: The server returns an error page with the proper error message.
-    get:
-      summary: List of user in a user group
-      description: It allows to have the list of user in a user group
-      responses:
-        200:
-          description: The server returns the user template page with the list of users in a user group
-        500:
-          description: The server returns an error page with the proper error message
-        
-  /v1/login:
-    post:
-      summary: Login User
-      description: It checks the paramaters via db, then it returns the user template page.
-      responses:
-        200:
-          description: The server returns the user template page with the user data if he was registere, otherwise an error page with the propper error message.
-        500:
-          description: The server returns an error page with the proper error message.
-  
-  /v1/register:
+##################
+##AUTHENTICATION##
+##################
+          
+  /register/:
     post:
       summary: Register User.
-      description: It checks the parameters consistency, then it redirects the user to its new profile page.
+      tags:
+      - "Authentication"
+      parameters:
+      - in: body
+        name: data
+        description: The registration data of the user
+        schema: 
+          type: object
+          properties:
+            name:
+              type: string
+            surname:
+              type: string
+            email:
+              type: string
+            badgeNumber:
+              type: string
+        
+      description: It allows a user to register. It checks the parameters consistency, then it redirects the user to its new profile page.
+      responses:
+        201:
+          description: The user has been inserted and the associated id is generated
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+        400:
+          description: Error! Could not insert the user. Probably something is missing
+        409:
+          description: Error! Probably the email address is already in use.
+        
+  /login/:
+    post:
+      summary: Login User
+      tags:
+      - "Authentication"
+      description: It allows a user to log in its profile.
+      
+      responses:
+        201:
+          description: The user is log in. 
+        400:
+          description: Error! Invalid credentials.
+
+#########
+##USERS##
+#########
+
+  /user:
+    get:
+      summary: All the users
+      description: Returns all the users of the system
+      tags:
+      - "User"
+      
       responses:
         200:
-          description: The server returns the user template page with the user data if the nickname wasn't yet used, otherwise an error page with the proper error message.
-        500:
-          description: The server returns an error page with the proper error message.
+          description: Everything is OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        404:
+          description: Error!
+  /user/{id}:
+    get:
+      summary: Return a specific user
+      tags: 
+      - "User"
+      parameters:
+      - in: path
+        name: "id"
+        required: true
+        type: integer
+        description: The id of a specific user
+        
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: User not found!
+  
+  /user/{id}/assignments:
+    get:
+      summary: Returns a list of assignments that are associated to the specified user
+      tags:
+      - User
+      
+      parameters:
+      - in: path
+        name: "id"
+        required: true
+        type: integer
+        description: The id of a specific user
+        
+      responses:
+        200:
+          description: Everything is ok!
+      
+  /user/me/:
+    get:
+      summary: It returns the information about the register user
+      description: By the user's id it returns it's data
+      tags: 
+      - "Personal Area User"
+      
+      responses:
+        200:
+          description: User found
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: Error! User NOT found
+    
+    put:
+      summary: Update the information for the authentication
+      tags:
+      - "Personal Area User"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          type: object
+          properties:
+            name:
+              type: string 
+              description: The new name of the user
+            surname:
+              type: string
+              description: The new surname of the user
+            badgeNumber:
+              type: string
+      responses:
+        200:
+          description: Everything is ok!
+        409: 
+          description: Error! Impossible to update
+
+  /user/me/email:
+    put:
+      summary: Change the email for the authentication
+      tags:
+      - "Personal Area User"
+      
+      parameters:
+      - in: body
+        required: true
+        name: "data"
+        schema:
+          type: object
+          properties:
+            newEmail:
+              type: string
+      
+      responses:
+        200:
+          description: Email changed!
+        409:
+          description: The email is already used by another user
+
+  /user/me/password:
+    put:
+      summary: Change the password for the authentication
+      tags:
+      - "Personal Area User"
+      parameters:
+      - in: body
+        required: true
+        name: "data"
+        schema:
+          type: object
+          properties:
+            newPassword:
+              type: string
+      
+      responses:
+        200:
+          description: Password changed!
+        409:
+          description: Error! Invalid password
+  
+  /user/me/assignments:
+    get:
+      summary: Returns a list of assignments that are associated to the registered user
+      tags:
+      - "Personal Area User"
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Exam"
+  
+  /user/me/assignments/{assignmentId}:
+    get:
+      summary: Returns a specif assignement assigned to the current user
+      tags:
+      - "Personal Area User"
+      
+      parameters:
+      - in: path
+        required: true
+        name: "assignmentId"
+        type: integer
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            $ref: "#/definitions/Exam"
+        404:
+          description: Assignement NOT found
