@@ -620,4 +620,87 @@ paths:
         200: 
           description: Everything is ok
         409:
-          description: Errortask
+          description: Error
+          
+  /taskGroup:
+    get:
+      summary: List of all task groups
+      description: Returns the list of all task groups
+      tags:
+      - "Task Group"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskGroup"
+    
+    post:
+      summary: New Task group
+      description: Create a new group of tasks
+      tags:
+      - "Task Group"
+      parameters:
+      - in: body
+        required: true
+        name: "data"
+        schema:
+          $ref: "#/definitions/TaskGroup"
+      
+      responses:
+        201: 
+          description: Everything is ok
+        400:
+          description: Invalid request
+  
+  /taskGroup/{taskGroupId}:
+    parameters:
+    - in: path
+      name: "taskGroupId"
+      required: true
+      type: integer
+    
+    get:
+      summary: Task Group by ID
+      description: Returns a specific task group mapping with the given id
+      tags: 
+      - "Task Group"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/TaskGroup"
+        404:
+          description: Error
+    
+    put:
+      summary: Update Task Group
+      description: Updates a specific group of tasks mapping with the given id
+      tags:
+      - "Task Group"
+      
+      parameters:
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+      
+      responses:
+        200:
+          description: Everything is ok
+    
+    delete:
+      summary: Delete Task Group
+      description: Deletes a specific group of tasks mapping with the given id
+      tags:
+      - "Task Group"
+      responses:
+        204:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/TaskGroup"
