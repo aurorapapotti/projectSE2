@@ -704,3 +704,81 @@ paths:
           description: Everything is ok
           schema:
             $ref: "#/definitions/TaskGroup"
+
+#ASSIGNMENTS
+  /assignment:
+    get:
+      summary: List of all assignments
+      description: Returns the list of all the assignments
+      tags:
+      - "Assignment"
+    
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Exam"
+        404: 
+          description: Error
+  
+    post:
+      summary: New Assignment
+      description: Adds a new assignment
+      tags:
+      - "Assignment"
+    
+      parameters:
+      - in: body
+        name: data
+        required: true
+        schema:
+          $ref: "#/definitions/Exam"
+    
+      responses:
+        204:
+          description: The new assignment is created
+        400:
+          description: Invalid request
+  
+  /assignment/{assignmentId}:
+    parameters:
+    - in: path
+      required: true
+      name: "assignmentId"
+      type: integer
+    
+    get:
+      summary: Assignmets by ID
+      tags:
+      - "Assignment"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Exam"
+    
+    put:
+      summary: Updates an Assignment
+      description: Updates a specific assignment mapping with the given id
+      tags:
+      - "Assignment"
+      parameters:
+      - in: body
+        name: data
+        schema:
+          $ref: '#/definitions/Exam'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Exam'
+
+    delete:
+      summary: Deletes an Assignment
+      description: Deletes a specific assignment mapping with the given id
+      tags:
+      - "Assignment"
+      responses:
+        204:
+          description: Everything is ok
