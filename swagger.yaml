@@ -55,11 +55,16 @@ definitions:
         description: The name of the group of users
       author:
         $ref: "#/definitions/User"
+      users:
+        type: array
+        items:
+          $ref: "#/definitions/User"
     
     required:
     - id
     - name
     - author
+    - definitions
     
   Task:
     title: Task
@@ -118,24 +123,26 @@ definitions:
     properties:
       id:
         type: integer
-      task:
-        $ref: "#/definitions/Task"
-      comment:
-        type: string
-      user:
+      answers:
+        type: array
+        items:
+          type: string
+      student:
         $ref: "#/definitions/User"
-      userReview:
-        $ref: "#/definitions/User"
+      assignment:
+        $ref: "#/definitions/Assignment"
+      taskGroup:
+        $ref: "#/definitions/TaskGroup"
     
     required:
     - id
-    - task
-    - comment
-    - user
-    - userReview
+    - answers
+    - student
+    - assignment
+    - taskGroup
   
-  Exam:
-    title: Exam
+  Assignment:
+    title: Assignment
     type: object
     properties:
       id:
@@ -147,34 +154,52 @@ definitions:
       professor:
         $ref: "#/definitions/User"
         description: The professor who creates the exam
-      tasks:
+      taskGroup:
         $ref: "#/definitions/TaskGroup"
+      tasks:
+        type: array
+        items:
+          $ref: "#/definitions/Task"
       class:
         $ref: "#/definitions/UserGroup"
       start:
-        type: string
+        type: integer
       deadline:
-        type: string
-  
-  Delivery:
-    title: Delivery
+        type: integer
+        
+  PeerReview:
+    title: Peer Review
     type: object
     properties:
       id:
         type: integer
-      exam:
-        $ref: "#/definitions/Exam"
-      date:
+        description: The id that univocally identifies a peer review
+      student:
+        $ref: "#/definitions/User"
+        description: The user who comments a task answer
+      taskAnswer:
+        $ref: "#/definitions/TaskAnswer"
+      comment:
         type: string
-      mark:
+  
+  Review:
+    title: Review
+    type: object
+    properties:
+      id:
         type: integer
-      tasks:
+        description: The id that univocally identifies a review
+      peerReview:
+        type: array
+        items:
+          $ref: "#/definitions/PeerReview"
+      taskAnswer:
         type: array
         items:
           $ref: "#/definitions/TaskAnswer"
-        
-
-
+      mark:
+        type: integer
+      
 #the APIs
 paths:
   
@@ -375,7 +400,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Exam"
+              $ref: "#/definitions/Assignment"
   
   /user/me/assignments/{assignmentId}:
     get:
@@ -393,7 +418,7 @@ paths:
         200:
           description: Everything is ok!
           schema:
-            $ref: "#/definitions/Exam"
+            $ref: "#/definitions/Assignment"
         404:
           description: Assignement NOT found
   
@@ -717,7 +742,7 @@ paths:
         200:
           description: Everything is ok
           schema:
-            $ref: "#/definitions/Exam"
+            $ref: "#/definitions/Assignment"
         404: 
           description: Error
   
@@ -732,7 +757,7 @@ paths:
         name: data
         required: true
         schema:
-          $ref: "#/definitions/Exam"
+          $ref: "#/definitions/Assignment"
     
       responses:
         204:
@@ -755,7 +780,7 @@ paths:
         200:
           description: Everything is ok
           schema:
-            $ref: "#/definitions/Exam"
+            $ref: "#/definitions/Assignment"
     
     put:
       summary: Updates an Assignment
@@ -766,13 +791,13 @@ paths:
       - in: body
         name: data
         schema:
-          $ref: '#/definitions/Exam'
+          $ref: '#/definitions/Assignment'
 
       responses:
         200:
           description: OK
           schema:
-            $ref: '#/definitions/Exam'
+            $ref: '#/definitions/Assignment'
 
     delete:
       summary: Deletes an Assignment
