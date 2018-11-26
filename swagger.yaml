@@ -926,3 +926,37 @@ paths:
       responses:
         204:
           description: Everything is ok
+
+#PEER REVIEW
+  /peerReview:
+    get:
+      summary: All peer reviews
+      description: Return the list of all peer reviws
+      tags:
+      - "Peer Review"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PeerReview"
+        404: 
+          description: Error
+    
+    post:
+      summary: Add a new peer review
+      tags:
+      - "Peer Review"
+      parameters:
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/PeerReview"
+      responses:
+        201:
+          description: Peer Review created
+        400: 
+          description: Invalid request
