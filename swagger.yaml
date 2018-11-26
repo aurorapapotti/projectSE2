@@ -260,6 +260,12 @@ paths:
       tags:
       - "User"
       
+      parameters:
+        - in: query
+          name: "user"
+          type: string
+          description: The names of the users
+      
       responses:
         200:
           description: Everything is OK
@@ -269,14 +275,15 @@ paths:
               $ref: "#/definitions/User"
         404:
           description: Error!
-  /user/{id}:
+          
+  /user/{userId}:
     get:
       summary: Return a specific user
       tags: 
       - "User"
       parameters:
       - in: path
-        name: "id"
+        name: "userId"
         required: true
         type: integer
         description: The id of a specific user
@@ -289,7 +296,7 @@ paths:
         404:
           description: User not found!
   
-  /user/{id}/assignments:
+  /user/{userId}/assignments:
     get:
       summary: Returns a list of assignments that are associated to the specified user
       tags:
@@ -297,21 +304,23 @@ paths:
       
       parameters:
       - in: path
-        name: "id"
         required: true
+        name: "userId"
         type: integer
         description: The id of a specific user
         
       responses:
         200:
           description: Everything is ok!
+
+#PERSONAL AREA USER
       
   /user/me/:
     get:
       summary: It returns the information about the register user
       description: By the user's id it returns it's data
       tags: 
-      - "Personal Area User"
+      - "Personal User Area"
       
       responses:
         200:
@@ -324,7 +333,7 @@ paths:
     put:
       summary: Update the information for the authentication
       tags:
-      - "Personal Area User"
+      - "Personal User Area"
       
       parameters:
       - in: body
@@ -350,7 +359,7 @@ paths:
     put:
       summary: Change the email for the authentication
       tags:
-      - "Personal Area User"
+      - "Personal User Area"
       
       parameters:
       - in: body
@@ -372,7 +381,8 @@ paths:
     put:
       summary: Change the password for the authentication
       tags:
-      - "Personal Area User"
+      - "Personal User Area"
+      
       parameters:
       - in: body
         required: true
@@ -393,7 +403,7 @@ paths:
     get:
       summary: Returns a list of assignments that are associated to the registered user
       tags:
-      - "Personal Area User"
+      - "Personal User Area"
       responses:
         200:
           description: Everything is ok!
@@ -404,9 +414,9 @@ paths:
   
   /user/me/assignments/{assignmentId}:
     get:
-      summary: Returns a specif assignement assigned to the current user
+      summary: Returns a specif assignment assigned to the current user
       tags:
-      - "Personal Area User"
+      - "Personal User Area"
       
       parameters:
       - in: path
@@ -421,6 +431,115 @@ paths:
             $ref: "#/definitions/Assignment"
         404:
           description: Assignement NOT found
+  
+  /user/me/assignments/{assignmentId}/tasks:
+    get:
+      summary: Assignment's tasks
+      description: Returns all tasks of an assignment
+      tags:
+      - "Personal User Area"
+      
+      parameters:
+      - in: path
+        required: true
+        name: assignmentId
+        type: integer
+      
+      responses:
+        200:
+          description: Everything is OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        404:
+          description: Assignment NOT found
+  
+  /user/me/assignments/{assignmentId}/taskAnswer:
+    parameters:
+      - in: path
+        required: true
+        name: "assignmentId"
+        type: integer
+      - in: body
+        name: data
+        required: true
+        schema:
+          $ref: "#/definitions/TaskAnswer"
+    
+    get:
+      summary: Task Assignment's answers
+      tags:
+      - "Personal User Area"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskAnswer"
+        404:
+          description: Assignment NOT found
+  
+    put:
+      summary: Submit the answers to a task assignment
+      tags:
+      - "Personal User Area"
+      
+      responses:
+        200:
+          description: Everything is ok
+        404:
+          description: Task Assignment NOT found
+  
+  /user/me/taskAnswer:
+    get:
+      summary: All user's task answers
+      tags:
+      - "Personal User Area"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskAnswer"
+  
+  /user/me/peerReviews:
+    get:
+      summary: All user's peer reviews
+      description: Returns all the peer reviews of a user
+      tags:
+      - "Personal User Area"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PeerReview"
+  
+  /user/me/assignments/{assignmentId}/peerReviews:
+    parameters:
+    - in: path
+      required: true
+      name: assignmentId
+      type: integer
+    
+    get:
+      summary: The peer reviews associated to a specific assignment
+      tags:
+      - "Personal User Area"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PeerReview"
+        404:
+          description: Assignment NOT found
   
 #USER GROUP
   /userGroup:
