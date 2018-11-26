@@ -148,24 +148,33 @@ definitions:
       id:
         type: integer
         description: The id that univocally identifies an exam
-      name:
+      title: 
         type: string
-        description: The name of an exam
+        description: The title with which the professor has called the exam.
       professor:
         $ref: "#/definitions/User"
         description: The professor who creates the exam
-      taskGroup:
-        $ref: "#/definitions/TaskGroup"
       tasks:
-        type: array
-        items:
-          $ref: "#/definitions/Task"
+        $ref: "#/definitions/TaskGroup"
+        description: The group of tasks that have been assigned to the students.
       class:
         $ref: "#/definitions/UserGroup"
+        description: The group of students who have been assigned the exam.
       start:
-        type: integer
+        type: string
+        description: It is the exam start time.
       deadline:
-        type: integer
+        type: string
+        description: The duration of the actual exam.
+        
+    required:
+    - id
+    - title
+    - professor
+    - tasks
+    - class
+    - start
+    - deadline
         
   PeerReview:
     title: Peer Review
