@@ -2,119 +2,970 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: "semaprojectse2"
-  description: Polls is a simple API allowing consumers to view polls and vote in them.
+  description: Group Project of De Cet Martina(188315), Morselli Silvia(185783), Papotti Aurora(188534), Tomaiuolo Elena(186410)
   license:
     name: MIT
     url: https://github.com/apiaryio/polls-api/blob/master/LICENSE
 host: polls.apiblueprint.org
-basePath: /
+basePath: /v1
 schemes:
 - http
 consumes:
 - application/json
 produces:
 - application/json
-paths:
-  /questions:
-    x-summary: Questions Collection
-    get:
-      summary: List All Questions
-      responses:
-        200:
-          description: Successful Response
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Question'
-          examples:
-            application/json:
-              - question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 2048
-                  - choice: Python
-                    votes: 1024
-                  - choice: Objective-C
-                    votes: 512
-                  - choice: Ruby
-                    votes: 256
-    post:
-      description: >-
-        You may create your own question using this action. It takes a JSON
-        object containing a question and a collection of answers in the
-        form of choices.
-      summary: Create a New Question
-      parameters:
-        - name: body
-          in: body
-          required: true
-          schema:
-            $ref: '#/definitions/QuestionRequest'
-      responses:
-        201:
-          description: ''
-          schema:
-            $ref: '#/definitions/Question'
-          examples:
-            application/json:
-                question: Favourite programming language?
-                published_at: '2015-08-05T08:40:51.620Z'
-                choices:
-                  - choice: Swift
-                    votes: 0
-                  - choice: Python
-                    votes: 0
-                  - choice: Objective-C
-                    votes: 0
-                  - choice: Ruby
-                    votes: 0
+
 definitions:
-  Question:
-    title: Question
+  User:
+    title: User
     type: object
     properties:
-      question:
+      id:
+        type: integer
+        description: The id of the user, it univocally identifies the user
+      name:
         type: string
-      published_at:
+        description: The name of the user
+      surname:
         type: string
-      choices:
+        description: The surname of the user
+      badgeNumber:
+        type: integer
+        description: The badge number of the user, it identifies if a user is a student or a teacher
+      email:
+        type: string
+        description: The email of the user
+    
+    required:
+    - id
+    - name
+    - surname
+    - badgeNumber
+    - email
+  
+  UserGroup:
+    title: User Group
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The identifier of the group of user, it's unique
+      name:
+        type: string
+        description: The name of the group of users
+      author:
+        $ref: "#/definitions/User"
+      users:
         type: array
         items:
-          $ref: '#/definitions/Choice'
+          $ref: "#/definitions/User"
+    
     required:
-      - question
-      - published_at
-      - choices
-  Choice:
-    title: Choice
+    - id
+    - name
+    - author
+    - definitions
+    
+  Task:
+    title: Task
     type: object
-    properties:
-      votes:
+    properties: 
+      id: 
         type: integer
-        format: int32
-      choice:
+        description: The id of the task, it univocally identifies the task
+      argument:
         type: string
+        description: The argument of the task
+      text:
+        type: string
+        description: The text of the task, the question
+      taskType: 
+        type: string
+        enum: [multiple_choice, normal]
+        description: The type of the task, it tells you if the task is a multiple choice or not.
+      author:
+        $ref: "#/definitions/Task"
+    
     required:
-      - votes
-      - choice
-  QuestionRequest:
-    title: Question Request
+    - id
+    - argument
+    - text
+    - taskType
+    - author
+    
+  TaskGroup:
+    title: Task Group
     type: object
     properties:
-      question:
+      id:
+        type: integer
+        description: The id that univocally identifies a task group
+      name:
         type: string
-      choices:
+        description: The name of a task group
+      author:
+        $ref: "#/definitions/User"
+      tasks:
+        type: array
+        items:
+          $ref: "#/definitions/Task"
+        description: The list of tasks of a task group
+    
+    required: 
+    - id
+    - name
+    - author
+    - tasks
+  
+  TaskAnswer:
+    title: Task Answer
+    type: object
+    properties:
+      id:
+        type: integer
+      answers:
         type: array
         items:
           type: string
+      student:
+        $ref: "#/definitions/User"
+      assignment:
+        $ref: "#/definitions/Assignment"
+      taskGroup:
+        $ref: "#/definitions/TaskGroup"
+    
     required:
-      - question
-      - choices
-    example:
-      question: Favourite programming language?
-      choices:
-        - Swift
-        - Python
-        - Objective-C
-        - Ruby
+    - id
+    - answers
+    - student
+    - assignment
+    - taskGroup
+  
+  Assignment:
+    title: Assignment
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The id that univocally identifies an exam
+      title: 
+        type: string
+        description: The title with which the professor has called the exam.
+      professor:
+        $ref: "#/definitions/User"
+        description: The professor who creates the exam
+      tasks:
+        $ref: "#/definitions/TaskGroup"
+        description: The group of tasks that have been assigned to the students.
+      class:
+        $ref: "#/definitions/UserGroup"
+        description: The group of students who have been assigned the exam.
+      start:
+        type: string
+        description: It is the exam start time.
+      deadline:
+        type: string
+        description: The duration of the actual exam.
+        
+    required:
+    - id
+    - title
+    - professor
+    - tasks
+    - class
+    - start
+    - deadline
+        
+  PeerReview:
+    title: Peer Review
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The id that univocally identifies a peer review
+      student:
+        $ref: "#/definitions/User"
+        description: The user who comments a task answer
+      taskAnswer:
+        $ref: "#/definitions/TaskAnswer"
+      comment:
+        type: string
+  
+  Review:
+    title: Review
+    type: object
+    properties:
+      id:
+        type: integer
+        description: The id that univocally identifies a review
+      peerReview:
+        type: array
+        items:
+          $ref: "#/definitions/PeerReview"
+      taskAnswer:
+        type: array
+        items:
+          $ref: "#/definitions/TaskAnswer"
+      mark:
+        type: integer
+      
+#the APIs
+paths:
+  
+#AUTHENTICATION
+  /register/:
+    post:
+      summary: Register User.
+      tags:
+      - "Authentication"
+      parameters:
+      - in: body
+        name: data
+        description: The registration data of the user
+        schema: 
+          type: object
+          properties:
+            name:
+              type: string
+            surname:
+              type: string
+            email:
+              type: string
+            badgeNumber:
+              type: string
+        
+      description: It allows a user to register. It checks the parameters consistency, then it redirects the user to its new profile page.
+      responses:
+        201:
+          description: The user has been inserted and the associated id is generated
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+        400:
+          description: Error! Could not insert the user. Probably something is missing
+        409:
+          description: Error! Probably the email address is already in use.
+        
+  /login/:
+    post:
+      summary: Login User
+      tags:
+      - "Authentication"
+      description: It allows a user to log in its profile.
+      
+      responses:
+        201:
+          description: The user is log in. 
+        400:
+          description: Error! Invalid credentials.
+
+#USER
+  /user:
+    get:
+      summary: All the users
+      description: Returns all the users of the system
+      tags:
+      - "User"
+      
+      parameters:
+        - in: query
+          name: "user"
+          type: string
+          description: The names of the users
+      
+      responses:
+        200:
+          description: Everything is OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        404:
+          description: Error!
+          
+  /user/{userId}:
+    get:
+      summary: Return a specific user
+      tags: 
+      - "User"
+      parameters:
+      - in: path
+        name: "userId"
+        required: true
+        type: integer
+        description: The id of a specific user
+        
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: User not found!
+  
+  /user/{userId}/assignments:
+    get:
+      summary: Returns a list of assignments that are associated to the specified user
+      tags:
+      - User
+      
+      parameters:
+      - in: path
+        required: true
+        name: "userId"
+        type: integer
+        description: The id of a specific user
+        
+      responses:
+        200:
+          description: Everything is ok!
+
+#PERSONAL AREA USER
+      
+  /user/me/:
+    get:
+      summary: It returns the information about the register user
+      description: By the user's id it returns it's data
+      tags: 
+      - "Personal User Area"
+      
+      responses:
+        200:
+          description: User found
+          schema:
+            $ref: "#/definitions/User"
+        404:
+          description: Error! User NOT found
+    
+    put:
+      summary: Update the information for the authentication
+      tags:
+      - "Personal User Area"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          type: object
+          properties:
+            name:
+              type: string 
+              description: The new name of the user
+            surname:
+              type: string
+              description: The new surname of the user
+            badgeNumber:
+              type: string
+      responses:
+        200:
+          description: Everything is ok!
+        409: 
+          description: Error! Impossible to update
+
+  /user/me/email:
+    put:
+      summary: Change the email for the authentication
+      tags:
+      - "Personal User Area"
+      
+      parameters:
+      - in: body
+        required: true
+        name: "data"
+        schema:
+          type: object
+          properties:
+            newEmail:
+              type: string
+      
+      responses:
+        200:
+          description: Email changed!
+        409:
+          description: The email is already used by another user
+
+  /user/me/password:
+    put:
+      summary: Change the password for the authentication
+      tags:
+      - "Personal User Area"
+      
+      parameters:
+      - in: body
+        required: true
+        name: "data"
+        schema:
+          type: object
+          properties:
+            newPassword:
+              type: string
+      
+      responses:
+        200:
+          description: Password changed!
+        409:
+          description: Error! Invalid password
+  
+  /user/me/assignments:
+    get:
+      summary: Returns a list of assignments that are associated to the registered user
+      tags:
+      - "Personal User Area"
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Assignment"
+  
+  /user/me/assignments/{assignmentId}:
+    get:
+      summary: Returns a specif assignment assigned to the current user
+      tags:
+      - "Personal User Area"
+      
+      parameters:
+      - in: path
+        required: true
+        name: "assignmentId"
+        type: integer
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            $ref: "#/definitions/Assignment"
+        404:
+          description: Assignement NOT found
+  
+  /user/me/assignments/{assignmentId}/tasks:
+    get:
+      summary: Assignment's tasks
+      description: Returns all tasks of an assignment
+      tags:
+      - "Personal User Area"
+      
+      parameters:
+      - in: path
+        required: true
+        name: assignmentId
+        type: integer
+      
+      responses:
+        200:
+          description: Everything is OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        404:
+          description: Assignment NOT found
+  
+  /user/me/assignments/{assignmentId}/taskAnswer:
+    parameters:
+      - in: path
+        required: true
+        name: "assignmentId"
+        type: integer
+      - in: body
+        name: data
+        required: true
+        schema:
+          $ref: "#/definitions/TaskAnswer"
+    
+    get:
+      summary: Task Assignment's answers
+      tags:
+      - "Personal User Area"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskAnswer"
+        404:
+          description: Assignment NOT found
+  
+    put:
+      summary: Submit the answers to a task assignment
+      tags:
+      - "Personal User Area"
+      
+      responses:
+        200:
+          description: Everything is ok
+        404:
+          description: Task Assignment NOT found
+  
+  /user/me/taskAnswer:
+    get:
+      summary: All user's task answers
+      tags:
+      - "Personal User Area"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskAnswer"
+  
+  /user/me/peerReviews:
+    get:
+      summary: All user's peer reviews
+      description: Returns all the peer reviews of a user
+      tags:
+      - "Personal User Area"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PeerReview"
+  
+  /user/me/assignments/{assignmentId}/peerReviews:
+    parameters:
+    - in: path
+      required: true
+      name: assignmentId
+      type: integer
+    
+    get:
+      summary: The peer reviews associated to a specific assignment
+      tags:
+      - "Personal User Area"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PeerReview"
+        404:
+          description: Assignment NOT found
+  
+#USER GROUP
+  /userGroup:
+    get:
+      summary: List of the User Group
+      description: Returns the list of all group of users
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: query
+        name: "user group"
+        type: string
+        description: The names of the user groups
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserGroup"
+        404:
+          description: Error!
+          
+    post:
+      summary: New User Group
+      description: Create a new group of users
+      tags:
+      - "User Group"
+      responses:
+        201:
+          description: The new group of users is created
+          schema:
+            type: object
+            properties:
+              userGroupId:
+                type: integer
+        400:
+          description: Error!
+  
+  /userGroup/{userGroupId}:
+    get:
+      summary: User Group by ID
+      description: Returns the specific user group mapping with the id
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: userGroupId
+        type: integer
+        required: true
+      
+      responses:
+        200:
+          description: Everything is ok!
+        404:
+          description: Error! User Group NOT found
+    
+    delete:
+      summary: Delete a User Group
+      description: Deletes the entire group of users mapping with the id
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: "userGroupId"
+        type: integer
+        required: true
+      
+      responses:
+        204:
+          description: The group of users was successfully deleted
+        404:
+          description: The group of users to delete was not found
+    
+  /userGroup/{userGroupId}/users:
+    parameters:
+      - in: path
+        name: "userGroupId"
+        type: integer
+        required: true
+    
+    get:
+      summary: Users of a User Group
+      description: Returns all the users of a user group
+      tags:
+      - "User Group"
+        
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        404:
+          description: Error!
+    
+    put:
+      summary: New User for a User Group
+      description: Add a new user for a specific group of users
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          type: object
+          properties:
+            userId:
+              type: integer
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema: 
+            $ref: "#/definitions/UserGroup"
+        409:
+          description: Error!
+  
+  /userGroup/{userGroupId}/users/{userId}:
+    parameters:
+      - in: path
+        name: "userGroupId"
+        type: integer
+        required: true
+      
+      - in: path
+        name: "userId"
+        type: integer
+        required: true
+        
+    delete:
+      summary: Delete a User from a group of users
+      description: Removes a user from a specific User Group
+      tags:
+      - "User Group"
+
+      responses: 
+        204:
+          description: The user was successfully remove from the group of users
+        400:
+          description: Could not remove the user from the group of users
+
+#TASK
+  /task:
+    get:
+      summary: List of all the tasks
+      description: Returns a list of all the tasks
+      tags:
+      - "Task"
+    
+      parameters:
+        - in: query
+          name: "task"
+          type: string
+          description: The names of the tasks
+    
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        404:
+          description: Error!
+  
+  /task/{taskId}:
+    parameters:
+    - in: path
+      required: true
+      name: "taskId"
+      type: integer
+      
+    get:
+      summary: Task by Id
+      description: Returns a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        404: 
+          description: Task NOT found
+    
+    put:
+      summary: Update Task
+      description: Updates a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        409:
+          description: Impossible to update the task
+    
+    delete:
+      summary: Delete Task
+      description: Deletes a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      responses:
+        200: 
+          description: Everything is ok
+        409:
+          description: Error
+          
+  /taskGroup:
+    get:
+      summary: List of all task groups
+      description: Returns the list of all task groups
+      tags:
+      - "Task Group"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskGroup"
+    
+    post:
+      summary: New Task group
+      description: Create a new group of tasks
+      tags:
+      - "Task Group"
+      parameters:
+      - in: body
+        required: true
+        name: "data"
+        schema:
+          $ref: "#/definitions/TaskGroup"
+      
+      responses:
+        201: 
+          description: Everything is ok
+        400:
+          description: Invalid request
+  
+  /taskGroup/{taskGroupId}:
+    parameters:
+    - in: path
+      name: "taskGroupId"
+      required: true
+      type: integer
+    
+    get:
+      summary: Task Group by ID
+      description: Returns a specific task group mapping with the given id
+      tags: 
+      - "Task Group"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/TaskGroup"
+        404:
+          description: Error
+    
+    put:
+      summary: Update Task Group
+      description: Updates a specific group of tasks mapping with the given id
+      tags:
+      - "Task Group"
+      
+      parameters:
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+      
+      responses:
+        200:
+          description: Everything is ok
+    
+    delete:
+      summary: Delete Task Group
+      description: Deletes a specific group of tasks mapping with the given id
+      tags:
+      - "Task Group"
+      responses:
+        204:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/TaskGroup"
+
+#ASSIGNMENTS
+  /assignment:
+    get:
+      summary: List of all assignments
+      description: Returns the list of all the assignments
+      tags:
+      - "Assignment"
+    
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Assignment"
+        404: 
+          description: Error
+  
+    post:
+      summary: New Assignment
+      description: Adds a new assignment
+      tags:
+      - "Assignment"
+    
+      parameters:
+      - in: body
+        name: data
+        required: true
+        schema:
+          $ref: "#/definitions/Assignment"
+    
+      responses:
+        204:
+          description: The new assignment is created
+        400:
+          description: Invalid request
+  
+  /assignment/{assignmentId}:
+    parameters:
+    - in: path
+      required: true
+      name: "assignmentId"
+      type: integer
+    
+    get:
+      summary: Assignmets by ID
+      tags:
+      - "Assignment"
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Assignment"
+    
+    put:
+      summary: Updates an Assignment
+      description: Updates a specific assignment mapping with the given id
+      tags:
+      - "Assignment"
+      parameters:
+      - in: body
+        name: data
+        schema:
+          $ref: '#/definitions/Assignment'
+
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/Assignment'
+
+    delete:
+      summary: Deletes an Assignment
+      description: Deletes a specific assignment mapping with the given id
+      tags:
+      - "Assignment"
+      responses:
+        204:
+          description: Everything is ok
+
+#PEER REVIEW
+  /peerReview:
+    get:
+      summary: All peer reviews
+      description: Return the list of all peer reviws
+      tags:
+      - "Peer Review"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PeerReview"
+        404: 
+          description: Error
+    
+    post:
+      summary: Add a new peer review
+      tags:
+      - "Peer Review"
+      parameters:
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/PeerReview"
+      responses:
+        201:
+          description: Peer Review created
+        400: 
+          description: Invalid request
