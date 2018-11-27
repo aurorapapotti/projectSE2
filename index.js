@@ -12,7 +12,7 @@ app.get('/', (req, res) => res.send('Hello World!'))
 
 //REGISTER
 app.post ('/register', function(req, res){
-  res.send(register.addUser(req, res));
+  res.send(register.registerUser(req, res));
 })
 
 /*LOGIN
