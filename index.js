@@ -4,13 +4,13 @@ const express = require('express'),
 const app = express();
 app.use(bodyParser.json());
 
-const register = require(./register);
-const login = require(./login);
+const register = require(./src/register.js);
+const login = require(./src/login.js);
 
 //REGISTER
 const newUserRegistered = [];
 
-register.post ('/', function(req, res){
-  const newUser = req.body
-
+register.post ('/register', function(req, res){
 })
+
+//LOGIN
