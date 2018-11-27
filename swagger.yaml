@@ -257,6 +257,24 @@ paths:
       - "Authentication"
       description: It allows a user to log in its profile.
       
+      parameters:
+      - in: body
+        name: data
+        description: The data for the login User
+        schema:
+          type: object
+          properties:
+            id: 
+              type: string
+            name: 
+              type: string
+            surname: 
+              type: string
+            email: 
+              type: string
+            badgeNumber: 
+              type: string
+      
       responses:
         201:
           description: The user is log in.
