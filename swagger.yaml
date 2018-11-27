@@ -1319,7 +1319,7 @@ paths:
         409:
           description: Error!
   
-  /assignment/{taskGroupId}/tasks:
+  /assignment/{assignmentId}/tasks:
     get:
       summary: Returns the task group of an assignment
       description: Returns the task group of an assignment
@@ -1328,7 +1328,7 @@ paths:
       
       parameters:
       - in: path
-        name: "taskGroupId"
+        name: "assignmentId"
         type: integer
         required: true
       
@@ -1350,7 +1350,7 @@ paths:
       
       parameters:
       - in: path
-        name: "taskGroupId"
+        name: "assignmentId"
         required: true
         type: integer
       
