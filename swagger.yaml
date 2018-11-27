@@ -21,7 +21,7 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
+        type: string
         description: The id of the user, it univocally identifies the user
       name:
         type: string
@@ -244,7 +244,7 @@ paths:
             type: object
             properties:
               id:
-                type: integer
+                type: string
         400:
           description: Error! Could not insert the user. Probably something is missing
         409:
@@ -259,7 +259,12 @@ paths:
       
       responses:
         201:
-          description: The user is log in. 
+          description: The user is log in.
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
         400:
           description: Error! Invalid credentials.
 
