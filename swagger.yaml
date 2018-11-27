@@ -1262,7 +1262,7 @@ paths:
       summary: Returns the professor of the assignment
       description: Returns the professor of the assignment
       tags:
-      - "User Group"
+      - "Assignment"
       
       parameters:
       - in: path
@@ -1281,7 +1281,7 @@ paths:
       summary: Returns the class of an assignment
       description: Returns the class of an assignment
       tags:
-      - "User Group"
+      - "Assignment"
       
       parameters:
       - in: path
@@ -1303,7 +1303,7 @@ paths:
       summary: Update the User Group of the assignment
       description: Update the User Group of the assignment
       tags:
-      - "User Group"
+      - "Assignment"
       
       parameters:
       - in: path
@@ -1324,7 +1324,7 @@ paths:
       summary: Returns the task group of an assignment
       description: Returns the task group of an assignment
       tags:
-      - "Task Group"
+      - "Assignment"
       
       parameters:
       - in: path
@@ -1346,7 +1346,7 @@ paths:
       summary: Update the task group of an assignment
       description: Update the task group of an assignment
       tags:
-      - "Task Group"
+      - "Assignment"
       
       parameters:
       - in: path
