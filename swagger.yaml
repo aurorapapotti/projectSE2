@@ -1681,7 +1681,7 @@ paths:
     get:
       summary: Answer of a TaskAnswer
       tags:
-      - "Review"
+      - "TaskAnswer"
       parameters:
       - in: path
         name: "taskAnswerId"
