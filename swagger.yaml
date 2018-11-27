@@ -55,16 +55,18 @@ definitions:
         description: The name of the group of users
       author:
         $ref: "#/definitions/User"
+        description: The author who created the group of users
       users:
         type: array
         items:
           $ref: "#/definitions/User"
+        description: The users of the group
     
     required:
     - id
     - name
     - author
-    - definitions
+    - users
     
   Task:
     title: Task
@@ -577,12 +579,13 @@ paths:
         
       responses:
         201:
-          description: The new group of users is created
+          description: The group of users was successfully created. The id of the generated group is then returned.
           schema:
             type: object
             properties:
-              ID:
+              id:
                 type: integer
+                example: 30
         400:
           description: Error!
           
@@ -626,8 +629,28 @@ paths:
       responses:
         200:
           description: Everything is ok!
+          schema: 
+            $ref: '#/definitions/UserGroup'
         404:
           description: Error! User Group NOT found
+    
+    put:
+      summary: Update the group
+      description: Update the group of users
+      tags: 
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: userGroupId
+        type: integer
+        required: true
+        
+      responses:
+        200:
+          description: The group of users was successfully updated!
+        404:
+          description: Error! The group of users to update was not found.
     
     delete:
       summary: Delete a User Group
@@ -637,7 +660,7 @@ paths:
       
       parameters:
       - in: path
-        name: "userGroupId"
+        name: userGroupId
         type: integer
         required: true
       
@@ -649,15 +672,15 @@ paths:
   
   /userGroup/{Author}:
     get:
-      summary: Returns the author of the user
-      description: Returns the author of the user
+      summary: Returns the author of the user group
+      description: Returns the author of the user group
       tags:
       - "User Group"
       
       parameters:
       - in: path
         name: Author
-        type: integer
+        type: string
         required: true
       
       responses:
@@ -1069,6 +1092,7 @@ paths:
           description: Everything is ok
         400:
           description: Error!
+          
   /taskGroup/{taskGroupAuthor}:
     parameters:
     - in: path
@@ -1101,9 +1125,11 @@ paths:
         200:
           description: Everything is ok
           schema:
-            $ref: "#/definitions/Assignment"
+            type: array
+            items: 
+              $ref: "#/definitions/Assignment"
         404: 
-          description: Error
+          description: Error!
   
     post:
       summary: New Assignment
@@ -1119,8 +1145,14 @@ paths:
           $ref: "#/definitions/Assignment"
     
       responses:
-        204:
-          description: The new assignment is created
+        201:
+          description: The new assignment is created.
+          schema:
+            type: object
+            properties:
+              assignmentId:
+                type: integer
+                example: 30
         400:
           description: Invalid request
   
@@ -1132,7 +1164,7 @@ paths:
       type: integer
     
     get:
-      summary: Assignmets by ID
+      summary: Returns an assignment with the given ID
       tags:
       - "Assignment"
       responses:
@@ -1140,6 +1172,8 @@ paths:
           description: Everything is ok
           schema:
             $ref: "#/definitions/Assignment"
+        404:
+          description: No assignment with the specified ID.
     
     put:
       summary: Updates an Assignment
@@ -1157,6 +1191,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Assignment'
+        404:
+          description: Invalid request
 
     delete:
       summary: Deletes an Assignment
@@ -1165,8 +1201,115 @@ paths:
       - "Assignment"
       responses:
         204:
+          description: Everything is ok!
+        404: 
+          description: Invalid request.
+  
+  /assignment/{Professor}:
+    get:
+      summary: Returns the professor of the assignment
+      description: Returns the professor of the assignment
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: Professor
+        type: string
+        required: true
+      
+      responses:
+        200:
+          description: Everything is ok!
+        404:
+          description: Error! Professor NOT found
+  
+  /assignment/{assignmentId}/users:
+    get:
+      summary: Returns the class of an assignment
+      description: Returns the class of an assignment
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: assignmentId
+        required: true
+        type: integer
+      
+      responses:
+        200:
           description: Everything is ok
-
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        404:
+          description: Error!
+    
+    put:
+      summary: Update the User Group of the assignment
+      description: Update the User Group of the assignment
+      tags:
+      - "User Group"
+      
+      parameters:
+      - in: path
+        name: assignmentId
+        required: true
+        type: integer
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema: 
+            $ref: "#/definitions/User"
+        409:
+          description: Error!
+  
+  /assignment/{taskGroupId}/tasks:
+    get:
+      summary: Returns the task group of an assignment
+      description: Returns the task group of an assignment
+      tags:
+      - "Task Group"
+      
+      parameters:
+      - in: path
+        name: "taskGroupId"
+        type: integer
+        required: true
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        404:
+          description: Error!
+    
+    put:
+      summary: Update the task group of an assignment
+      description: Update the task group of an assignment
+      tags:
+      - "Task Group"
+      
+      parameters:
+      - in: path
+        name: "taskGroupId"
+        required: true
+        type: integer
+      
+      responses:
+        200:
+          description: Everything is ok!
+          schema: 
+            $ref: "#/definitions/Task"
+        409:
+          description: Error!
+  
 #PEER REVIEW
   /peerReview:
     get:
@@ -1199,417 +1342,4 @@ paths:
         201:
           description: Peer Review created
         400: 
-          description: Invalid request
-
-#REVIEW
-  /reviews:
-    get:
-      summary: All the reviews
-      description: Get the list of all the reviews
-      tags:
-      - "Review"
-      responses:
-        200: 
-          description: Everything is OK
-          schema:
-            $ref: "#/definitions/Review"
-        404:
-          description: Not found
-          
-    post:
-      summary: Create review
-      tags:
-      - "Review"
-      parameters:
-      - in: body
-        name: "data"
-        required: true
-        schema:
-          $ref: "#/definitions/Review"
-      responses:
-        201:
-          description: Review created
-          schema:
-            $ref: "#/definitions/Review"
-        400: 
-          description: Invalid request
-          
-  /reviews/{reviewId}:
-    get:
-      summary: Get a review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      responses:
-        200: 
-          description: Everything is ok
-          schema:
-            $ref: "#/definitions/Review"
-        404: 
-          description: Not found
-    
-    put:
-      summary: Edit the id of a review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      responses:
-        200: 
-          description: Everything is OK
-          schema:
-            $ref: "#/definitions/Review"
-    
-    delete:
-      summary: Deletes a Review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      responses:
-        204:
-          description: Everything is ok
-          
-  /reviews/{reviewId}/peerReviews:
-    get:
-      summary: All peerReviews of a Review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      responses:
-        200: 
-          description: Everything is OK
-          schema:
-            $ref: "#/definitions/Review"
-        404:
-          description: Not found
-  
-  /reviews/{reviewId}/peerReviews/{peerReviewId}:
-    get:
-      summary: PeerReview of a Review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      - in: path
-        name: "peerReviewId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-    
-    put:
-      summary: Edit a peerReview of a Review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      - in: path
-        name: "peerReviewId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: PeerReview edited
-        400:
-          description: Invalid request
-    
-  /reviews/{reviewId}/taskAnswers:
-    get:
-      summary: TaskAnswers of a Review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-  
-  /reviews/{reviewId}/taskAnswers/{taskAnswerId}:
-    get:
-      summary: TaskAnswer of a Review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-    
-    put:
-      summary: Edit a taskAnswer of a Review
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "reviewId"
-        required: true
-        type: integer
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: PeerReview edited
-        400:
-          description: Invalid request
-    
-#TASKANSWER
-  /taskAnswers:
-    get:
-      summary: get a taskAnswer
-      tags:
-      - "TaskAnswer"
-      responses:
-        200:
-          description: Everything is OK
-          schema:
-            $ref: "#/definitions/TaskAnswer"
-        400:
-          description: Not found
-    
-    post:
-      summary: Create a taskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: body
-        name: "data"
-        required: true
-        schema:
-          $ref: "#/definitions/TaskAnswer"
-      responses:
-        201: 
-          description: TaskAnswer created
-        400:
-          description: Invalid request
-  
-  /taskAnswers/{taskAnswerId}:
-    get:
-      summary: Get a taskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-    
-    put:
-      summary: Edit a taskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: TaskAnswer edited
-        400:
-          description: Invalid request
-    
-    delete:
-      summary: Deletes a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        204:
-          description: Everything is ok
-          
-  /taskAnswers/{taskAnswerId}/answers:
-    get:
-      summary: Answers of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-  
-  /taskAnswers/{taskAnswerId}/answers/{answerId}:
-    get:
-      summary: Answer of a TaskAnswer
-      tags:
-      - "Review"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      - in: path
-        name: "answerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-    
-    put:
-      summary: Edit an answer of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      - in: path
-        name: "answerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Answer of TaskAnswer edited
-        400:
-          description: Invalid request
-  
-  /taskAnswers/{taskAnswerId}/student:
-    get:
-      summary: Student of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-    
-    put:
-      summary: Edit a student of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Student of a TaskAnswer edited
-        400:
-          description: Invalid request
-    
-  /taskAnswers/{taskAnswerId}/assignment:
-    get:
-      summary: Assignment of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-    
-    put:
-      summary: Edit an assignment of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Assignment of a TaskAnswer edited
-        400:
-          description: Invalid request
-    
-  /taskAnswer/{taskAnswerId}/taskGroup:
-    get:
-      summary: TaskGroup of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: Everything is OK
-        404:
-          description: Not found
-    
-    put:
-      summary: Edit a taskGroup of a TaskAnswer
-      tags:
-      - "TaskAnswer"
-      parameters:
-      - in: path
-        name: "taskAnswerId"
-        required: true
-        type: integer
-      responses:
-        200:
-          description: TaskGroup of a TaskAnswer edited
-        400:
           description: Invalid request
