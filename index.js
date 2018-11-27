@@ -15,9 +15,9 @@ app.post ('/register', function(req, res){
   res.send(register.registerUser(req, res));
 })
 
-/*LOGIN
-login.post ('/login', function(req, res){
-
-})*/
+//LOGIN
+app.post ('/login', function(req, res){
+  res.send(login.loginUser(req,res));
+})
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

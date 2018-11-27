@@ -1,10 +1,11 @@
 {
   "name": "projectse2",
   "version": "1.0.0",
-  "description": "Modifica by Elena Tomaiuolo",
+  "description": "Project for SEII class. Group SEMA.",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
