@@ -711,26 +711,6 @@ paths:
               $ref: "#/definitions/User"
         404:
           description: Error!
-    
-    put:
-      summary: New User for a User Group
-      description: Add a new user for a specific group of users
-      tags:
-      - "User Group"
-      
-      parameters:
-      - in: path
-        name: "userGroupId"
-        required: true
-        type: integer
-      
-      responses:
-        200:
-          description: Everything is ok!
-          schema: 
-            $ref: "#/definitions/UserGroup"
-        409:
-          description: Error!
   
   /userGroup/{userGroupId}/users/{userId}:
     parameters:
