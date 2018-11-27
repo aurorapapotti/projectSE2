@@ -35,14 +35,14 @@ definitions:
       email:
         type: string
         description: The email of the user
-    
+
     required:
     - id
     - name
     - surname
     - badgeNumber
     - email
-  
+
   UserGroup:
     title: User Group
     type: object
@@ -59,18 +59,18 @@ definitions:
         type: array
         items:
           $ref: "#/definitions/User"
-    
+
     required:
     - id
     - name
     - author
     - definitions
-    
+
   Task:
     title: Task
     type: object
-    properties: 
-      id: 
+    properties:
+      id:
         type: integer
         description: The id of the task, it univocally identifies the task
       argument:
@@ -79,20 +79,20 @@ definitions:
       text:
         type: string
         description: The text of the task, the question
-      taskType: 
+      taskType:
         type: string
         enum: [multiple_choice, normal]
         description: The type of the task, it tells you if the task is a multiple choice or not.
       author:
         $ref: "#/definitions/Task"
-    
+
     required:
     - id
     - argument
     - text
     - taskType
     - author
-    
+
   TaskGroup:
     title: Task Group
     type: object
@@ -110,13 +110,13 @@ definitions:
         items:
           $ref: "#/definitions/Task"
         description: The list of tasks of a task group
-    
-    required: 
+
+    required:
     - id
     - name
     - author
     - tasks
-  
+
   TaskAnswer:
     title: Task Answer
     type: object
@@ -133,14 +133,14 @@ definitions:
         $ref: "#/definitions/Assignment"
       taskGroup:
         $ref: "#/definitions/TaskGroup"
-    
+
     required:
     - id
     - answers
     - student
     - assignment
     - taskGroup
-  
+
   Assignment:
     title: Assignment
     type: object
@@ -148,7 +148,7 @@ definitions:
       id:
         type: integer
         description: The id that univocally identifies an exam
-      title: 
+      title:
         type: string
         description: The title with which the professor has called the exam.
       professor:
@@ -166,7 +166,7 @@ definitions:
       deadline:
         type: string
         description: The duration of the actual exam.
-        
+
     required:
     - id
     - title
@@ -175,7 +175,7 @@ definitions:
     - class
     - start
     - deadline
-        
+
   PeerReview:
     title: Peer Review
     type: object
@@ -190,7 +190,7 @@ definitions:
         $ref: "#/definitions/TaskAnswer"
       comment:
         type: string
-  
+
   Review:
     title: Review
     type: object
@@ -208,10 +208,10 @@ definitions:
           $ref: "#/definitions/TaskAnswer"
       mark:
         type: integer
-      
+
 #the APIs
 paths:
-  
+
 #AUTHENTICATION
   /register/:
     post:
@@ -222,7 +222,7 @@ paths:
       - in: body
         name: data
         description: The registration data of the user
-        schema: 
+        schema:
           type: object
           properties:
             name:
@@ -233,7 +233,7 @@ paths:
               type: string
             badgeNumber:
               type: string
-        
+
       description: It allows a user to register. It checks the parameters consistency, then it redirects the user to its new profile page.
       responses:
         201:
@@ -247,17 +247,17 @@ paths:
           description: Error! Could not insert the user. Probably something is missing
         409:
           description: Error! Probably the email address is already in use.
-        
+
   /login/:
     post:
       summary: Login User
       tags:
       - "Authentication"
       description: It allows a user to log in its profile.
-      
+
       responses:
         201:
-          description: The user is log in. 
+          description: The user is log in.
         400:
           description: Error! Invalid credentials.
 
@@ -268,13 +268,13 @@ paths:
       description: Returns all the users of the system
       tags:
       - "User"
-      
+
       parameters:
         - in: query
           name: "user"
           type: string
           description: The names of the users
-      
+
       responses:
         200:
           description: Everything is OK
@@ -284,11 +284,11 @@ paths:
               $ref: "#/definitions/User"
         404:
           description: Error!
-          
+
   /user/{userId}:
     get:
       summary: Return a specific user
-      tags: 
+      tags:
       - "User"
       parameters:
       - in: path
@@ -296,7 +296,7 @@ paths:
         required: true
         type: integer
         description: The id of a specific user
-        
+
       responses:
         200:
           description: Everything is ok!
@@ -304,33 +304,33 @@ paths:
             $ref: "#/definitions/User"
         404:
           description: User not found!
-  
+
   /user/{userId}/assignments:
     get:
       summary: Returns a list of assignments that are associated to the specified user
       tags:
       - User
-      
+
       parameters:
       - in: path
         required: true
         name: "userId"
         type: integer
         description: The id of a specific user
-        
+
       responses:
         200:
           description: Everything is ok!
 
 #PERSONAL AREA USER
-      
+
   /user/me/:
     get:
       summary: It returns the information about the register user
       description: By the user's id it returns it's data
-      tags: 
+      tags:
       - "Personal User Area"
-      
+
       responses:
         200:
           description: User found
@@ -338,12 +338,12 @@ paths:
             $ref: "#/definitions/User"
         404:
           description: Error! User NOT found
-    
+
     put:
       summary: Update the information for the authentication
       tags:
       - "Personal User Area"
-      
+
       parameters:
       - in: body
         name: "data"
@@ -351,7 +351,7 @@ paths:
           type: object
           properties:
             name:
-              type: string 
+              type: string
               description: The new name of the user
             surname:
               type: string
@@ -361,7 +361,7 @@ paths:
       responses:
         200:
           description: Everything is ok!
-        409: 
+        409:
           description: Error! Impossible to update
 
   /user/me/email:
@@ -369,7 +369,7 @@ paths:
       summary: Change the email for the authentication
       tags:
       - "Personal User Area"
-      
+
       parameters:
       - in: body
         required: true
@@ -379,7 +379,7 @@ paths:
           properties:
             newEmail:
               type: string
-      
+
       responses:
         200:
           description: Email changed!
@@ -391,7 +391,7 @@ paths:
       summary: Change the password for the authentication
       tags:
       - "Personal User Area"
-      
+
       parameters:
       - in: body
         required: true
@@ -401,13 +401,13 @@ paths:
           properties:
             newPassword:
               type: string
-      
+
       responses:
         200:
           description: Password changed!
         409:
           description: Error! Invalid password
-  
+
   /user/me/assignments:
     get:
       summary: Returns a list of assignments that are associated to the registered user
@@ -420,19 +420,19 @@ paths:
             type: array
             items:
               $ref: "#/definitions/Assignment"
-  
+
   /user/me/assignments/{assignmentId}:
     get:
       summary: Returns a specif assignment assigned to the current user
       tags:
       - "Personal User Area"
-      
+
       parameters:
       - in: path
         required: true
         name: "assignmentId"
         type: integer
-      
+
       responses:
         200:
           description: Everything is ok!
@@ -440,20 +440,20 @@ paths:
             $ref: "#/definitions/Assignment"
         404:
           description: Assignement NOT found
-  
+
   /user/me/assignments/{assignmentId}/tasks:
     get:
       summary: Assignment's tasks
       description: Returns all tasks of an assignment
       tags:
       - "Personal User Area"
-      
+
       parameters:
       - in: path
         required: true
         name: assignmentId
         type: integer
-      
+
       responses:
         200:
           description: Everything is OK
@@ -463,7 +463,7 @@ paths:
               $ref: "#/definitions/Task"
         404:
           description: Assignment NOT found
-  
+
   /user/me/assignments/{assignmentId}/taskAnswer:
     parameters:
       - in: path
@@ -475,12 +475,12 @@ paths:
         required: true
         schema:
           $ref: "#/definitions/TaskAnswer"
-    
+
     get:
       summary: Task Assignment's answers
       tags:
       - "Personal User Area"
-      
+
       responses:
         200:
           description: Everything is ok
@@ -490,18 +490,18 @@ paths:
               $ref: "#/definitions/TaskAnswer"
         404:
           description: Assignment NOT found
-  
+
     put:
       summary: Submit the answers to a task assignment
       tags:
       - "Personal User Area"
-      
+
       responses:
         200:
           description: Everything is ok
         404:
           description: Task Assignment NOT found
-  
+
   /user/me/taskAnswer:
     get:
       summary: All user's task answers
@@ -514,7 +514,7 @@ paths:
             type: array
             items:
               $ref: "#/definitions/TaskAnswer"
-  
+
   /user/me/peerReviews:
     get:
       summary: All user's peer reviews
@@ -528,14 +528,14 @@ paths:
             type: array
             items:
               $ref: "#/definitions/PeerReview"
-  
+
   /user/me/assignments/{assignmentId}/peerReviews:
     parameters:
     - in: path
       required: true
       name: assignmentId
       type: integer
-    
+
     get:
       summary: The peer reviews associated to a specific assignment
       tags:
@@ -549,7 +549,7 @@ paths:
               $ref: "#/definitions/PeerReview"
         404:
           description: Assignment NOT found
-  
+
 #USER GROUP
   /userGroup:
     get:
@@ -557,13 +557,13 @@ paths:
       description: Returns the list of all group of users
       tags:
       - "User Group"
-      
+
       parameters:
       - in: query
         name: "user group"
         type: string
         description: The names of the user groups
-      
+
       responses:
         200:
           description: Everything is ok!
@@ -573,7 +573,7 @@ paths:
               $ref: "#/definitions/UserGroup"
         404:
           description: Error!
-          
+
     post:
       summary: New User Group
       description: Create a new group of users
@@ -589,57 +589,57 @@ paths:
                 type: integer
         400:
           description: Error!
-  
+
   /userGroup/{userGroupId}:
     get:
       summary: User Group by ID
       description: Returns the specific user group mapping with the id
       tags:
       - "User Group"
-      
+
       parameters:
       - in: path
         name: userGroupId
         type: integer
         required: true
-      
+
       responses:
         200:
           description: Everything is ok!
         404:
           description: Error! User Group NOT found
-    
+
     delete:
       summary: Delete a User Group
       description: Deletes the entire group of users mapping with the id
       tags:
       - "User Group"
-      
+
       parameters:
       - in: path
         name: "userGroupId"
         type: integer
         required: true
-      
+
       responses:
         204:
           description: The group of users was successfully deleted
         404:
           description: The group of users to delete was not found
-    
+
   /userGroup/{userGroupId}/users:
     parameters:
       - in: path
         name: "userGroupId"
         type: integer
         required: true
-    
+
     get:
       summary: Users of a User Group
       description: Returns all the users of a user group
       tags:
       - "User Group"
-        
+
       responses:
         200:
           description: Everything is ok
@@ -649,13 +649,13 @@ paths:
               $ref: "#/definitions/User"
         404:
           description: Error!
-    
+
     put:
       summary: New User for a User Group
       description: Add a new user for a specific group of users
       tags:
       - "User Group"
-      
+
       parameters:
       - in: body
         name: "data"
@@ -665,34 +665,34 @@ paths:
           properties:
             userId:
               type: integer
-      
+
       responses:
         200:
           description: Everything is ok!
-          schema: 
+          schema:
             $ref: "#/definitions/UserGroup"
         409:
           description: Error!
-  
+
   /userGroup/{userGroupId}/users/{userId}:
     parameters:
       - in: path
         name: "userGroupId"
         type: integer
         required: true
-      
+
       - in: path
         name: "userId"
         type: integer
         required: true
-        
+
     delete:
       summary: Delete a User from a group of users
       description: Removes a user from a specific User Group
       tags:
       - "User Group"
 
-      responses: 
+      responses:
         204:
           description: The user was successfully remove from the group of users
         400:
@@ -705,13 +705,13 @@ paths:
       description: Returns a list of all the tasks
       tags:
       - "Task"
-    
+
       parameters:
         - in: query
           name: "task"
           type: string
           description: The names of the tasks
-    
+
       responses:
         200:
           description: Everything is ok
@@ -721,40 +721,40 @@ paths:
               $ref: "#/definitions/Task"
         404:
           description: Error!
-  
+
   /task/{taskId}:
     parameters:
     - in: path
       required: true
       name: "taskId"
       type: integer
-      
+
     get:
       summary: Task by Id
       description: Returns a specific task mapping with the given id
       tags:
       - "Task"
-      
+
       responses:
         200:
           description: Everything is ok
           schema:
             $ref: "#/definitions/Task"
-        404: 
+        404:
           description: Task NOT found
-    
+
     put:
       summary: Update Task
       description: Updates a specific task mapping with the given id
       tags:
       - "Task"
-      
+
       parameters:
       - in: body
         name: "data"
         schema:
           $ref: "#/definitions/Task"
-      
+
       responses:
         200:
           description: Everything is ok
@@ -762,19 +762,19 @@ paths:
             $ref: "#/definitions/Task"
         409:
           description: Impossible to update the task
-    
+
     delete:
       summary: Delete Task
       description: Deletes a specific task mapping with the given id
       tags:
       - "Task"
-      
+
       responses:
-        200: 
+        200:
           description: Everything is ok
         409:
           description: Error
-          
+
   /taskGroup:
     get:
       summary: List of all task groups
@@ -788,7 +788,7 @@ paths:
             type: array
             items:
               $ref: "#/definitions/TaskGroup"
-    
+
     post:
       summary: New Task group
       description: Create a new group of tasks
@@ -800,24 +800,24 @@ paths:
         name: "data"
         schema:
           $ref: "#/definitions/TaskGroup"
-      
+
       responses:
-        201: 
+        201:
           description: Everything is ok
         400:
           description: Invalid request
-  
+
   /taskGroup/{taskGroupId}:
     parameters:
     - in: path
       name: "taskGroupId"
       required: true
       type: integer
-    
+
     get:
       summary: Task Group by ID
       description: Returns a specific task group mapping with the given id
-      tags: 
+      tags:
       - "Task Group"
       responses:
         200:
@@ -826,13 +826,13 @@ paths:
             $ref: "#/definitions/TaskGroup"
         404:
           description: Error
-    
+
     put:
       summary: Update Task Group
       description: Updates a specific group of tasks mapping with the given id
       tags:
       - "Task Group"
-      
+
       parameters:
       - in: body
         name: "data"
@@ -842,11 +842,11 @@ paths:
           properties:
             name:
               type: string
-      
+
       responses:
         200:
           description: Everything is ok
-    
+
     delete:
       summary: Delete Task Group
       description: Deletes a specific group of tasks mapping with the given id
@@ -865,41 +865,41 @@ paths:
       description: Returns the list of all the assignments
       tags:
       - "Assignment"
-    
+
       responses:
         200:
           description: Everything is ok
           schema:
             $ref: "#/definitions/Assignment"
-        404: 
+        404:
           description: Error
-  
+
     post:
       summary: New Assignment
       description: Adds a new assignment
       tags:
       - "Assignment"
-    
+
       parameters:
       - in: body
         name: data
         required: true
         schema:
           $ref: "#/definitions/Assignment"
-    
+
       responses:
         204:
           description: The new assignment is created
         400:
           description: Invalid request
-  
+
   /assignment/{assignmentId}:
     parameters:
     - in: path
       required: true
       name: "assignmentId"
       type: integer
-    
+
     get:
       summary: Assignmets by ID
       tags:
@@ -909,7 +909,7 @@ paths:
           description: Everything is ok
           schema:
             $ref: "#/definitions/Assignment"
-    
+
     put:
       summary: Updates an Assignment
       description: Updates a specific assignment mapping with the given id
@@ -943,7 +943,7 @@ paths:
       description: Return the list of all peer reviws
       tags:
       - "Peer Review"
-      
+
       responses:
         200:
           description: Everything is ok
@@ -951,9 +951,9 @@ paths:
             type: array
             items:
               $ref: "#/definitions/PeerReview"
-        404: 
+        404:
           description: Error
-    
+
     post:
       summary: Add a new peer review
       tags:
@@ -967,5 +967,5 @@ paths:
       responses:
         201:
           description: Peer Review created
-        400: 
+        400:
           description: Invalid request
