@@ -1,6 +1,6 @@
 var fs = require("fs");
 
-const dbPath = "./entities/reviews.json";
+const dbPath = "./entities/taskAnswer.json";
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -21,22 +21,23 @@ function getObjectsList(dbpath){
   return db;
 }
 
-function createReview(req, res) {
-	var taskAnswer = req.body.taskAnswer;
-	var peerReview = req.body.peerReview;
+function createTaskAnswer(req, res) {
+	var student = req.body.student;
+	var assignment = req.body.assignment;
+	var taskGroup = req.body.taskGroup;
 	
-	if (taskAnswer == null || peerReview == null)
+	if (student == null || assignment == null || taskGroup == null)
 		res.status(400).send("Invalid request");
 	
-	var review = '{"review": {'+
-		'"taskAnswer": "'+taskAnswer+'",'+
-		'"peerReview": "'+peerReview+'",'+
-		'"vote":"1"}'
+	var taskAnswer = '{"taskAnswer": {'+
+		'"student": "'+student+'",'+
+		'"assignment": "'+assignment+'",'+
+		'"taskGroup": "'+taskGroup+'"}'
 		
 	addObject(review, dbPath);
 	res.status(201).send("Created");
 } 
 
 module.exports = {
-	create: createReview
+	create: createTaskAnswer
 }
