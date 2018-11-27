@@ -1,0 +1,17 @@
+{
+  "user1": {
+    "id" : "1",
+    "name" : "Marco",
+    "surname" : "Rossi",
+    "badgeNumber" : "123456",
+    "email" : "marco.rossi@email.it"
+  },
+
+  "user2" : {
+    "id" : "2",
+    "name" : "Gino",
+    "surname" : "Mazzo",
+    "badgeNumber" : "654321",
+    "email" : "gino.mazzo@email.it"
+  }
+}
