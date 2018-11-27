@@ -1,41 +1,42 @@
-var express = require('express');
-var app = express();
 var fs = require("fs");
 
-app.post('/reviews', function (req, res){
-	var review = '{"review": {'+
-		'"id": "1",'+
-		'"taskAnswer": "'+req.body.taskAnswer+'",'+
-		'"peerReview": "'+req.body.peerReview+'",'+
-		'"vote": "1"}'+
-	'}';
-	
-	if (!review.taskAnswer || !Number.isInteger(review.taskAnswer)){
-		res.status(400).json({error: Invalid request});
-		return;
-	}
-	
-	if (!review.peerReview || !Number.isInteger(review.peerReview)){
-		res.status(400).json({error: Invalid request});
-	}
-	
-	fs.writeFile("../entities/review.json", review);
-});
+const dbUserPath = "./entities/reviews.json";
 
-app.put('/reviews/reviewId', function (req, res){
-	fs.readFile()
+function getUUID(){
+  return '_' + Math.random().toString(36).substr(2, 9);
+}
+
+function addObject(obj,dbpath){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  let id = getUUID();
+  db[id] = obj;
+  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+  return id;
+}
+
+function getObjectsList(dbpath){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  return db;
+}
+
+function createReview(req, res) {
+	var taskAnswer = req.body.taskAnswer;
+	var peerReview = req.body.peerReview;
 	
-	if (!review.taskAnswer || !Number.isInteger(review.taskAnswer)){
-		res.status(400).json({error: Invalid request});
-		return;
-	}
+	if (taskAnswer == null || peerReview == null)
+		res.status(400).send("Invalid request");
 	
-	if (!review.peerReview || !Number.isInteger(review.peerReview)){
-		res.status(400).json({error: Invalid request});
-		return;
-	}
-	
-	fs.writeFile("../entities/review.json", review);
-	res.status(200);
-	return;
-});
+	var review = '{"review": {'+
+		'"taskAnswer": "'+taskAnswer+'",'+
+		'"peerReview": "'+peerReview+'",'+
+		'"vote":"1"}'
+		
+	addObject(review, "./entities/reviews.json");
+	res.status(201).send("Created");
+} 
+
+module.exports = {
+	create: createReview
+}
