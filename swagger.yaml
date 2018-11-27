@@ -798,11 +798,11 @@ paths:
         404:
           description: Error!
   
-  /task/{taskId}:
+  /task/{Id}:
     parameters:
     - in: path
       required: true
-      name: "taskId"
+      name: "Id"
       type: integer
       
     get:
@@ -850,11 +850,11 @@ paths:
           description: Everything is ok
         409:
           description: Error
-  /task/{taskArgument}:
+  /task/{Argument}:
     parameters:
     - in: path
       required: true
-      name: "taskArgument"
+      name: "Argument"
       type: string
       
     get:
@@ -870,24 +870,32 @@ paths:
             $ref: "#/definitions/Task"
         404: 
           description: Task NOT found
-    post:
-      summary: Create Argument
-      description: Create a new Task Argument
+    
+    put:
+      summary: Update Argument
+      description: Update a new Task Argument
       tags:
       - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
       responses:
-        201:
-          description: The new argument is ok
+        200:
+          description: Everything is ok
           schema:
             $ref: "#/definitions/Task"
-        400:
-          description: Error!
-  
-  /task/{taskDescription}:
+        409:
+          description: Impossible to update the argument
+    
+  /task/{Description}:
     parameters:
     - in: path
       required: true
-      name: "taskDescription"
+      name: "Description"
       type: string
       
     get:
@@ -903,38 +911,79 @@ paths:
             $ref: "#/definitions/Task"
         404: 
           description: Task NOT found
-    post:
-      summary: Create Description
-      description: Create a new Task Description
+    put:
+      summary: Update Description
+      description: Update a new Task Description
       tags:
       - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
       responses:
-        201:
-          description: The new description is ok
+        200:
+          description: Everything is ok
           schema:
             $ref: "#/definitions/Task"
-        400:
-          description: Error!
+        409:
+          description: Impossible to update the description
           
-  /task/{taskType}:
+  /task/{Type}:
     parameters:
     - in: path
       required: true
-      name: "taskType"
+      name: "Type"
       type: string
       
-    post:
-      summary: Create Type
-      description: Create a new Task Type
+    put:
+      summary: Update Type
+      description: Update a new Task Type
       tags:
       - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
       responses:
-        201:
-          description: The new Task Type is ok
+        200:
+          description: Everything is ok
           schema:
             $ref: "#/definitions/Task"
-        400:
-          description: Error! 
+        409:
+          description: Impossible to update the type
+  
+  /task/{Author}:
+    parameters:
+    - in: path
+      required: true
+      name: "Author"
+      type: string
+      
+    put:
+      summary: Update Author
+      description: Update a new Task Author
+      tags:
+      - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        409:
+          description: Impossible to update the author
           
   /taskGroup:
     get:
@@ -968,10 +1017,10 @@ paths:
         400:
           description: Invalid request
   
-  /taskGroup/{taskGroupId}:
+  /taskGroup/{Id}:
     parameters:
     - in: path
-      name: "taskGroupId"
+      name: "Id"
       required: true
       type: integer
     
@@ -1019,16 +1068,16 @@ paths:
           schema:
             $ref: "#/definitions/TaskGroup"
   
-  /taskGroup/{taskGroupTask}:
+  /taskGroup/{Task}:
     parameters:
     - in: path
-      name: "taskGroupTask"
+      name: "Task"
       required: true
       type: string
     
     get:
       summary: Task of a Task Group
-      description: Returns a specific task group mapping with the given Name
+      description: Returns a specific task group mapping with the given Task
       tags: 
       - "Task Group"
       responses:
@@ -1038,28 +1087,22 @@ paths:
             $ref: "#/definitions/TaskGroup"
         404:
           description: Error
-    post:
-      summary: Add a Task 
-      description: Add Task in a TaskGroup
+          
+    delete:
+      summary: Delete Task Of a TaskGroup
+      description: Deletes a specific Task of a Task Group
       tags:
       - "Task Group"
-      parameters:
-      - in: body
-        required: true
-        name: "data"
-        schema:
-          $ref: "#/definitions/TaskGroup"
-      
       responses:
-        201: 
+        204:
           description: Everything is ok
-        400:
-          description: Error!
+          schema:
+            $ref: "#/definitions/TaskGroup"
             
-  /taskGroup/{taskGroupName}:
+  /taskGroup/{Name}:
     parameters:
     - in: path
-      name: "taskGroupName"
+      name: "Name"
       required: true
       type: string
     
@@ -1075,43 +1118,52 @@ paths:
             $ref: "#/definitions/TaskGroup"
         404:
           description: Error
-    post:
-      summary: New Name of a TaskGroup
-      description: Create a new Name of a TaskGroup
+    put:
+      summary: Update Task Group Name
+      description: Updates a specific group of tasks mapping with the given Name
       tags:
       - "Task Group"
+      
       parameters:
       - in: body
-        required: true
         name: "data"
+        required: true
         schema:
-          $ref: "#/definitions/TaskGroup"
+          type: object
+          properties:
+            name:
+              type: string
       
-      responses:
-        201: 
-          description: Everything is ok
-        400:
-          description: Error!
-          
-  /taskGroup/{taskGroupAuthor}:
-    parameters:
-    - in: path
-      name: "taskGroupAuthor"
-      required: true
-      type: string
-    
-    get:
-      summary: Task Group by Author
-      description: Returns a specific task group mapping with the given Author
-      tags: 
-      - "Task Group"
       responses:
         200:
           description: Everything is ok
-          schema:
-            $ref: "#/definitions/TaskGroup"
-        404:
-          description: Error
+          
+  /taskGroup/{Author}:
+    parameters:
+    - in: path
+      name: "Author"
+      required: true
+      type: string
+    
+    put:
+      summary: Update Task Group Author
+      description: Updates a specific group of tasks mapping with the given Author
+      tags:
+      - "Task Group"
+      
+      parameters:
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+      
+      responses:
+        200:
+          description: Everything is ok
           
 #ASSIGNMENTS
   /assignment:
