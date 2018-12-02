@@ -1,27 +1,15 @@
-var fs = require("fs");
+const fetch = require("node-fetch");
+const express = require("express");
+const bodyParser = require("body-parser");
+const percistencyLayer = require("./persistencyLayer.js");
 
-const dbPath = "./entities/reviews.json";
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-function getUUID(){
-  return '_' + Math.random().toString(36).substr(2, 9);
-}
+const PORT = process.env.PORT || 3000;
 
-function addObject(obj,dbpath){
-  let data = fs.readFileSync(dbpath, 'utf8');
-  let db = JSON.parse(data);
-  let id = getUUID();
-  db[id] = obj;
-  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-  return id;
-}
-
-function getObjectsList(dbpath){
-  let data = fs.readFileSync(dbpath, 'utf8');
-  let db = JSON.parse(data);
-  return db;
-}
-
-function createReview(req, res) {
+app.post("/review", (req, res) => {
 	var taskAnswer = req.body.taskAnswer;
 	var peerReview = req.body.peerReview;
 	
@@ -33,10 +21,17 @@ function createReview(req, res) {
 		'"peerReview": "'+peerReview+'",'+
 		'"vote":"1"}'
 		
-	addObject(review, dbPath);
+	percistencyLayer.writeReview(review);
 	res.status(201).send("Created");
-} 
+});
+
+app.get("/reviews", (req, res) => {
+	const reviews = percistencyLayer.getAllReview(req.query);
+	res.json(reviews);
+});
 
 module.exports = {
-	create: createReview
+	app
 }
+
+app.listen(PORT, () => console.log("App listening on PORT "+ PORT));

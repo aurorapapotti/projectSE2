@@ -1,6 +1,7 @@
 var fs = require("fs");
 
 const dbUserPath = "./entities/users.json";
+const dbReviewPath = "./entities/reviews.json";
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -36,6 +37,7 @@ function getObject(idObject, dbpath){
   }
 }
 
+//USER
 function writeUser(user){
   return addObject(user,dbUserPath);
 }
@@ -49,9 +51,24 @@ function getUser(idUser){
   return getObject(idUser, dbUserPath);
 }
 
+//REVIEW
+function writeReview(review){
+  return addObject(review,dbReviewPath);
+}
+
+function getReview (idReview){
+	return getObject(idReview, dbReviewPath);
+}
+
+function getAllReview(){
+  return getObjectsList(dbReviewPath);
+}
+
 module.exports = {
     writeUser: writeUser,
     getAllUsers: getAllUsers,
     getUser: getUser,
-    getObject: getObject
+	writeReview: writeReview,
+    getAllReview: getAllReview,
+    getReview: getReview
 }

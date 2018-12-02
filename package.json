@@ -19,10 +19,15 @@
   "homepage": "https://github.com/aurorapapotti/projectSE2#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "node-fetch": "^2.3.0"
   },
   "jest": {
     "verbose": true,
     "collectCoverage": true
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {}
 }
