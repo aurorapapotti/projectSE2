@@ -39,8 +39,31 @@ function getAuthorByIdUserGroup(id){
 	console.log(persistencyLayer.getAuthorByIdUserGroup(id));
 }
 
-function getUsersByIdUserGroup(){
-	//...
+function getUsersByIdUserGroup(req, res){
+	const userGroup = persistencyLayer.getUserGroup(req.params.userGroupId);
+	console.log(userGroup);
+
+	if (userGroup === null){
+		res.status(400).send("Invalid request");
+	}
+	else {
+		var users = [];
+		var allUsers = userGroup["user"];
+
+		for (var i=0; i<allUsers.length; i++){
+			console.log("Element: " + allUsers[i]);
+			var users = persistencyLayer.getUserGroup(allUsers[i]);
+
+			if (users == null){
+				res.status(400).send("Something has gone wrong");
+			}
+			else {
+				users.push(user);
+			}
+		}
+
+		res.status(200).send(users);
+	}
 }
 
 function deleteUserByIdUserGroup(){
