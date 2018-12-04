@@ -7,6 +7,7 @@ app.use(bodyParser.json());
 
 const register = require("./src/register.js");
 const login = require("./src/login.js");
+const user = require("./src/user.js");
 
 //app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -18,6 +19,19 @@ app.post ('/register', function(req, res){
 //LOGIN
 app.post ('/login', function(req, res){
   res.send(login.loginUser(req,res));
+})
+
+//USER
+app.get ('/user', function(req, res){
+  res.send(user.listAllUsers(req, res));
+})
+
+app.get ('/user/:idUser', function(req, res){
+  res.send(user.getUser(req, res));
+})
+
+app.delete ('/user', function(req, res){
+  res.send(user.deleteUser(req, res));
 })
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

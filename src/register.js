@@ -1,10 +1,9 @@
-const persistencyLayer = require('./persistencyLayer.js');
-
+const userFunctions = require('./functionsEntities/userFunctions.js');
 
 function registerUser(req, res) {
   console.log("recived request: ",req.body);
-  persistencyLayer.writeUser(req.body);
-  console.log("wrote completed: ",persistencyLayer.getAllUsers());
+  userFunctions.createUser(req.body);
+  console.log("wrote completed: ", userFunctions.getAllUsers());
   res.status(201).send("Created");
 }
 
