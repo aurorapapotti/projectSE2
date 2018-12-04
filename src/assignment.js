@@ -1,4 +1,6 @@
 const persistencyLayer = require('./persistencyLayer.js');
+const dbUserPath = "./entities/users.js";
+const dbAssignmentPath = "./entities/assignments.js";
 
 function createAssignment(req, res) {
 	var professor = req.body.professor;
@@ -24,9 +26,15 @@ function createAssignment(req, res) {
 }
 
 function getAssignment(req, res) {
-  console.log("recived request: ",req.body);
-  persistencyLayer.getAssignment(req.body.id);
-  res.status(201).send("Found");
+	console.log("recived request: ",req.body);
+	const ass = persistencyLayer.getAssignment(req.params.assignmentId);
+	
+	if(ass = null){
+		res.status(400).send("Invalid request");
+	}
+	else{
+		res.status(201).send(ass);
+	}
 }
 
 function getAllAssignments(req, res){
@@ -35,28 +43,38 @@ function getAllAssignments(req, res){
 	res.status(201).send("Found");
 }
 
-function getAssignmentById(id){
-	return persistencyLayer.getObject(id, dbAssignmentPath);
+function getAssignmentById(req, res){
+	if(req.params.assignmentId == undefined || req.params.assignmentId == null){
+		res.status(400).send("Invalid request");
+	}
+	else{
+		res.status(201).send(persistencyLayer.getObject(req.params.assignmentId, dbAssignmentPath));
+	}
 }
 
 function updateAssignment(req, res){
 	//...
 }
 
-function deleteAssignment(id){
-	return persistencyLayer.deleteObject(id, dbAssignmentPath);
+function deleteAssignment(req, res){
+	if(req.params.assignmentId == undefined || req.params.assignmentId == null){
+		res.status(400).send("Invalid request");
+	}
+	else{
+		res.status(201).send(persistencyLayer.deleteAssignment(req.params.assignmentId));
+	}
 }
 
-function getProfessor(req, res){
-	
+function getProfessorByIdAssignment(req, idAssignment){
+	return persistencyLayer.getObjectByParam(idAssignment, req.param.idProfessor, dbAssignmentPath, dbUserPath);
 }
 
-function getUsers(id){
-	return persistencyLayer.getObjectByParam(id, dbAssignmentPath, dbUserPath);
+function getUsers(req, res){
+	return persistencyLayer.getObjectByParam(req.params.assignmentId, req.params.userId, dbAssignmentPath, dbUserPath);
 }
 
 function updateUsers(id){
-		
+	
 }
 
 function getTasks(id){

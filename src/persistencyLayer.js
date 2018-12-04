@@ -37,6 +37,32 @@ function getObject(idObject, dbpath){
   }
 }
 
+function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
+  let data = fs.readFileSync(dbPathidObject, 'utf8');
+  let db = JSON.parse(data);
+  let object = Object.keys(db).filter(x => x == idObject);
+  if (object.length > 0) {
+    let data2 = fs.readFileSync(dbPathObjectToFind, 'utf8');
+    let db2 = JSON.parse(data);
+    let object2 = Object.keys(db2).filter(x => x[param] == idObject);
+    return db[idObject];
+  }
+  else {
+    console.log("Object NOT found :(");
+    return null;
+  }
+}
+
+function deleteObject(idObject, dbpath){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  delete db[idObject];
+  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+  return idObject;
+
+}
+
+
 //USER
 function writeUser(user){
   return addObject(user,dbUserPath);
@@ -52,23 +78,29 @@ function getUser(idUser){
 }
 
 //ASSIGNMENT
-function writeAssignment(ass){
-	return addObject(ass, dbAssignmentPath);
+function writeAssignment(assignmentId){
+	return addObject(assignmentId, dbAssignmentPath);
 }
 
 function getAllAssignments(){
 	return getObjectsList(dbAssignmentPath);
 }
 
-function getAssignment(idAss){
-	return getObject(idAss, dbAssignmentPath);
+function getAssignment(assignmentId){
+	return getObject(assignmentId, dbAssignmentPath);
+}
+
+function deleteAssignment(assignmentId){
+  return deleteObject(assignmentId, dbAssignmentPath);
 }
 
 module.exports = {
     writeUser: writeUser,
     getAllUsers: getAllUsers,
     getUser: getUser,
+	
 	writeAssignment: writeAssignment,
 	getAllAssignments: getAllAssignments,
-	getAssignment, getAssignment
+	getAssignment, getAssignment,
+	deleteAssignment: deleteAssignment
 }
