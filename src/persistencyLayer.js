@@ -102,6 +102,10 @@ function getAllPeerReviews(){
 }
 
 //TASK ANSWERS
+function writeTaskAnswer(taskAnswer){
+  return addObject(taskAnswer, dbTaskAnswerPath);
+}
+
 function getTaskAnswer(idPeerReview){
   return getObject(idPeerReview, dbTaskAnswerPath);
 }
@@ -120,8 +124,9 @@ module.exports = {
   getReview: getReview,
   getAllPeerReviews: getAllPeerReviews,
   getPeerReview: getPeerReview,
-  getAllTaskAnswer: getAllTaskAnswers,
+  getAllTaskAnswers: getAllTaskAnswers,
   getTaskAnswer: getTaskAnswer,
   deleteReview: deleteReview,
-  modifyReview: modifyReview
+  modifyReview: modifyReview,
+  writeTaskAnswer: writeTaskAnswer
 }

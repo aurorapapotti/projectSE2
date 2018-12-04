@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const register = require("./src/register.js");
 const login = require("./src/login.js");
 const review = require("./src/review.js");
+const taskAnswer = require("./src/taskAnswer.js");
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -61,6 +62,26 @@ app.put("/reviews/:reviewId/peerReviews/:peerReviewId", (req, res) => {
 
 app.put("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
   res.send(review.addTaskAnswer(req, res));
+});
+
+app.post("/taskAnswers", (req, res) => {
+  res.send(taskAnswer.createTaskAnswer(req, res));
+});
+
+app.get("/taskAnswers", (req, res) => {
+  res.send(taskAnswer.getAllTaskAnswers(req, res));
+});
+
+app.get("/taskAnswers/:taskAnswerId", (req, res) => {
+  res.send(taskAnswer.getTaskAnswer(req, res));
+});
+
+app.get("/taskAnswers/:taskAnswerId/answers", (req, res) => {
+  res.send(taskAnswer.getAllAnswers(req, res));
+});
+
+app.get("/taskAnswers/:taskAnswerId/answers/:answerId", (req, res) => {
+  res.send(taskAnswer.getAnswer(req, res));
 });
 
 app.listen(PORT, () => console.log('App listening on port '+ PORT))
