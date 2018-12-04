@@ -1,5 +1,6 @@
 const persistencyLayer = require('../persistencyLayer.js')
 const dbUserPath = "./entities/users.js";
+const dbAssignmentPath = "./entities/assignments.js";
 
 function createUser(user){
   return persistencyLayer.addObject(user,dbUserPath);
@@ -23,10 +24,15 @@ function removeUser(idUser){
   return persistencyLayer.deleteObject(idUser, dbUserPath);
 }
 
+function getAssignments(idUser){
+  return persistencyLayer.getObjectByParam(idUser, dbUserPath, dbAssignmentPath);
+}
+
 module.exports = {
   createUser: createUser,
   getAllUsers: getAllUsers,
   getUser: getUser,
   getUserById: getUserById,
-  removeUser: removeUser
+  removeUser: removeUser,
+  getAssignments: getAssignments,
 }

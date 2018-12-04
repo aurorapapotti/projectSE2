@@ -26,12 +26,16 @@ app.get ('/user', function(req, res){
   res.send(user.listAllUsers(req, res));
 })
 
+app.delete ('/user', function(req, res){
+  res.send(user.deleteUser(req, res));
+})
+
 app.get ('/user/:idUser', function(req, res){
   res.send(user.getUser(req, res));
 })
 
-app.delete ('/user', function(req, res){
-  res.send(user.deleteUser(req, res));
+app.get('/user/:idUser/assignments', function(req, res){
+  res.send(user.getAssignmentsByIdUser(req, res));
 })
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

@@ -45,8 +45,25 @@ function getObject(idObject, dbpath){
   }
 }
 
+function getObjectByParam(idObject, dbPathidObject, dbPathObjectToFind){
+  let data = fs.readFileSync(dbPathidObject, 'utf8');
+  let db = JSON.parse(data);
+  let object = Object.keys(db).filter(x => x == idObject);
+  if (object.length > 0) {
+    let data2 = fs.readFileSync(dbPathObjectToFind, 'utf8');
+    let db2 = JSON.parse(data);
+    let object2 = Object.keys(db2).filter(x => x.professor == idObject);
+    return db[idObject];
+  }
+  else {
+    console.log("Object NOT found :(");
+    return null;
+  }
+}
+
 module.exports = {
   getObjectsList: getObjectsList,
+  getObjectByParam: getObjectByParam,
   addObject: addObject,
   getObject: getObject,
   deleteObject: deleteObject

@@ -15,7 +15,14 @@ function deleteUser(req, res){
   console.log(userFunctions.removeUser(req.body.id));
 }
 
+function getAssignmentsByIdUser(req, res){
+  //console.log("receiver request: ", req.body);
+  //console.log(userFunctions.getAssignments(req.params.idUser));
+  res.status(200).send(userFunctions.getAssignments(req.params.idUser));
+}
+
 module.exports = {
+  getAssignmentsByIdUser: getAssignmentsByIdUser,
   listAllUsers: listAllUsers,
   deleteUser: deleteUser,
   getUser: getUser
