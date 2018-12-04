@@ -1,10 +1,1 @@
-{
-    "_j07012kes": {
-        "taskAnswer": [
-            "1"
-        ],
-        "peerReview": [
-            "1"
-        ]
-    }
-}
+{"_j07012kes":{"taskAnswer":["1","2"],"peerReview":["1","2"]}}

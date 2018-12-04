@@ -146,24 +146,20 @@ function deleteReview (req, res) {
 	}
 }
 
-/*
-app.put("/reviews/:reviewId", (req, res) => {
+function addPeerReview (req, res){
+	let review = percLayer.getReview(req.params.reviewId);
+	review["peerReview"].push(req.params.peerReviewId);
 
-});
+	res.status(200).send(percLayer.modifyReview(req.params.reviewId, review));
+}
 
+function addTaskAnswer (req, res){
+	let review = percLayer.getReview(req.params.reviewId);
+	review["taskAnswer"].push(req.params.taskAnswerId);
 
-app.delete("/reviews/:reviewId", (req, res) => {
+	res.status(200).send(percLayer.modifyReview(req.params.reviewId, review));
+}
 
-});
-
-app.put("/reviews/:reviewId/peerReviews/:peerReviewId", (req, res) => {
-
-});
-
-app.put("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
-
-});
-*/
 module.exports = {
 	createReview: createReview,
 	getAllReviews: getAllReviews,
@@ -172,5 +168,7 @@ module.exports = {
 	getPeerReview: getPeerReview,
 	getAllTaskAnswers: getAllTaskAnswer,
 	getTaskAnswer: getTaskAnswer,
-	deleteReview: deleteReview
+	deleteReview: deleteReview,
+	addPeerReview: addPeerReview,
+	addTaskAnswer: addTaskAnswer
 }

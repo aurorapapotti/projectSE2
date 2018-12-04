@@ -55,4 +55,12 @@ app.delete("/reviews/:reviewId", (req, res) => {
   res.send(review.deleteReview(req, res));
 });
 
+app.put("/reviews/:reviewId/peerReviews/:peerReviewId", (req, res) => {
+  res.send(review.addPeerReview(req, res));
+});
+
+app.put("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
+  res.send(review.addTaskAnswer(req, res));
+});
+
 app.listen(PORT, () => console.log('App listening on port '+ PORT))
