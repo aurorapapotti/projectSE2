@@ -51,4 +51,8 @@ app.get("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
   res.send(review.getTaskAnswer(req, res));
 });
 
-app.listen(PORT, () => console.log('App listening on port'+ PORT))
+app.delete("/reviews/:reviewId", (req, res) => {
+  res.send(review.deleteReview(req, res));
+});
+
+app.listen(PORT, () => console.log('App listening on port '+ PORT))

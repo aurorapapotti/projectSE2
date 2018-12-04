@@ -39,6 +39,15 @@ function getObject(idObject, dbpath){
   }
 }
 
+function deleteObject(idObject, dbpath){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  let object = Object.keys(db).filter(x => x == idObject);
+  delete db[object];
+  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+  return idObject;
+}
+
 //USER
 function writeUser(user){
   return addObject(user,dbUserPath);
@@ -65,6 +74,10 @@ function getReview (idReview){
 function getAllReview(){
   return getObjectsList(dbReviewPath);
 } 
+
+function deleteReview(idReview){
+  return deleteObject(idReview, dbReviewPath);
+}
 
 //PEER REVIEW
 function getPeerReview(idPeerReview){
@@ -95,5 +108,6 @@ module.exports = {
   getAllPeerReviews: getAllPeerReviews,
   getPeerReview: getPeerReview,
   getAllTaskAnswer: getAllTaskAnswers,
-  getTaskAnswer: getTaskAnswer
+  getTaskAnswer: getTaskAnswer,
+  deleteReview: deleteReview
 }

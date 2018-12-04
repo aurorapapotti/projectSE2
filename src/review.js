@@ -137,6 +137,15 @@ function getTaskAnswer (req, res) {
 
 }
 
+function deleteReview (req, res) {
+	if (req.params.reviewId == undefined || req.params.reviewId == null){
+		res.status(400).send("Invalid request");
+	}
+	else {
+		res.status(201).send(percLayer.deleteReview(req.params.reviewId));
+	}
+}
+
 /*
 app.put("/reviews/:reviewId", (req, res) => {
 
@@ -147,17 +156,7 @@ app.delete("/reviews/:reviewId", (req, res) => {
 
 });
 
-app.get("/reviews/:reviewId/peerReviews", (req, res) => {
-	const review = percistencyLayer.getReview(req.params.reviewId);
-
-});
-
-
 app.put("/reviews/:reviewId/peerReviews/:peerReviewId", (req, res) => {
-
-});
-
-app.get("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
 
 });
 
@@ -172,7 +171,6 @@ module.exports = {
 	getAllPeerReviews: getAllPeerReviews,
 	getPeerReview: getPeerReview,
 	getAllTaskAnswers: getAllTaskAnswer,
-	getTaskAnswer: getTaskAnswer
+	getTaskAnswer: getTaskAnswer,
+	deleteReview: deleteReview
 }
-
-//app.listen(PORT, () => console.log("App listening on PORT "+ PORT));
