@@ -1,6 +1,7 @@
 var fs = require("fs");
 
 const dbUserPath = "./entities/users.json";
+const dbAssignmentPath = "./entities/assignments.json";
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -36,6 +37,7 @@ function getObject(idObject, dbpath){
   }
 }
 
+//USER
 function writeUser(user){
   return addObject(user,dbUserPath);
 }
@@ -49,9 +51,24 @@ function getUser(idUser){
   return getObject(idUser, dbUserPath);
 }
 
+//ASSIGNMENT
+function writeAssignment(ass){
+	return addObject(ass, dbAssignmentPath);
+}
+
+function getAllAssignments(){
+	return getObjectsList(dbAssignmentPath);
+}
+
+function getAssignment(idAss){
+	return getObject(idAss, dbAssignmentPath);
+}
+
 module.exports = {
     writeUser: writeUser,
     getAllUsers: getAllUsers,
     getUser: getUser,
-    getObject: getObject
+	writeAssignment: writeAssignment,
+	getAllAssignments: getAllAssignments,
+	getAssignment, getAssignment
 }

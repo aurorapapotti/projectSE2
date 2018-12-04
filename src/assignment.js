@@ -1,27 +1,4 @@
-var express = require('express');
-var app = express();
-var fs = require('fs');
-
-const dbAssignmentPath = "./entities/assignment.json";
-
-function getUUID(){
-  return '_' + Math.random().toString(36).substr(2, 9);
-}
-
-function addObject(obj,dbpath){
-  let data = fs.readFileSync( dbpath, 'utf8');
-  let db = JSON.parse(data);
-  let id = getUUID();
-  db[id] = obj;
-  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-  return id;
-}
-
-function getObjectsList(dbpath){
-  let data = fs.readFileSync( dbpath, 'utf8');
-  let db = JSON.parse(data);
-  return db;
-}
+const persistencyLayer = require('./persistencyLayer.js');
 
 function createAssignment(req, res) {
 	var professor = req.body.professor;
@@ -41,11 +18,58 @@ function createAssignment(req, res) {
 		'"deadline: "' + req.body.deadline + '"}"'
 		
 	console.log("recived request: ",req.body);
-	addObject(ass,dbAssignmentPath);
-	console.log("wrote completed: ",getObjectsList(dbAssignmentPath));
+	persistencyLayer.writeAssignment(req.body);
+	console.log("wrote completed: ",persistencyLayer.getAllAssignments());
 	res.status(201).send("Created");
 }
 
+function getAssignment(req, res) {
+  console.log("recived request: ",req.body);
+  persistencyLayer.getAssignment(req.body.id);
+  res.status(201).send("Found");
+}
+
+function getAllAssignments(req, res){
+	console.log("recived request: ",req.body);
+	persistencyLayer.getAllAssignments();
+	res.status(201).send("Found");
+}
+
+function getAssignmentById(id){
+	return persistencyLayer.getObject(id, dbAssignmentPath);
+}
+
+function updateAssignment(req, res){
+	//...
+}
+
+function deleteAssignment(id){
+	return persistencyLayer.deleteObject(id, dbAssignmentPath);
+}
+
+function getProfessor(req, res){
+	
+}
+
+function getUsers(id){
+	return persistencyLayer.getObjectByParam(id, dbAssignmentPath, dbUserPath);
+}
+
+function updateUsers(id){
+		
+}
+
+function getTasks(id){
+	return persistencyLayer.getObjectByParam(id, dbAssignmentPath, dbTaskPath);
+}
+
+function updateTasks(id){
+	
+}
+
+
 module.exports = {
-    createAssignment: createAssignment
+    createAssignment: createAssignment,
+	getAssignment: getAssignment,
+	getAllAssignments: getAllAssignments
 }
