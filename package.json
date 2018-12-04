@@ -24,5 +24,8 @@
   "jest": {
     "verbose": true,
     "collectCoverage": true
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
   }
 }

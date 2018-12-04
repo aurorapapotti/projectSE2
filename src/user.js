@@ -12,7 +12,7 @@ function getUser(req, res){
 
 function deleteUser(req, res){
   console.log("receiver request: ", req.body);
-  console.log(userFunctions.removeUser(req.body.id));
+  console.log(userFunctions.removeUser(req.params.idUser));
 }
 
 function getAssignmentsByIdUser(req, res){

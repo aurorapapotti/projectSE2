@@ -1,6 +1,6 @@
 const persistencyLayer = require('../persistencyLayer.js')
-const dbUserPath = "./entities/users.js";
-const dbAssignmentPath = "./entities/assignments.js";
+const dbUserPath = __dirname+"/../../entities/users.js";
+const dbAssignmentPath = __dirname+"/../../entities/assignments.js";
 
 function createUser(user){
   return persistencyLayer.addObject(user,dbUserPath);

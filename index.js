@@ -12,9 +12,7 @@ const user = require("./src/user.js");
 //app.get('/', (req, res) => res.send('Hello World!'))
 
 //REGISTER
-app.post ('/register', function(req, res){
-  res.send(register.registerUser(req, res));
-})
+app.post ('/register',register.registerUser);
 
 //LOGIN
 app.post ('/login', function(req, res){
@@ -26,7 +24,7 @@ app.get ('/user', function(req, res){
   res.send(user.listAllUsers(req, res));
 })
 
-app.delete ('/user', function(req, res){
+app.delete ('/user/:idUser', function(req, res){
   res.send(user.deleteUser(req, res));
 })
 

@@ -1,7 +1,7 @@
 var fs = require("fs");
 
-const dbUserPath = "./entities/users.js";
-const dbAssignmentPath = "./entities/assignments.js"
+const dbUserPath = "../entities/users.js";
+const dbAssignmentPath = "../entities/assignments.js"
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
