@@ -36,12 +36,19 @@ app.get("/reviews/:reviewId", (req, res) => {
 });
 
 app.get("/reviews/:reviewId/peerReviews", (req, res) => {
-
+  res.send(review.getAllPeerReviews(req, res));
 });
 
 app.get("/reviews/:reviewId/peerReviews/:peerReviewId", (req, res) => {
-
+  res.send(review.getPeerReview(req, res));
 });
 
+app.get("/reviews/:reviewId/taskAnswers", (req, res) => {
+  res.send(review.getAllTaskAnswers(req, res));
+});
+
+app.get("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
+  res.send(review.getTaskAnswer(req, res));
+});
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

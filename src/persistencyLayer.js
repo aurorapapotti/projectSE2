@@ -1,7 +1,9 @@
 var fs = require("fs");
 
-const dbUserPath = "./entities/users.json";
-const dbReviewPath = "./entities/reviews.json";
+const dbUserPath = "./entities/users.js";
+const dbReviewPath = "./entities/reviews.js";
+const dbPeerReviewPath = "./entities/peerReviews.js";
+const dbTaskAnswerPath = "./entities/taskAnswer.js";
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -12,7 +14,7 @@ function addObject(obj,dbpath){
   let db = JSON.parse(data);
   let id = getUUID();
   db[id] = obj;
-  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+  fs.writeFileSync(dbpath, JSON.stringify(db));
   return id;
 }
 
@@ -26,12 +28,12 @@ function getObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
+  let obj = db[object];
   if (object.length > 0) {
     console.log("Object found :)");
-    return object[0];
+    return obj;
   }
   else {
-    //TODO: mettere a posto sto schifo, deve ritornare una cosa più intelligente
     console.log("Object NOT found :(");
     return null;
   }
@@ -62,13 +64,36 @@ function getReview (idReview){
 
 function getAllReview(){
   return getObjectsList(dbReviewPath);
+} 
+
+//PEER REVIEW
+function getPeerReview(idPeerReview){
+  return getObject(idPeerReview, dbPeerReviewPath);
 }
 
+function getAllPeerReviews(){
+  return getObjectsList(dbPeerReviewPath);
+}
+
+//TASK ANSWERS
+function getTaskAnswer(idPeerReview){
+  return getObject(idPeerReview, dbTaskAnswerPath);
+}
+
+function getAllTaskAnswers(){
+  return getObjectsList(dbTaskAnswerPath);
+}
+
+
 module.exports = {
-    writeUser: writeUser,
-    getAllUsers: getAllUsers,
-    getUser: getUser,
+  writeUser: writeUser,
+  getAllUsers: getAllUsers,
+  getUser: getUser,
 	writeReview: writeReview,
-    getAllReview: getAllReview,
-    getReview: getReview
+  getAllReviews: getAllReview,
+  getReview: getReview,
+  getAllPeerReviews: getAllPeerReviews,
+  getPeerReview: getPeerReview,
+  getAllTaskAnswer: getAllTaskAnswers,
+  getTaskAnswer: getTaskAnswer
 }
