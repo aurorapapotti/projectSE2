@@ -24,8 +24,8 @@ function removeUser(idUser){
   return persistencyLayer.deleteObject(idUser, dbUserPath);
 }
 
-function getAssignments(idUser){
-  return persistencyLayer.getObjectByParam(idUser, dbUserPath, dbAssignmentPath);
+function getAssignments(idUser, param){
+  return persistencyLayer.getObjectByParam(idUser, param, dbUserPath, dbAssignmentPath);
 }
 
 module.exports = {

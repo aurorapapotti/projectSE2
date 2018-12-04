@@ -1,6 +1,7 @@
 var fs = require("fs");
 
 const dbUserPath = "./entities/users.js";
+const dbAssignmentPath = "./entities/assignments.js"
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -45,14 +46,14 @@ function getObject(idObject, dbpath){
   }
 }
 
-function getObjectByParam(idObject, dbPathidObject, dbPathObjectToFind){
+function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
   let data = fs.readFileSync(dbPathidObject, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
   if (object.length > 0) {
     let data2 = fs.readFileSync(dbPathObjectToFind, 'utf8');
     let db2 = JSON.parse(data);
-    let object2 = Object.keys(db2).filter(x => x.professor == idObject);
+    let object2 = Object.keys(db2).filter(x => x[param] == idObject);
     return db[idObject];
   }
   else {
