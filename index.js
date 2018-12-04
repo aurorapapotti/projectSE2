@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 const register = require("./src/register.js");
 const login = require("./src/login.js");
 
-app.get('/', (req, res) => res.send('Hello World!'))
+//app.get('/', (req, res) => res.send('Hello World!'))
 
 //REGISTER
 app.post ('/register', function(req, res){
