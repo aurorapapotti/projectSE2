@@ -23,7 +23,7 @@ function createAssignment(req, res) {
 	ass["start"] = start;
 	ass["deadline"] = deadline;
 		
-	persistencyLayer.writeAssignment(ass);
+	persistencyLayer.writeAssignment(ass);	
 	console.log("Created: ",persistencyLayer.getAllAssignments());
 	res.status(201).send("Created");
 }
@@ -76,21 +76,49 @@ function getUsers(req, res){
 	return persistencyLayer.getObjectByParam(req.params.assignmentId, req.params.userId, dbAssignmentPath, dbUserPath);
 }
 
-function updateUsers(id){
+function updateUsers(req, res){
+	const idAssignment = req.body.assignmentId;
+	const users = req.body.users;
 	
+	if(idAssignment == null || users == null){
+		res.status(400).send("Params null");
+	}
+	else{
+		var ass = getObject(idAssignment, dbAssignmentPath);
+		ass["users"] = users;
+		res.status(200).send("Updated.");
+	}
 }
 
-function getTasks(id){
-	return persistencyLayer.getObjectByParam(id, dbAssignmentPath, dbTaskPath);
+function getTasks(req, res){
+	return persistencyLayer.getObjectByParam(req.params.assignmentId, req.params.taskId, dbAssignmentPath, dbTaskPath);
 }
 
-function updateTasks(id){
+function updateTasks(req, res){
+	const idAssignment = req.body.assignmentId;
+	const tasks = req.body.tasks;
 	
+	if(idAssignment == null || tasks == null){
+		res.status(400).send("Params null");
+	}
+	else{
+		var ass = getObject(idAssignment, dbAssignmentPath);
+		ass["tasks"] = tasks;
+		res.status(200).send("Updated.");
+	}
 }
 
 
 module.exports = {
     createAssignment: createAssignment,
 	getAssignment: getAssignment,
-	getAllAssignments: getAllAssignments
+	getAllAssignments: getAllAssignments,
+	getAssignmentById: getAssignmentById,
+	updateAssignment: updateAssignment,
+	deleteAssignment: deleteAssignment,
+	getProfessorByIdAssignment: getProfessorByIdAssignment,
+	getUsers: getUsers,
+	updateUsers: updateUsers,
+	getTasks: getTasks,
+	updateTasks: updateTasks
 }

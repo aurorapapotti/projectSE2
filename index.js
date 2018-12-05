@@ -50,16 +50,16 @@ app.get ('/assignment/assignmentId/users', function(req, res)){
 	res.send(assignment.getUsers(req, res));
 }
 
-app.update ('/assignment/assignmentId/users', function(assignmentId)){
-	res.send(assignment.updateUsers(assignmentId));
+app.update ('/assignment/assignmentId/users', function(req, res)){
+	res.send(assignment.updateUsers(req, res));
 }
 //...
-app.get ('/assignment/assignmentId/tasks', function(assignmentId)){
-	res.send(assignment.getTasks(assignmentId));
+app.get ('/assignment/assignmentId/tasks', function(req, res)){
+	res.send(assignment.getTasks(req, res));
 }
 
-app.update ('/assignment/assignmentId/tasks', function(assignmentId)){
-	res.send(assignment.updateTasks(assignmentId));
+app.update ('/assignment/assignmentId/tasks', function(req, res)){
+	res.send(assignment.updateTasks(req, res));
 }
 
 
