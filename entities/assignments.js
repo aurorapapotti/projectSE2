@@ -1,5 +1,5 @@
 {
-	"Assignment1": {
+    "Assignment1": {
 		"id": "1",
 		"title": "Ingegneria del software",
 		"professor": "user1",
@@ -18,4 +18,4 @@
 		"start": "12",
 		"deadline": "2"
 	}
-} 
+}

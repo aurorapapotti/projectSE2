@@ -58,35 +58,68 @@ function getAnswer (req, res) {
 }
 
 function getStudent (req, res){
+	const taskAnswer = percLayer.getTaskAnswer(req.params.taskAnswerId);
 
+	const student = percLayer.getUser(taskAnswer["student"]);
+
+	res.status(200).send(student);
 }
 
 function getAssignment(req, res){
+	const taskAnswer = percLayer.getTaskAnswer(req.params.taskAnswerId);
 
+	const assignment = percLayer.getAssignment(taskAnswer["assignment"]);
+
+	res.status(200).send(assignment);
 }
 
 function getTaskGroup(req, res){
+	const taskAnswer = percLayer.getTaskAnswer(req.params.taskAnswerId);
 
+	const taskGroup = percLayer.getTaskGroup(taskAnswer["taskGroup"]);
+
+	res.status(200).send(taskGroup);
 }
 
-function deleteTaskAssignment (req, res) {
-
+function deleteTaskAnswer (req, res) {
+	res.status(200).send(percLayer.deleteTaskAnswer(req.params.taskAnswerId));
 }
 
 function addAnswer (req, res){
+	const taskAnswer = percLayer.getTaskAnswer(req.params.taskAnswerId);
+	const newAnswer = req.body.answer;
 
+	let answers = taskAnswer["answers"];
+	answers.push(newAnswer);
+
+	res.status(201).send(percLayer.modifyTaskAnswer(req.params.taskAnswerId, taskAnswer));
 }
 
 function editAssignment (req, res){
+	const taskAnswer = percLayer.getTaskAnswer(req.params.taskAnswerId);
+	const newAssignment = req.body.assignment;
 
+	taskAnswer["assignment"] = newAssignment;
+
+	res.status(201).send(percLayer.modifyTaskAnswer(req.params.taskAnswerId, taskAnswer));
 }
 
 function editTaskGroup (req, res) {
+	const taskAnswer = percLayer.getTaskAnswer(req.params.taskAnswerId);
+	const newTaskGroup = req.body.taskGroup;
 
+	taskAnswer["taskGroup"] = newTaskGroup;
+
+	res.status(201).send(percLayer.modifyTaskAnswer(req.params.taskAnswerId, taskAnswer));
 }
 
 function editStudent(req, res){
-	
+	const taskAnswer = percLayer.getTaskAnswer(req.params.taskAnswerId);
+	const newStudent = req.body.student;
+
+	taskAnswer["student"] = newStudent;
+
+	res.status(201).send(percLayer.modifyTaskAnswer(req.params.taskAnswerId, taskAnswer));
 }
 
 module.exports = {
@@ -94,5 +127,13 @@ module.exports = {
 	getAllTaskAnswers: getAllTaskAnswers,
 	getTaskAnswer: getTaskAnswer,
 	getAllAnswers: getAllAnswers,
-	getAnswer: getAnswer
+	getAnswer: getAnswer,
+	getStudent: getStudent,
+	getAssignment: getAssignment,
+	getTaskGroup: getTaskGroup,
+	deleteTaskAnswer: deleteTaskAnswer,
+	addAnswer: addAnswer,
+	editAssignment: editAssignment,
+	editTaskGroup: editTaskGroup,
+	editStudent: editStudent
 }

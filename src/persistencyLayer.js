@@ -4,6 +4,8 @@ const dbUserPath = "./entities/users.js";
 const dbReviewPath = "./entities/reviews.js";
 const dbPeerReviewPath = "./entities/peerReviews.js";
 const dbTaskAnswerPath = "./entities/taskAnswer.js";
+const dbAssignmentPath = "./entities/assignments.js";
+const dbTaskGroupPath = "./entities/taskGroups.js";
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -14,7 +16,7 @@ function addObject(obj,dbpath){
   let db = JSON.parse(data);
   let id = getUUID();
   db[id] = obj;
-  fs.writeFileSync(dbpath, JSON.stringify(db));
+  fs.writeFileSync(dbpath, JSON.stringify(db, null, 4));
   return id;
 }
 
@@ -54,7 +56,7 @@ function modifyObject(idObject, dbpath, newObject){
   let object = Object.keys(db).filter(x => x == idObject);
   db[object] = newObject;
 
-  fs.writeFileSync(dbpath,JSON.stringify(db));  
+  fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));  
 }
 
 //USER
@@ -67,7 +69,6 @@ function getAllUsers(){
 }
 
 function getUser(idUser){
-  console.log("Id passato:", idUser);
   return getObject(idUser, dbUserPath);
 }
 
@@ -114,6 +115,23 @@ function getAllTaskAnswers(){
   return getObjectsList(dbTaskAnswerPath);
 }
 
+function deleteTaskAnswer (idTaskAnswer){
+  return deleteObject(idTaskAnswer, dbTaskAnswerPath);
+}
+
+function modifyTaskAnswer(idTaskAnswer, newTaskAnswer){
+  return modifyObject(idTaskAnswer, dbTaskAnswerPath, newTaskAnswer);
+}
+
+//ASSIGNMENT
+function getAssignment(idAssignment){
+  return getObject(idAssignment, dbAssignmentPath);
+}
+
+//TASKGROUP
+function getTaskGroup(idTaskGroup){
+  return getObject(idTaskGroup, dbTaskGroupPath);
+}
 
 module.exports = {
   writeUser: writeUser,
@@ -128,5 +146,9 @@ module.exports = {
   getTaskAnswer: getTaskAnswer,
   deleteReview: deleteReview,
   modifyReview: modifyReview,
-  writeTaskAnswer: writeTaskAnswer
+  writeTaskAnswer: writeTaskAnswer,
+  getAssignment: getAssignment,
+  getTaskGroup: getTaskGroup,
+  deleteTaskAnswer: deleteTaskAnswer,
+  modifyTaskAnswer: modifyTaskAnswer
 }

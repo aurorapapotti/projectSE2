@@ -84,4 +84,36 @@ app.get("/taskAnswers/:taskAnswerId/answers/:answerId", (req, res) => {
   res.send(taskAnswer.getAnswer(req, res));
 });
 
+app.get("/taskAnswers/:taskAnswerId/student", (req, res) => {
+  res.send(taskAnswer.getStudent(req, res));
+});
+
+app.get("/taskAnswers/:taskAnswerId/assignment", (req, res) => {
+  res.send(taskAnswer.getAssignment(req, res));
+});
+
+app.get("/taskAnswers/:taskAnswerId/taskGroup", (req, res) => {
+  res.send(taskAnswer.getTaskGroup(req, res));
+});
+
+app.delete("/taskAnswers/:taskAnswerId", (req, res) => {
+  res.send(taskAnswer.deleteTaskAnswer(req, res));
+});
+
+app.put("/taskAnswers/:taskAnswerId/answers", (req, res) => {
+  res.send(taskAnswer.addAnswer(req, res));
+});
+
+app.put("/taskAnswers/:taskAnswerId/assignment", (req, res) => {
+  res.send(taskAnswer.editAssignment(req, res));
+});
+
+app.put("/taskAnswers/:taskAnswerId/taskGroup", (req, res) => {
+  res.send(taskAnswer.editTaskGroup(req, res));
+});
+
+app.put("/taskAnswers/:taskAnswerId/student", (req, res) => {
+  res.send(taskAnswer.editStudent(req, res));
+})
+
 app.listen(PORT, () => console.log('App listening on port '+ PORT))

@@ -1,1 +1,24 @@
-{"1":{"answers":["abc","cde"],"student":"1","assignment":"1","task":"1"},"2":{"answers":["abc","cde"],"student":"2","assignment":"2","task":"2"},"_alnlhze83":{"answers":[],"student":"2","assignment":"1","taskGroup":"0"}}
+{
+    "2": {
+        "answers": [
+            "abc",
+            "cde",
+            "abc"
+        ],
+        "student": "user1",
+        "assignment": "abc",
+        "taskGroup": "21"
+    },
+    "_alnlhze83": {
+        "answers": [],
+        "student": "2",
+        "assignment": "1",
+        "taskGroup": "0"
+    },
+    "_oc5bu0gjw": {
+        "answers": [],
+        "student": "1",
+        "assignment": "Assignment1",
+        "taskGroup": "1"
+    }
+}
