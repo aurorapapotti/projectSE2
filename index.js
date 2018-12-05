@@ -22,37 +22,37 @@ app.post ('/login', function(req, res){
 })
 
 //USER GROUP
-app.get ('/userGroup', function(req, res)){
+app.get ('/userGroup', function(req, res){
 	res.send(userGroup.listUserGroups(req, res));
-}
+})
 
-app.post ('/userGroup', function(req, res)){
+app.post ('/userGroup', function(req, res){
 	res.send(userGroup.createUserGroup(req, res));
-}
+})
 //---
-app.get ('/userGroup/:userGroupId', function(id)){
-	res.send(userGroup.getUserGroupById(id));
-}
+app.get ('/userGroup/:userGroupId', function(req, res){
+	res.send(userGroup.getUserGroupById(req, res));
+})
 
-app.put ('/userGroup/:userGroupId', function(req, res)){
+app.put ('/userGroup/:userGroupId', function(req, res){
 	res.send(userGroup.updateUserGroup(req, res));
-}
+})
 
-app.delete ('/userGroup/:userGroupId', function(id)){
-	res.send(userGroup.deleteUserGroup(id));
-}
+app.delete ('/userGroup/:userGroupId', function(req, res){
+	res.send(userGroup.deleteUserGroup(req, res));
+})
 //...
-app.get ('/userGroup/Author', function(req, res)){
-	res.send(userGroup.getAuthorByIdUserGroup(req.params.id, res));
-}
+app.get ('/userGroup/Author', function(req, res){
+	res.send(userGroup.getAuthorByIdUserGroup(req, res));
+})
 //...
-app.get ('/userGroup/:userGroupId/users', function(req, res)){
+app.get ('/userGroup/:userGroupId/users', function(req, res){
 	res.send(userGroup.getUsersByIdUserGroup(req, res));
-}
+})
 //...
-app.delete ('/userGroup/:userGroupId/users/userId', function (req, res)){
-	res.send(userGroup.deleteUserByIdUserGroup(req.params.id));
-}
+app.delete ('/userGroup/:userGroupId/users/userId', function (req, res){
+	res.send(userGroup.deleteUserByIdUserGroup(req, res));
+})
 
 
 

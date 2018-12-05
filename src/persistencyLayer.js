@@ -98,14 +98,20 @@ function getAuthorByIdUserGroup(id){
 	return getObjectByParam(id, dbUserGroupPath, dbUserPath);
 }
 
+function getUserGroupById(id){
+	return getObject(id, dbUserGroupPath);
+}
+
 
 module.exports = {
     writeUser: writeUser,
     getAllUsers: getAllUsers,
     getUser: getUser,
+	
 	writeUserGroup: writeUserGroup,
 	getAllUserGroups: getAllUserGroups,
 	getUserGroup: getUserGroup,
 	deleteUserGroup: deleteUserGroup,
-	getAuthorByIdUserGroup: getAuthorByIdUserGroup
+	getAuthorByIdUserGroup: getAuthorByIdUserGroup,
+	getUserGroupById: getUserGroupById
 }
