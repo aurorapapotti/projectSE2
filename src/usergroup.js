@@ -10,14 +10,16 @@ function createUserGroup(req, res) {
 	console.log("recived request: ",req.body);
 	const name = req.body.name;
 	const author = req.body.author;
+	const users = req.body.users;
 	
 	var userGroup = new Object();
 	userGroup["name"] = name;
 	userGroup["author"] = author;
 	userGroup["users"] = new Array();
+	userGroup["users"].push(users);
 	
-	const userGroup = persistencyLayer.writeUserGroup(req.body);
-	if (userGroup == null) {
+	const us = persistencyLayer.writeUserGroup(userGroup);
+	if (us == null) {
 		res.status(400).send("Invalid request");
 	}
 	else {
