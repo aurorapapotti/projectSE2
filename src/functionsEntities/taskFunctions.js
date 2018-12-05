@@ -1,5 +1,5 @@
 const persistencyLayer = require('../persistencyLayer.js')
-const dbTaskPath = "./entities/task.js";
+const dbTaskPath = "../entities/task.js";
 
 function createTask(task){
   return persistencyLayer.addObject(task,dbTaskPath);
