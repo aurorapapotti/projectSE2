@@ -3,25 +3,28 @@ const dbUserPath = "./entities/users.js";
 const dbAssignmentPath = "./entities/assignments.js";
 
 function createAssignment(req, res) {
+	console.log("recived request: ",req.body);
+	
+	var title = req.body.title;
 	var professor = req.body.professor;
 	var tasks = req.body.taskGroup;
-	var clas = req.body.userGroup;
+	var users = req.body.userGroup;
+	var start = req.body.start;
+	var deadline = req.body.deadline;
 	
-	if (professor == null || tasks == null || clas == null)
+	if (title == null || professor == null || tasks == null || users == null)
 		res.status(400).send("Invalid request");
 	
-	var ass = '{"assignment": {'+
-		'"id": "' + getUUID() + '",'+
-		'"title": "' + req.body.title + '",'+
-		'"professor": "' + professor + '",'+
-		'"tasks": "' + tasks + '",'+
-		'"clas": "' + clas + '",'+
-		'"start": "' + req.body.deadline + '",'+
-		'"deadline: "' + req.body.deadline + '"}"'
+	var ass = new Object();
+	ass["title"] = title;
+	ass["professor"] = professor;
+	ass["tasks"] = tasks;
+	ass["users"] = users;
+	ass["start"] = start;
+	ass["deadline"] = deadline;
 		
-	console.log("recived request: ",req.body);
-	persistencyLayer.writeAssignment(req.body);
-	console.log("wrote completed: ",persistencyLayer.getAllAssignments());
+	persistencyLayer.writeAssignment(ass);
+	console.log("Created: ",persistencyLayer.getAllAssignments());
 	res.status(201).send("Created");
 }
 
