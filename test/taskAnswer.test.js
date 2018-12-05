@@ -1,4 +1,4 @@
-const create = require('./taskAnswer').create;
+const create = require('./taskAnswer.js').create;
 
 test('Create a taskAnswer', () => {
 	var student = 1;
