@@ -1,6 +1,9 @@
 const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
-const percLayer = require("./persistencyLayer.js");
+
+const reviewFunc = require("./functionEntities/reviewFunctions.js");
+const peerReviewFunc = require("./functionEntities/peerReviewFunctions.js");
+const taskAnswerFunc = require("./functionEntities/taskAnswerFunctions.js");
 
 function createReview (req, res) {
 	var taskAnswer = req.body.taskAnswer;
@@ -15,16 +18,16 @@ function createReview (req, res) {
 	review["peerReview"] = new Array();
 	review["peerReview"].push(peerReview);	
 		
-	percLayer.writeReview(review);
+	reviewFunc.writeReview(review);
 	res.status(201).send("Created");
 }
 
 function getAllReviews (req, res)  {
-	res.status(200).send(percLayer.getAllReviews());
+	res.status(200).send(reviewFunc.getAllReviews());
 }
 
 function getReview (req, res) {
-	const review = percLayer.getReview(req.params.reviewId);
+	const review = reviewFunc.getReview(req.params.reviewId);
 	if (review == null) {
 		res.status(400).send("Invalid request");
 	}
@@ -34,7 +37,7 @@ function getReview (req, res) {
 }
 
 function getAllPeerReviews (req, res) {
-	const review = percLayer.getReview(req.params.reviewId);
+	const review = reviewFunc.getReview(req.params.reviewId);
 	console.log(review);
 
 	if (review === null){
@@ -47,7 +50,7 @@ function getAllPeerReviews (req, res) {
 
 		for (var i=0; i<allPeerReviews.length; i++){
 			console.log("Element: " + allPeerReviews[i]);
-			var peerReview = percLayer.getPeerReview(allPeerReviews[i]);
+			var peerReview = peerReviewFunc.getPeerReview(allPeerReviews[i]);
 
 			console.log(peerReview);
 
@@ -67,7 +70,7 @@ function getPeerReview (req, res) {
 	const reviewId = req.params.reviewId;
 	const peerReviewId = req.params.peerReviewId;
 
-	const review = percLayer.getReview(reviewId);
+	const review = reviewFunc.getReview(reviewId);
 	console.log(review);
 
 	if (review === null){
@@ -78,7 +81,7 @@ function getPeerReview (req, res) {
 		
 		for (var i=0; i<allPeerReviews.length; i++){
 			if (allPeerReviews[i] == peerReviewId){
-				res.status(200).send(percLayer.getPeerReview(allPeerReviews[i]));
+				res.status(200).send(peerReviewFunc.getPeerReview(allPeerReviews[i]));
 			}
 		}
 
@@ -88,7 +91,7 @@ function getPeerReview (req, res) {
 }
 
 function getAllTaskAnswer (req, res) {
-	const review = percLayer.getReview(req.params.reviewId);
+	const review = reviewFunc.getReview(req.params.reviewId);
 	console.log(review);
 
 	if (review === null){
@@ -100,7 +103,7 @@ function getAllTaskAnswer (req, res) {
 
 		for (var i=0; i<allTaskAnswer.length; i++){
 			console.log("Element: " + allTaskAnswer[i]);
-			var taskAnswer = percLayer.getTaskAnswer(allTaskAnswer[i]);
+			var taskAnswer = taskAnswerFunc.getTaskAnswer(allTaskAnswer[i]);
 
 			if (taskAnswer == null){
 				res.status(400).send("Something has gone wrong");
@@ -118,7 +121,7 @@ function getTaskAnswer (req, res) {
 	const reviewId = req.params.reviewId;
 	const taskAnswerId = req.params.taskAnswerId;
 
-	const review = percLayer.getReview(reviewId);
+	const review = reviewFunc.getReview(reviewId);
 
 	if (review === null){
 		res.status(400).send("Invalid request");
@@ -128,7 +131,7 @@ function getTaskAnswer (req, res) {
 		
 		for (var i=0; i<allTaskAnswer.length; i++){
 			if (allTaskAnswer[i] == taskAnswerId){
-				res.status(200).send(percLayer.getTaskAnswer(allTaskAnswer[i]));
+				res.status(200).send(taskAnswerFunc.getTaskAnswer(allTaskAnswer[i]));
 			}
 		}
 
@@ -142,22 +145,22 @@ function deleteReview (req, res) {
 		res.status(400).send("Invalid request");
 	}
 	else {
-		res.status(201).send(percLayer.deleteReview(req.params.reviewId));
+		res.status(201).send(reviewFunc.deleteReview(req.params.reviewId));
 	}
 }
 
 function addPeerReview (req, res){
-	let review = percLayer.getReview(req.params.reviewId);
+	let review = reviewFunc.getReview(req.params.reviewId);
 	review["peerReview"].push(req.params.peerReviewId);
 
-	res.status(200).send(percLayer.modifyReview(req.params.reviewId, review));
+	res.status(200).send(reviewFunc.modifyReview(req.params.reviewId, review));
 }
 
 function addTaskAnswer (req, res){
-	let review = percLayer.getReview(req.params.reviewId);
+	let review = reviewFunc.getReview(req.params.reviewId);
 	review["taskAnswer"].push(req.params.taskAnswerId);
 
-	res.status(200).send(percLayer.modifyReview(req.params.reviewId, review));
+	res.status(200).send(reviewFunc.modifyReview(req.params.reviewId, review));
 }
 
 module.exports = {
