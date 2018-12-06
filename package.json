@@ -24,5 +24,8 @@
   "jest": {
     "verbose": true,
     "collectCoverage": true
+  },
+  "directories": {
+    "test": "test"
   }
 }

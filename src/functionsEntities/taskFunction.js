@@ -1,5 +1,5 @@
 const persistencyLayer = require('../persistencyLayer.js')
-const dbTaskPath = "../entities/task.js";
+const dbTaskPath = __dirname+"/../../entities/task.js";
 
 function createTask(task){
   return persistencyLayer.addObject(task,dbTaskPath);
@@ -19,15 +19,27 @@ function getTaskById(Id){
   return persistencyLayer.getObject(Id, dbTaskPath);
 }
 
+function getTaskByArgument(taskArgument){
+  console.log("Argument passato:", taskArgument);
+  return persistencyLayer.getObject(taskArgument, dbTaskPath);
+}
+
+function getTaskByDescription(taskDescription){
+  console.log("Description passata:", taskDescription);
+  return persistencyLayer.getObject(taskDescription, dbTaskPath);
+}
+
 function removeTask(idTask){
-  return persistencyLayer.deleteObject(Id, dbTaskPath);
+  return persistencyLayer.deleteObject(idTask, dbTaskPath);
 }
 
 module.exports = {
   createTask: createTask,
-  getAllTask: getAllTask,
+  getAllTasks: getAllTask,
   getTask: getTask,
   getTaskById: getTaskById,
+  getTaskByArgument: getTaskByArgument,
+  getTaskByDescription: getTaskByDescription,
   removeTask: removeTask
 }
 

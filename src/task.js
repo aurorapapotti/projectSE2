@@ -7,11 +7,11 @@ function createTask(req, res){
 	const argument = req.body.taskArgument;
 	const description = req.body.taskDescription;
 	let task = new Object ();
-	task ["author"] = author;
+	
+	task["argument"] = argument;
+	task["description"] = description;
 	task["taskType"] = type;
-	task["taskId"] = id;
-	task["argument"] = taskArgument;
-	task["description"] = taskDescription;
+	task ["author"] = author;
 	
 	taskFunc.createTask(task);
 	
@@ -23,7 +23,7 @@ function getAllTasks(req, res){
 }
 
 function getTaskbyId(req, res){
-	const task = taskFunc.getTaskbyId(req.params.taskId);
+	const task = taskFunc.getTaskById(req.params.taskId);
 	if (task == null){
 		res.status(400).send("Invalid request");
 	}
@@ -34,13 +34,13 @@ function getTaskbyId(req, res){
 
 function getTaskbyArgument(req,res){
 	const taskArgument = req.params.taskArgument;
-	const allTasks = taskFunc.getAllTasks();
+	const AllTasks = taskFunc.getAllTasks();
 	
 	let searched = {};
 	
-	allTasks.forEach (element =>){
-		if (allTasks[element]["taskArgument"] == taskArgument){
-			searched[element] = allTasks[element];
+	for (element in AllTasks) {
+		if (AllTasks[element]["taskArgument"] == taskArgument){
+			searched[element] = AllTasks[element];
 		}
 	}
 	
@@ -54,13 +54,13 @@ function getTaskbyArgument(req,res){
 
 function getTaskbyDescription(req,res){
 	const taskDescription = req.params.taskDescription;
-	const allTasks = taskFunc.getAllTasks();
+	const AllTasks = taskFunc.getAllTasks();
 	
 	let searched = {};
 	
-	allTasks.forEach (element =>){
-		if (allTasks[element]["taskDescription"] == taskDescription){
-			searched[element] = allTasks[element];
+	for (element in AllTasks) {
+		if (AllTasks[element]["taskDescription"] == taskDescription){
+			searched[element] = AllTasks[element];
 		}
 	}
 	
@@ -75,41 +75,18 @@ function getTaskbyDescription(req,res){
 
 function deleteTask (req, res){
 	if (req.params.taskId == undefined || req.params.taskId == null){
-		res.status
+		res.status(400).send("Invalid Request");
 	}
+	else 
+		res.status(200).send(taskFunc.removeTask(req.params.taskId));
 }
 
-const Task = (req, res) => {
-    let task = {
-        argument: req.body.argument,
-        description: req.body.description,
-        type: req.body.type,
-        author: req.body.author
-    };
-
-    if (!task.type || typeof task.type != 'string' || (task.type != 'Normal' && task.type != "Multiple_choice")) {
-        res.status(400).json({ error: 'The field "type" must be a non-empty string. Possible types: "Normal", 
-"Multiple_choice' });
-        return;
-    }
-
-    if (!task.argument || typeof task.argument != 'string') {
-        res.status(400).json({ error: 'The field "argument" must be a string' });
-        return;
-    }
-
-    if (!task.description || typeof task.description != 'string') {
-        res.status(400).json({ error: 'The field "description" must be a non-empty string' });
-        return;
-    }
-	
-	if (!task.author || typeof task.author != 'string') {
-        res.status(400).json({ error: 'The field "author" must be a  non-empty string' });
-        return;
-    }
-};
-
 module.exports = {
-    Task
-};
+    createTask : createTask,
+	getAllTasks: getAllTasks,
+	getTaskbyId : getTaskbyId,
+	getTaskbyArgument: getTaskbyArgument,
+	getTaskbyDescription : getTaskbyDescription,
+	deleteTask : deleteTask
+}
 
