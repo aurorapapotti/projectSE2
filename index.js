@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 const register = require("./src/register.js");
 const login = require("./src/login.js");
@@ -42,7 +43,7 @@ app.delete ('/userGroup/:userGroupId', function(req, res){
 	res.send(userGroup.deleteUserGroup(req, res));
 })
 //...
-app.get ('/userGroup/Author', function(req, res){
+app.get ('/userGroup/:userGroupId/author', function(req, res){
 	res.send(userGroup.getAuthorByIdUserGroup(req, res));
 })
 //...
@@ -50,10 +51,8 @@ app.get ('/userGroup/:userGroupId/users', function(req, res){
 	res.send(userGroup.getUsersByIdUserGroup(req, res));
 })
 //...
-app.delete ('/userGroup/:userGroupId/users/userId', function (req, res){
+app.delete ('/userGroup/:userGroupId/users/:userId', function (req, res){
 	res.send(userGroup.deleteUserByIdUserGroup(req, res));
 })
-
-
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

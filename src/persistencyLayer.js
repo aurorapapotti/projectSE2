@@ -1,7 +1,7 @@
 var fs = require("fs");
 
-const dbUserPath = "./entities/users.json";
-const dbUserGroupPath = "./entities/usergroups.json";
+const dbUserPath = "./entities/users.js";
+const dbUserGroupPath = "./entities/usergroups.js";
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -36,7 +36,7 @@ function getObject(idObject, dbpath){
   let object = Object.keys(db).filter(x => x == idObject);
   if (object.length > 0) {
     console.log("Object found :)");
-    return object[0];
+    return db[object];
   }
   else {
     //TODO: mettere a posto sto schifo, deve ritornare una cosa più intelligente
@@ -59,6 +59,15 @@ function getObjectByParam(idObject, dbPathidObject, dbPathObjectToFind){
     console.log("Object NOT found :(");
     return null;
   }
+}
+
+function modifyObject(idObject, dbpath, newObject){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  let object = Object.keys(db).filter(x => x == idObject);
+  db[object] = newObject;
+
+  fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
 }
 
 //USER
@@ -84,22 +93,17 @@ function getAllUserGroups(){
 	return getObjectsList(dbUserGroupPath);
 }
 
-function getUserGroup(idUserGroup){
-	console.log("Id passato: ", idUserGroup);
-	return getObject(idUserGroup, dbUserGroupPath);
-}
-
 function deleteUserGroup(idUserGroup){
 	console.log("Id passato: ", idUserGroup);
 	return deleteObject(idUserGroup, dbUserGroupPath);
 }
 
-function getAuthorByIdUserGroup(id){
-	return getObjectByParam(id, dbUserGroupPath, dbUserPath);
-}
-
 function getUserGroupById(id){
 	return getObject(id, dbUserGroupPath);
+}
+
+function modifyUserGroup(id, userGroup){
+  return modifyObject(id, dbUserGroupPath, userGroup);
 }
 
 
@@ -107,11 +111,10 @@ module.exports = {
     writeUser: writeUser,
     getAllUsers: getAllUsers,
     getUser: getUser,
-	
+    getObjectByParam: getObjectByParam,
+  modifyUserGroup: modifyUserGroup,
 	writeUserGroup: writeUserGroup,
 	getAllUserGroups: getAllUserGroups,
-	getUserGroup: getUserGroup,
 	deleteUserGroup: deleteUserGroup,
-	getAuthorByIdUserGroup: getAuthorByIdUserGroup,
 	getUserGroupById: getUserGroupById
 }
