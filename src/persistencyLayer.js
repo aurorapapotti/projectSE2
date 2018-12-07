@@ -1,8 +1,5 @@
 var fs = require("fs");
 
-const dbUserPath = "./entities/users.js";
-const dbUserGroupPath = "./entities/usergroups.js";
-
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
 }
@@ -70,51 +67,11 @@ function modifyObject(idObject, dbpath, newObject){
   fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
 }
 
-//USER
-function writeUser(user){
-  return addObject(user,dbUserPath);
-}
-
-function getAllUsers(){
-  return getObjectsList(dbUserPath);
-}
-
-function getUser(idUser){
-  console.log("Id passato:", idUser);
-  return getObject(idUser, dbUserPath);
-}
-
-//USER GROUP
-function writeUserGroup(userGroup){
-	return addObject(userGroup, dbUserGroupPath);
-}
-
-function getAllUserGroups(){
-	return getObjectsList(dbUserGroupPath);
-}
-
-function deleteUserGroup(idUserGroup){
-	console.log("Id passato: ", idUserGroup);
-	return deleteObject(idUserGroup, dbUserGroupPath);
-}
-
-function getUserGroupById(id){
-	return getObject(id, dbUserGroupPath);
-}
-
-function modifyUserGroup(id, userGroup){
-  return modifyObject(id, dbUserGroupPath, userGroup);
-}
-
-
 module.exports = {
-    writeUser: writeUser,
-    getAllUsers: getAllUsers,
-    getUser: getUser,
-    getObjectByParam: getObjectByParam,
-  modifyUserGroup: modifyUserGroup,
-	writeUserGroup: writeUserGroup,
-	getAllUserGroups: getAllUserGroups,
-	deleteUserGroup: deleteUserGroup,
-	getUserGroupById: getUserGroupById
+  addObject: addObject,
+  deleteObject: deleteObject,
+  getObjectsList: getObjectsList,
+  getObject: getObject,
+  getObjectByParam: getObjectByParam,
+  modifyObject: modifyObject
 }

@@ -1,13 +1,13 @@
-const persistencyLayer = require('./persistencyLayer.js');
+const persistencyLayer = require('./functionEntities/userGroupFunctions.js');
 const bodyParser = require("body-parser");
 
 function listUserGroups(req, res) {
-	const us = persistencyLayer.getAllUserGroups();
+	const us = userGroupFunctions.getAllUserGroups();
 	if (us == null) {
 		res.status(400).send("Invalid request");
 	}
 	else {
-		console.log("GetAll: ",persistencyLayer.getAllUserGroups());
+		console.log("GetAll: ",userGroupFunctions.getAllUserGroups());
 		res.status(201).send(us);
 	}
 }
@@ -24,12 +24,12 @@ function createUserGroup(req, res) {
 	userGroup["users"] = new Array();
 	//userGroup["users"].push(users);
 	
-	const us = persistencyLayer.writeUserGroup(userGroup);
+	const us = userGroupFunctions.writeUserGroup(userGroup);
 	if (us == null) {
 		res.status(400).send("Invalid request");
 	}
 	else {
-		console.log("Created: ",persistencyLayer.getAllUserGroups());
+		console.log("Created: ",userGroupFunctions.getAllUserGroups());
 		res.status(201).send(userGroup);
 	}
 }
@@ -38,7 +38,7 @@ function getUserGroupById(req, res) {
 	var id = req.params.userGroupId;
 	console.log("recived request: ", id);
 	
-	const us = persistencyLayer.getUserGroupById(id);
+	const us = userGroupFunctions.getUserGroupById(id);
 	if (us == null) {
 		res.status(400).send("Invalid request");
 	}
@@ -58,7 +58,7 @@ function updateUserGroup(req, res){
 		res.status(400).send("Cannot Update");
 	}
 	else{
-		const us = persistencyLayer.getUserGroupById(id);
+		const us = userGroupFunctions.getUserGroupById(id);
 		if (us == null) {
 			res.status(400).send("Id null");
 		}
@@ -77,7 +77,7 @@ function updateUserGroup(req, res){
 					us["users"].push(split[i]);
 				}
 			}
-			persistencyLayer.modifyUserGroup(id, us);
+			userGroupFunctions.modifyUserGroup(id, us);
 
 			console.log("Updated.");
 			res.status(201).send(us);
@@ -88,13 +88,13 @@ function updateUserGroup(req, res){
 function deleteUserGroup(req, res){
 	var id = req.params.userGroupId;
 	console.log("received request: ", id);
-	console.log(persistencyLayer.deleteUserGroup(id));
+	console.log(userGroupFunctions.deleteUserGroup(id));
 }
 
 function getAuthorByIdUserGroup(req, res){
 	var id = req.params.userGroupId;
 	console.log("received request: ", id);
-	var us = persistencyLayer.getUserGroupById(id);
+	var us = userGroupFunctions.getUserGroupById(id);
 	author = us["author"];
 	if(author == null){
 		res.status(400).send("Invalid request, authorId null");
@@ -106,7 +106,7 @@ function getAuthorByIdUserGroup(req, res){
 }
 
 function getUsersByIdUserGroup(req, res){
-	const userGroup = persistencyLayer.getUserGroupById(req.params.userGroupId);
+	const userGroup = userGroupFunctions.getUserGroupById(req.params.userGroupId);
 	console.log("UserGroup: ", userGroup);
 
 	if (userGroup === null){
@@ -118,7 +118,7 @@ function getUsersByIdUserGroup(req, res){
 		
 		for (var i=0; i<allUsers.length; i++){
 			console.log("Element: " + allUsers[i]);
-			var user = persistencyLayer.getUser(allUsers[i]);
+			var user = userGroupFunctions.getUser(allUsers[i]);
 
 			if (user == null){
 				res.status(400).send("Something has gone wrong");
@@ -136,7 +136,7 @@ function deleteUserByIdUserGroup(req, res){
 	const idUser = req.params.userId;
 
 	var trovato = -1;
-	var userGroup = persistencyLayer.getUserGroupById(idUserGroup);
+	var userGroup = userGroupFunctions.getUserGroupById(idUserGroup);
 	
 	if(userGroup === null){
 		res.status(400).send("Id userGroup null");
@@ -157,7 +157,7 @@ function deleteUserByIdUserGroup(req, res){
 				userGroup["users"] = users;
 				console.log("Deleted.");
 				console.log("Users: ", users);
-				persistencyLayer.modifyUserGroup(idUserGroup, userGroup);	//UPDATE
+				userGroupFunctions.modifyUserGroup(idUserGroup, userGroup);	//UPDATE
 				res.status(200).send(userGroup);	
 			}
 		}
