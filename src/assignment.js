@@ -1,6 +1,5 @@
 const persistencyLayer = require('./persistencyLayer.js');
-const dbUserPath = "./entities/users.js";
-const dbAssignmentPath = "./entities/assignments.js";
+const bodyParser = require("body-parser");
 
 function createAssignment(req, res) {
 	console.log("recived request: ",req.body);
@@ -23,11 +22,16 @@ function createAssignment(req, res) {
 	ass["start"] = start;
 	ass["deadline"] = deadline;
 		
-	persistencyLayer.writeAssignment(ass);	
-	console.log("Created: ",persistencyLayer.getAllAssignments());
-	res.status(201).send("Created");
+	const a = persistencyLayer.writeAssignment(ass);
+	if(a == null){
+		res.status(400).send("Invalid request");
+	}
+	else{
+		console.log("Created: ",persistencyLayer.getAllAssignments());
+		res.status(201).send("Created");
+	}
 }
-
+/*
 function getAssignment(req, res) {
 	console.log("recived request: ",req.body);
 	const ass = persistencyLayer.getAssignment(req.params.assignmentId);
@@ -38,25 +42,78 @@ function getAssignment(req, res) {
 	else{
 		res.status(201).send(ass);
 	}
-}
+}*/
 
 function getAllAssignments(req, res){
-	console.log("recived request: ",req.body);
-	persistencyLayer.getAllAssignments();
-	res.status(201).send("Found");
-}
-
-function getAssignmentById(req, res){
-	if(req.params.assignmentId == undefined || req.params.assignmentId == null){
+	const ass = persistencyLayer.getAllAssignments();
+	if(ass == null){
 		res.status(400).send("Invalid request");
 	}
 	else{
-		res.status(201).send(persistencyLayer.getObject(req.params.assignmentId, dbAssignmentPath));
+		console.log("Get all: ", ass);
+		res.status(201).send(ass);
+	}
+}
+
+function getAssignmentById(req, res){
+	var id = req.params.assignmentId;
+	var ass = persistencyLayer.getAssignmentById(id);
+
+	if(ass == undefined || ass == null){
+		res.status(400).send("Invalid request");
+	}
+	else{
+		res.status(201).send(ass);
 	}
 }
 
 function updateAssignment(req, res){
-	//...
+	var id = req.params.assignmentId;
+
+	var title = req.body.title;
+	var professor = req.body.professor;
+	var tasks = req.body.taskGroup;
+	var users = req.body.userGroup;
+	var start = req.body.start;
+	var deadline = req.body.deadline;
+
+	if(title == null && professor == null && tasks == null && users == null && start == null && deadline == null){
+		req.status(400).send("Invalid request");
+	}
+	else{
+		var ass = persistencyLayer.getAssignmentById(id);
+
+		if(id == null || id == undefined){
+			req.status(400).send("Invalid request: id not valid");
+		}
+		else{
+			if(typeof title === string){
+				ass["title"] = title;
+			}
+			var prof = persistencyLayer.getUserById(professor);
+			if(prof != null && prof != undefined){
+				ass["professor"] = professor;
+			}
+			var t = persistencyLayer.getTaskGroupById(tasks);
+			if(t != null && t != undefined){
+				ass["tasks"] = tasks;
+			}
+			var u = persistencyLayer.getUserGroupById(users);
+			if(u != null && u != undefined){
+				ass["users"] = users;
+			}
+			if(typeof start instanceof Date){
+				ass["start"] = start;
+			}
+			if(typeof deadline instanceof Integer){
+				ass["deadline"] = deadline;
+			}
+
+			persistencyLayer.modifyAssignment(id, ass);
+			console.log("Updated.");
+			res.status(201).send(ass);
+		}
+	}
 }
 
 function deleteAssignment(req, res){

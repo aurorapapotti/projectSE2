@@ -1,7 +1,9 @@
 var fs = require("fs");
 
-const dbUserPath = "./entities/users.json";
-const dbAssignmentPath = "./entities/assignments.json";
+const dbUserPath = "./entities/users.js";
+const dbAssignmentPath = "./entities/assignments.js";
+const dbUserGroupPath = "./entities/usergroups.js";
+const dbTaskGroupPath = "./entities/taskGroup.js"
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
@@ -14,6 +16,15 @@ function addObject(obj,dbpath){
   db[id] = obj;
   fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
   return id;
+}
+
+function modifyObject(idObject, dbpath, newObject){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  let object = Object.keys(db).filter(x => x == idObject);
+  db[object] = newObject;
+
+  fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
 }
 
 function getObjectsList(dbpath){
@@ -86,7 +97,7 @@ function getAllAssignments(){
 	return getObjectsList(dbAssignmentPath);
 }
 
-function getAssignment(assignmentId){
+function getAssignmentById(assignmentId){
 	return getObject(assignmentId, dbAssignmentPath);
 }
 
@@ -94,13 +105,36 @@ function deleteAssignment(assignmentId){
   return deleteObject(assignmentId, dbAssignmentPath);
 }
 
+function modifyAssignment(id, ass){
+  return modifyObject(id, dbAssignmentPath, ass);
+}
+
+function getUserById(id){
+  return getObject(id, dbUserPath);
+}
+
+function getTaskGroupById(id){
+  return getObject(id, dbTaskGroupPath);
+}
+
+function getUserGroupById(id){
+  return getObject(id, dbUserGroupPath);
+}
+
+
 module.exports = {
     writeUser: writeUser,
     getAllUsers: getAllUsers,
     getUser: getUser,
-	
+    modifyObject: modifyObject,
+  
+    getObjectByParam: getObjectByParam,
 	writeAssignment: writeAssignment,
 	getAllAssignments: getAllAssignments,
-	getAssignment, getAssignment,
-	deleteAssignment: deleteAssignment
+	getAssignmentById: getAssignmentById,
+  deleteAssignment: deleteAssignment,
+  modifyAssignment: modifyAssignment,
+  getUserById: getUserById,
+  getTaskGroupById: getTaskGroupById,
+  getUserGroupById: getUserGroupById
 }
