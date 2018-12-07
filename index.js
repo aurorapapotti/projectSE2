@@ -12,57 +12,46 @@ const assignment = require("./src/assignment.js");
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-//REGISTER
-app.post ('/register', function(req, res){
-  res.send(register.registerUser(req, res));
-})
-
-//LOGIN
-app.post ('/login', function(req, res){
-  res.send(login.loginUser(req,res));
-})
-
 //ASSIGNMENT
-app.get ('/assignment', function (req, res)){
+app.get ('/assignment', function (req, res){
 	res.send(assignment.getAllAssignments());
-}
+})
 
-app.post ('/assignment', function (req, res)){
+app.post ('/assignment', function (req, res){
 	res.send(assignment.createAssignment(req, res));
-}
+})
 //...
-app.get ('/assignment/:assignmentId', function (req, res)){
+app.get ('/assignment/:assignmentId', function (req, res){
 	res.send(assignment.getAssignmentById(req, res));
-}
+})
 
-app.put ('/assignment/:assignmentId', function (req, res)){
+app.put ('/assignment/:assignmentId', function (req, res){
 	res.send(assignment.updateAssignment(req, res));
-}
+})
 
-app.delete ('/assignment/:assignmentId', function (req, res)){
+app.delete ('/assignment/:assignmentId', function (req, res){
 	res.send(assignment.deleteAssignment(req, res));
-}
+})
 
-app.get ('/assignment/:assignmentId', function(req, res)){
+app.get ('/assignment/:assignmentId', function(req, res){
 	res.send(assignment.getProfessorByIdAssignment(req, res));
-}
+})
 
-app.get ('/assignment/:assignmentId/users', function(req, res)){
+app.get ('/assignment/:assignmentId/users', function(req, res){
 	res.send(assignment.getUsers(req, res));
-}
+})
 
-app.update ('/assignment/:assignmentId/users', function(req, res)){
+app.update ('/assignment/:assignmentId/users', function(req, res){
 	res.send(assignment.updateUsers(req, res));
-}
+})
 //...
-app.get ('/assignment/:assignmentId/tasks', function(req, res)){
+app.get ('/assignment/:assignmentId/tasks', function(req, res){
 	res.send(assignment.getTasks(req, res));
-}
+})
 
-app.update ('/assignment/:assignmentId/tasks', function(req, res)){
+app.update ('/assignment/:assignmentId/tasks', function(req, res){
 	res.send(assignment.updateTasks(req, res));
-}
-
+})
 
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

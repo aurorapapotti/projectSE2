@@ -1,5 +1,7 @@
-const persistencyLayer = require('./persistencyLayer.js');
+
+const assignmentFunc = require('./functionEntities.assignmentFuncitons.js');
 const bodyParser = require("body-parser");
+const fetch = require("node-fetch");
 
 function createAssignment(req, res) {
 	console.log("recived request: ",req.body);

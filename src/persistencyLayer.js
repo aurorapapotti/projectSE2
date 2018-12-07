@@ -1,10 +1,5 @@
 var fs = require("fs");
 
-const dbUserPath = "./entities/users.js";
-const dbAssignmentPath = "./entities/assignments.js";
-const dbUserGroupPath = "./entities/usergroups.js";
-const dbTaskGroupPath = "./entities/taskGroup.js"
-
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);
 }
@@ -73,68 +68,11 @@ function deleteObject(idObject, dbpath){
 
 }
 
-
-//USER
-function writeUser(user){
-  return addObject(user,dbUserPath);
-}
-
-function getAllUsers(){
-  return getObjectsList(dbUserPath);
-}
-
-function getUser(idUser){
-  console.log("Id passato:", idUser);
-  return getObject(idUser, dbUserPath);
-}
-
-//ASSIGNMENT
-function writeAssignment(assignmentId){
-	return addObject(assignmentId, dbAssignmentPath);
-}
-
-function getAllAssignments(){
-	return getObjectsList(dbAssignmentPath);
-}
-
-function getAssignmentById(assignmentId){
-	return getObject(assignmentId, dbAssignmentPath);
-}
-
-function deleteAssignment(assignmentId){
-  return deleteObject(assignmentId, dbAssignmentPath);
-}
-
-function modifyAssignment(id, ass){
-  return modifyObject(id, dbAssignmentPath, ass);
-}
-
-function getUserById(id){
-  return getObject(id, dbUserPath);
-}
-
-function getTaskGroupById(id){
-  return getObject(id, dbTaskGroupPath);
-}
-
-function getUserGroupById(id){
-  return getObject(id, dbUserGroupPath);
-}
-
-
 module.exports = {
-    writeUser: writeUser,
-    getAllUsers: getAllUsers,
-    getUser: getUser,
-    modifyObject: modifyObject,
-  
-    getObjectByParam: getObjectByParam,
-	writeAssignment: writeAssignment,
-	getAllAssignments: getAllAssignments,
-	getAssignmentById: getAssignmentById,
-  deleteAssignment: deleteAssignment,
-  modifyAssignment: modifyAssignment,
-  getUserById: getUserById,
-  getTaskGroupById: getTaskGroupById,
-  getUserGroupById: getUserGroupById
+  addObject: addObject,
+  modifyObject: modifyObject,
+  getObjectsList: getObjectsList,
+  getObject: getObject,
+  getObjectByParam: getObjectByParam,
+  deleteObject: deleteObject
 }

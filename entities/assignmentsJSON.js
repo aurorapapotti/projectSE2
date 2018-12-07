@@ -1,6 +1,5 @@
 {
 	"Assignment1": {
-		"id": "1",
 		"title": "Ingegneria del software",
 		"professor": "user1",
 		"tasks": "taskGroup1",
@@ -10,7 +9,6 @@
 	},
 	
 	"Assignment2": {
-		"id": "2",
 		"title": "Algoritmi e strutture dati",
 		"professor": "user2",
 		"tasks": "taskGroup3",
