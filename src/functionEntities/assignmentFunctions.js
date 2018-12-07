@@ -1,5 +1,8 @@
 const persistencyLayer = require("../persistencyLayer.js");
 const dbAssignmentPath = __dirname+"/../../entities/assignments.js";
+const dbUserPath = __dirname+"/../../entities/users.js";
+const dbUserGroupPath = __dirname+"/../../entities/usergroups.js";
+const dbTaskGroupPath = __dirname+"/../../entities/taskgroups.js";
 
 function writeAssignment(assignmentId){
 	return persistencyLayer.addObject(assignmentId, dbAssignmentPath);

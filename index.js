@@ -6,8 +6,6 @@ const PORT = process.env.PORT || 3000
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-const register = require("./src/register.js");
-const login = require("./src/login.js");
 const assignment = require("./src/assignment.js");
 
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -33,12 +31,12 @@ app.delete ('/assignment/:assignmentId', function (req, res){
 	res.send(assignment.deleteAssignment(req, res));
 })
 
-app.get ('/assignment/:assignmentId', function(req, res){
+app.get ('/assignment/:assignmentId/professor', function(req, res){
 	res.send(assignment.getProfessorByIdAssignment(req, res));
 })
 
 app.get ('/assignment/:assignmentId/users', function(req, res){
-	res.send(assignment.getUsers(req, res));
+	res.send(assignment.getUsersByIdAssignment(req, res));
 })
 
 app.update ('/assignment/:assignmentId/users', function(req, res){
@@ -46,7 +44,7 @@ app.update ('/assignment/:assignmentId/users', function(req, res){
 })
 //...
 app.get ('/assignment/:assignmentId/tasks', function(req, res){
-	res.send(assignment.getTasks(req, res));
+	res.send(assignment.getTasksByIdAssignment(req, res));
 })
 
 app.update ('/assignment/:assignmentId/tasks', function(req, res){

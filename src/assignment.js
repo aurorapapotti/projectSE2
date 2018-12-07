@@ -1,5 +1,9 @@
 
-const assignmentFunc = require('./functionEntities.assignmentFuncitons.js');
+const assignmentFunc = require('./functionEntities/assignmentFunctions.js');
+const userFunc = require('./functionEntities/userFunctions.js');
+const userGroupFunc = require('./functionEntities/userGroupFunctions.js');
+const taskGroupFunc = require('./functionEntities/taskGroupFunctions.js');
+
 const bodyParser = require("body-parser");
 const fetch = require("node-fetch");
 
@@ -24,30 +28,18 @@ function createAssignment(req, res) {
 	ass["start"] = start;
 	ass["deadline"] = deadline;
 		
-	const a = persistencyLayer.writeAssignment(ass);
+	const a = assignmentFunc.writeAssignment(ass);
 	if(a == null){
 		res.status(400).send("Invalid request");
 	}
 	else{
-		console.log("Created: ",persistencyLayer.getAllAssignments());
+		console.log("Created: ",assignmentFunc.getAllAssignments());
 		res.status(201).send("Created");
 	}
 }
-/*
-function getAssignment(req, res) {
-	console.log("recived request: ",req.body);
-	const ass = persistencyLayer.getAssignment(req.params.assignmentId);
-	
-	if(ass = null){
-		res.status(400).send("Invalid request");
-	}
-	else{
-		res.status(201).send(ass);
-	}
-}*/
 
 function getAllAssignments(req, res){
-	const ass = persistencyLayer.getAllAssignments();
+	const ass = assignmentFunc.getAllAssignments();
 	if(ass == null){
 		res.status(400).send("Invalid request");
 	}
@@ -59,7 +51,7 @@ function getAllAssignments(req, res){
 
 function getAssignmentById(req, res){
 	var id = req.params.assignmentId;
-	var ass = persistencyLayer.getAssignmentById(id);
+	var ass = assignmentFunc.getAssignmentById(id);
 
 	if(ass == undefined || ass == null){
 		res.status(400).send("Invalid request");
@@ -83,7 +75,7 @@ function updateAssignment(req, res){
 		req.status(400).send("Invalid request");
 	}
 	else{
-		var ass = persistencyLayer.getAssignmentById(id);
+		var ass = assignmentFunc.getAssignmentById(id);
 
 		if(id == null || id == undefined){
 			req.status(400).send("Invalid request: id not valid");
@@ -92,15 +84,15 @@ function updateAssignment(req, res){
 			if(typeof title === string){
 				ass["title"] = title;
 			}
-			var prof = persistencyLayer.getUserById(professor);
+			var prof = userFunc.getUserById(professor);
 			if(prof != null && prof != undefined){
 				ass["professor"] = professor;
 			}
-			var t = persistencyLayer.getTaskGroupById(tasks);
+			var t = taskGroupFunc.getTaskGroupById(tasks);
 			if(t != null && t != undefined){
 				ass["tasks"] = tasks;
 			}
-			var u = persistencyLayer.getUserGroupById(users);
+			var u = userGroupFunc.getUserGroupById(users);
 			if(u != null && u != undefined){
 				ass["users"] = users;
 			}
@@ -111,7 +103,7 @@ function updateAssignment(req, res){
 				ass["deadline"] = deadline;
 			}
 
-			persistencyLayer.modifyAssignment(id, ass);
+			assignmentFunc.modifyAssignment(id, ass);
 			console.log("Updated.");
 			res.status(201).send(ass);
 		}
@@ -119,51 +111,90 @@ function updateAssignment(req, res){
 }
 
 function deleteAssignment(req, res){
-	if(req.params.assignmentId == undefined || req.params.assignmentId == null){
+	var id = req.params.assignmentId;
+	if( id == undefined || id == null){
 		res.status(400).send("Invalid request");
 	}
 	else{
-		res.status(201).send(persistencyLayer.deleteAssignment(req.params.assignmentId));
+		res.status(201).send(assignmentFunc.deleteAssignment(id));
 	}
 }
 
-function getProfessorByIdAssignment(req, idAssignment){
-	return persistencyLayer.getObjectByParam(idAssignment, req.param.idProfessor, dbAssignmentPath, dbUserPath);
+function getProfessorByIdAssignment(req, res){
+	var id = req.params.assignmentId;
+
+	if(id != null && id != undefined){
+		var ass = assignmentFunc.getAssignmentById(id);
+		res.status(200).send(ass["professor"]);
+	}
+	else{
+		res.status(400).send("Id null");
+	}
 }
 
-function getUsers(req, res){
-	return persistencyLayer.getObjectByParam(req.params.assignmentId, req.params.userId, dbAssignmentPath, dbUserPath);
+function getUsersByIdAssignment(req, res){
+	var id = req.params.assignmentId;
+
+	if(id != null && id != undefined){
+		var ass = assignmentFunc.getAssignmentById(id);
+		res.status(200).send(ass["users"]);
+	}
+	else{
+		res.status(400).send("Id null");
+	}
 }
 
 function updateUsers(req, res){
 	const idAssignment = req.body.assignmentId;
 	const users = req.body.users;
 	
-	if(idAssignment == null || users == null){
-		res.status(400).send("Params null");
+	if(idAssignment == null || idAssignment == undefined){
+		res.status(400).send("Id null or undefined");
 	}
 	else{
-		var ass = getObject(idAssignment, dbAssignmentPath);
-		ass["users"] = users;
-		res.status(200).send("Updated.");
+		var ass = assignmentFunc.getAssignmentById(idAssignment);
+
+		if(ass == null){
+			res.status(400).send("Invalid request");
+		}
+		else{
+			ass["users"] = users;
+			assignmentFunc.modifyAssignment(idAssignment, ass);
+			res.status(200).send(ass);
+		}
 	}
 }
 
-function getTasks(req, res){
-	return persistencyLayer.getObjectByParam(req.params.assignmentId, req.params.taskId, dbAssignmentPath, dbTaskPath);
+function getTasksByIdAssignment(req, res){
+	var id = req.params.assignmentId;
+
+	if(id != null && id != undefined){
+		var ass = assignmentFunc.getAssignmentById(id);
+		res.status(200).send(ass["tasks"]);
+	}
+	else{
+		res.status(400).send("Id null");
+	}
 }
 
 function updateTasks(req, res){
 	const idAssignment = req.body.assignmentId;
 	const tasks = req.body.tasks;
 	
-	if(idAssignment == null || tasks == null){
-		res.status(400).send("Params null");
+	if(idAssignment == null || idAssignment == undefined){
+		res.status(400).send("Id null or undefined");
 	}
 	else{
-		var ass = getObject(idAssignment, dbAssignmentPath);
-		ass["tasks"] = tasks;
-		res.status(200).send("Updated.");
+		var ass = assignmentFunc.getAssignmentById(idAssignment);
+
+		if(ass == null){
+			res.status(400).send("Invalid request");
+		}
+		else{
+			ass["tasks"] = tasks;
+			assignmentFunc.modifyAssignment(idAssignment, ass);
+			res.status(200).send(ass);
+		}
 	}
 }
 
@@ -176,8 +207,8 @@ module.exports = {
 	updateAssignment: updateAssignment,
 	deleteAssignment: deleteAssignment,
 	getProfessorByIdAssignment: getProfessorByIdAssignment,
-	getUsers: getUsers,
+	getUsersByIdAssignment: getUsersByIdAssignment,
 	updateUsers: updateUsers,
-	getTasks: getTasks,
+	getTasksByIdAssignment: getTasksByIdAssignment,
 	updateTasks: updateTasks
 }
