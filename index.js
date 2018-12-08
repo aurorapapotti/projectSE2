@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({encoded: true}));
 
 const register = require("./src/register.js");
 const login = require("./src/login.js");
@@ -31,7 +30,10 @@ app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdU
 
 //TASK
 app.get('/task', task.listAllTasks);
-
+app.get('/task/argument', task.getTaskByArgument);
+app.get('/task/:idTask', task.getTask);
+app.post('/task', task.createTask);
+app.delete('/task/:idTask', task.deleteTask);
 
 
 //PEER REVIEW

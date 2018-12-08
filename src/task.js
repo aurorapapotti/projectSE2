@@ -1,42 +1,60 @@
-const taskFunc = require('./functionsEntities/taskFunction.js');
+const taskFunctions = require('./functionsEntities/taskFunctions.js');
 
 function listAllTasks(req, res){
   if (!req)
     return res.status(400).json("Bad Request");
-  return res.status(200).json(userFunctions.getAllTasks());
+  return res.status(200).json(taskFunctions.getAllTasks());
 }
 
-function createTask(req, res){
-	const author = req.body.author;
-	const type = req.body.taskType;
-	const id = req.body.taskId;
-	const argument = req.body.taskArgument;
-	const description = req.body.taskDescription;
-	let task = new Object ();
-
-	task["argument"] = argument;
-	task["description"] = description;
-	task["taskType"] = type;
-	task ["author"] = author;
-
-	taskFunc.createTask(task);
-
-	res.status(201).send("Created");
+function getTask(req, res){
+  if(!req || !req.params.idTask || typeof req.params.idTask !== 'string')
+    return res.status(400).json("Bad Request");
+  task = new Object();
+  task = taskFunctions.getTaskById(req.params.idTask);
+  if (!task.author || !task.taskType || !task.argument || !task.correctAnswer)
+    return res.status(404).json("Task NOT found");
+  return res.status(200).json(task);
 }
 
-function getAllTasks(req, res){
-	res.status(200).send(taskFunc.getAllTasks());
+function createTask(req, res) {
+  if(!req || !req.body || !req.body.author|| !req.body.taskType || !req.body.argument || !req.body.correctAnswer)
+    return res.status(401).json("Bad Request");
+  if(typeof req.body.author !== "string" ||typeof req.body.taskType !== "string" || typeof req.body.argument !== "string" || typeof req.body.correctAnswer !== "string" )
+    return res.status(401).json("Bad Request");
+  //console.log("recived request: ",req.body);
+  let idTask = taskFunctions.addTask(req.body);
+	console.log(idTask);
+  //console.log("wrote completed: ", userFunctions.getAllUsers());
+  return res.status(201).json("Created Task");
 }
 
-function getTaskbyId(req, res){
-	const task = taskFunc.getTaskById(req.params.taskId);
-	if (task == null){
-		res.status(400).send("Invalid request");
-	}
-	else{
-		res.status(200).send(task);
-	}
+function deleteTask(req, res){
+  if (!req || !req.params.idTask || typeof req.params.idTask !== 'string')
+    return res.status(400).json("Bad Request");
+  task_deleted = new Object();
+  task_deleted = taskFunctions.removeTask(req.params.idTask);
+  if (!task_deleted.author || !task_deleted.taskType || !task_deleted.argument || !task_deleted.correctAnswer)
+    return res.status(404).json("Task NOT found");
+  return res.status(200).json("Task deleted");
 }
+
+function getTaskByArgument(req, res){
+  if (!req || !req.query || req.query.taskArgument === undefined || typeof (req.query.taskArgument) !== 'string' )
+    return res.status(400).json("Bad Request");
+  tasks = new Object();
+  let param = "professor";
+  assignments = userFunctions.getAssignments(req.params.idUser, param);
+  if (assignments.id)
+    return res.status(404).json("User NOT found");
+  else if (!assignments[req.params.idAssignment])
+    return res.status(404).json("Assignment NOT found");
+  else
+    return res.status(200).json(assignments[req.params.idAssignment]);
+}
+
+
+/*
+
 
 function getTaskbyArgument(req,res){
 	const taskArgument = req.query.taskArgument;
@@ -61,41 +79,13 @@ function getTaskbyArgument(req,res){
 		res.status(200).send(taskArgument);
 	}
 }
-
-function getTaskbyDescription(req,res){
-	const taskDescription = req.params.taskDescription;
-	const AllTasks = taskFunc.getAllTasks();
-
-	let searched = {};
-
-	for (element in AllTasks) {
-		if (AllTasks[element]["taskDescription"] == taskDescription){
-			searched[element] = AllTasks[element];
-		}
-	}
-
-	if (taskDescription == null){
-		res.status(400).send("Invalid request");
-	}
-	else{
-		res.status(200).send(taskDescription);
-	}
-}
-
-
-function deleteTask (req, res){
-	if (req.params.taskId == undefined || req.params.taskId == null){
-		res.status(400).send("Invalid Request");
-	}
-	else
-		res.status(200).send(taskFunc.removeTask(req.params.taskId));
-}
+}*/
 
 module.exports = {
-    createTask : createTask,
-	getAllTasks: getAllTasks,
-	getTaskbyId : getTaskbyId,
-	getTaskbyArgument: getTaskbyArgument,
-	getTaskbyDescription : getTaskbyDescription,
+  createTask : createTask,
+	listAllTasks: listAllTasks,
+	getTask : getTask,
+	//getTaskbyArgument: getTaskbyArgument,
+	//getTaskbyDescription : getTaskbyDescription,
 	deleteTask : deleteTask
 }

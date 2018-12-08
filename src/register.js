@@ -8,7 +8,7 @@ function registerUser(req, res) {
   //console.log("recived request: ",req.body);
   let idUser = userFunctions.createUser(req.body);
   //console.log("wrote completed: ", userFunctions.getAllUsers());
-  return res.status(201).send("Created User: ",idUser);
+  return res.status(201).send("Created User");
 }
 
 module.exports = {
