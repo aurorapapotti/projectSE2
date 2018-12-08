@@ -4,10 +4,12 @@ const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({encoded: true}));
 
 const register = require("./src/register.js");
 const login = require("./src/login.js");
 const user = require("./src/user.js");
+const task = require("./src/task.js");
 const peerReview = require("./src/peerReview.js");
 
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -25,7 +27,12 @@ app.delete('/user/:idUser', user.deleteUser);
 app.get('/user/:idUser/assignments', user.getAssignmentsByIdUser);
 app.get('/user/:idUser/assignments/:idAssignment', user.getAssignmentByIdUser);
 app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdUser);
-//app.get('/user/:idUser/peerReview', user.getPeerReview);
+//app.get('/user/:idUser/peerReview', user.getPeerReview
+
+//TASK
+app.get('/task', task.listAllTasks);
+
+
 
 //PEER REVIEW
 app.get('/peerReview', peerReview.listAllPeerReview);
