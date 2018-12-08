@@ -153,7 +153,7 @@ function getTaskAnswer (req, res) {
 		}
 	}
 	else {
-		return res.status(400).("Invalid request");
+		return res.status(400).json("Invalid request");
 	}
 }
 
@@ -182,6 +182,14 @@ function addTaskAnswer (req, res){
 	review["taskAnswer"].push(req.params.taskAnswerId);
 
 	res.status(200).send(reviewFunc.modifyReview(req.params.reviewId, review));
+}
+
+function deletePeerReview (req, res) {
+
+}
+
+function deleteTaskAnswer (req, res) {
+	
 }
 
 module.exports = {
