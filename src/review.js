@@ -3,38 +3,29 @@ const peerReviewFunc = require("./functionsEntities/peerReviewFunctions.js");
 const taskAnswerFunc = require("./functionsEntities/taskAnswerFunctions.js");
 
 function createReview (req, res) {
-	if (req.body.taskAnswer && req.body.peerReview){
+	if (req.body.taskAnswer && req.body.peerReview && req.body.vote){
 		let taskAnswer = req.body.taskAnswer;
-		if (taskAnswer[0] === '[' && taskAnswer[taskAnswer.length-1] === ']')
-			taskAnswer = taskAnswer.substring(1, taskAnswer.length-1);
-
-		const taskAnswers = taskAnswer.split(",");
-
-		for (var i=0; i<taskAnswers.length; i++){
-			let found = taskAnswerFunc.getTaskAnswer(taskAnswers[i]);
-			if (found["id"])
-				return res.status(404).json("taskAnswer " + taskAnswers[i] + " doesn't exist");
-		}
-
 		let peerReview = req.body.peerReview;
-		if(peerReview[0] === '[' && peerReview[peerReview.length-1] === ']')
-			peerReview = peerReview.substring(1, peerReview.length-1);
 
-		const peerReviews = peerReview.split(",");
+		//if (taskAnswer.isArray() && peerReview.isArray()){
+			for (var i=0; i<taskAnswer.length; i++){
+				let found = taskAnswerFunc.getTaskAnswer(taskAnswer[i]);
+				if (found["id"])
+					return res.status(404).json("taskAnswer " + taskAnswer[i] + " doesn't exist");
+			}
 
-		for (var j=0; j<peerReviews.length; j++){
-			let found = peerReviewFunc.getPeerReviewById(peerReviews[j]);
-			if (found["id"])
-				return res.status(404).json("peerReview " + peerReviews[j] + " doesn't exist");
-		}
+			for (var j=0; j<peerReview.length; j++){
+				let found = peerReviewFunc.getPeerReviewById(peerReview[j]);
+				if (found["id"])
+					return res.status(404).json("peerReview " + peerReview[j] + " doesn't exist");
+			}
 
-		var review = new Object();
-		review["taskAnswer"] = taskAnswers;
-		review["peerReview"] = peerReviews;
-		review["vote"] = 0;	
-			
-		reviewFunc.writeReview(review);
-		return res.status(201).json("Created");
+			reviewFunc.writeReview(req.body);
+			return res.status(201).json("Created");
+		/*}
+		else {
+			return res.status(400).json("Invalid request: taskAnswer e peerRevie devono essere array")
+		}*/
 	}
 	else {
 		return res.status(400).json("Invalid request");
@@ -42,14 +33,14 @@ function createReview (req, res) {
 }
 
 function getAllReviews (req, res)  {
-	res.status(200).json(reviewFunc.getAllReviews());
+	return res.status(200).json(reviewFunc.getAllReviews());
 }
 
 function getReview (req, res) {
 	if (req.params.reviewId){
 		const review = reviewFunc.getReview(req.params.reviewId);
-		if (review == null) {
-			return res.status(404).json("Review "+req.params.reviewId+"Not found");
+		if (review["id"]) {
+			return res.status(404).json("Review "+req.params.reviewId+" not found");
 		}
 		else {
 			return res.status(200).json(review);
@@ -64,7 +55,7 @@ function getAllPeerReviews (req, res) {
 	if (req.params.reviewId) {
 		const review = reviewFunc.getReview(req.params.reviewId);
 
-		if (review === null){
+		if (review["id"]){
 			return res.status(404).json("Review "+req.params.reviewId+"Not found");
 		}
 		else {
@@ -72,9 +63,9 @@ function getAllPeerReviews (req, res) {
 			var allPeerReviews = review["peerReview"];
 
 			for (var i=0; i<allPeerReviews.length; i++){
-				var peerReview = peerReviewFunc.getPeerReview(allPeerReviews[i]);
+				var peerReview = peerReviewFunc.getPeerReviewById(allPeerReviews[i]);
 
-				if (peerReview == null){
+				if (peerReview["id"]){
 					return res.status(400).json("Something has gone wrong");
 				}
 				else {
@@ -118,7 +109,7 @@ function getAllTaskAnswer (req, res) {
 	if (req.params.reviewId){
 		const review = reviewFunc.getReview(req.params.reviewId);
 
-		if (review === null){
+		if (review["id"]){
 			return res.status(404).json("Review "+ req.params.reviewId + " not found");
 		}
 		else {
@@ -128,7 +119,7 @@ function getAllTaskAnswer (req, res) {
 			for (var i=0; i<allTaskAnswer.length; i++){
 				var taskAnswer = taskAnswerFunc.getTaskAnswer(allTaskAnswer[i]);
 
-				if (taskAnswer == null){
+				if (taskAnswer["id"]){
 					return res.status(404).json("Something has gone wrong");
 				}
 				else {
@@ -151,7 +142,7 @@ function getTaskAnswer (req, res) {
 
 		const review = reviewFunc.getReview(reviewId);
 
-		if (review === null){
+		if (review["id"]){
 			return res.status(404).json("Review "+reviewId+" not found");
 		}
 		else {
@@ -163,7 +154,7 @@ function getTaskAnswer (req, res) {
 				}
 			}
 
-			return res.status(404).send("TaskAnswer "+taskAnswerId+" not found in review "+peerReviewId);
+			return res.status(404).json("TaskAnswer "+taskAnswerId+" not found in review "+ reviewId);
 		}
 	}
 	else {
@@ -174,11 +165,13 @@ function getTaskAnswer (req, res) {
 function deleteReview (req, res) {
 	if (req.params.reviewId){
 		const deleted = reviewFunc.deleteReview(req.params.reviewId);
-		if (deleted !== null)
-			return res.status(200).json("Review "+ req.params.reviewId + "deleted");
-		else
+		if (deleted["id"] !== undefined){
 			return res.status(204);
-	}
+		}
+		else{
+			return res.status(200).json("Review "+ req.params.reviewId + " deleted");
+		}
+	} 
 	else {
 		return res.status(400).json("Invalid request");
 	}
