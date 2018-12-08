@@ -1,48 +1,21 @@
 {
-    "Assignment2": {
-        "title": "Ingegneria del software",
-        "professor": "_a43v8503v",
-        "tasks": "taskGroup1",
-        "class": "userGroup2",
-        "start": "12",
-        "deadline": "2"
-    },
-    "Assignment3": {
-        "title": "Ingegneria del software",
-        "professor": "_a43v8503v",
-        "tasks": "taskGroup1",
-        "class": "userGroup2",
-        "start": "12",
-        "deadline": "2"
-    },
-    "Assignment4": {
-        "title": "Algoritmi",
-        "professor": "_qug0v8sh",
-        "tasks": "taskGroup1",
-        "class": "userGroup2",
-        "start": "12",
-        "deadline": "2"
-    },
-    "_xssyxdk50": {
-        "title": "Algoritmi",
-        "professor": "_qug0v8sh",
-        "tasks": [
-            "ciao",
-            "ciao"
-        ],
-        "userGroup": "userGroup2",
-        "start": "12",
-        "deadline": "2"
-    },
-    "_pa8n5be4n": {
-        "title": "Algoritmi",
-        "professor": "_qug0v8sh",
-        "tasks": [
-            "ciao",
-            "ciao"
-        ],
-        "userGroup": "userGroup2",
-        "start": "12",
-        "deadline": "2"
-    }
-}
+	"Assignment1": {
+		"id": "1",
+		"title": "Ingegneria del software",
+		"professor": "user1",
+		"tasks": "taskGroup1",
+		"class": "userGroup2",
+		"start": "12",
+		"deadline": "2"
+	},
+	
+	"Assignment2": {
+		"id": "2",
+		"title": "Algoritmi e strutture dati",
+		"professor": "user2",
+		"tasks": "taskGroup3",
+		"class": "userGroup1",
+		"start": "12",
+		"deadline": "2"
+	}
+} 

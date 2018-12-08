@@ -11,6 +11,7 @@ const login = require("./src/login.js");
 const user = require("./src/user.js");
 const task = require("./src/task.js");
 const taskGroup = require("./src/taskGroup.js");
+const userGroup = require("./src/usergroup.js");
 const peerReview = require("./src/peerReview.js");
 const assignment = require("./src/assignment.js");
 const review = require("./src/review.js");
@@ -32,6 +33,39 @@ app.get('/user/:idUser/assignments', user.getAssignmentsByIdUser);
 app.get('/user/:idUser/assignments/:idAssignment', user.getAssignmentByIdUser);
 app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdUser);
 //app.get('/user/:idUser/peerReview', user.getPeerReview
+
+//USER GROUP
+app.get ('/userGroup', function(req, res){
+	res.send(userGroup.listUserGroups(req, res));
+})
+
+app.post ('/userGroup', function(req, res){
+	res.send(userGroup.createUserGroup(req, res));
+})
+//---
+app.get ('/userGroup/:userGroupId', function(req, res){
+	res.send(userGroup.getUserGroupById(req, res));
+})
+
+app.put ('/userGroup/:userGroupId', function(req, res){
+	res.send(userGroup.updateUserGroup(req, res));
+})
+
+app.delete ('/userGroup/:userGroupId', function(req, res){
+	res.send(userGroup.deleteUserGroup(req, res));
+})
+//...
+app.get ('/userGroup/:userGroupId/author', function(req, res){
+	res.send(userGroup.getAuthorByIdUserGroup(req, res));
+})
+//...
+app.get ('/userGroup/:userGroupId/users', function(req, res){
+	res.send(userGroup.getUsersByIdUserGroup(req, res));
+})
+//...
+app.delete ('/userGroup/:userGroupId/users/:userId', function (req, res){
+	res.send(userGroup.deleteUserByIdUserGroup(req, res));
+})
 
 //TASK
 app.get('/task', task.listAllTasks);

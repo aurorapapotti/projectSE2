@@ -16,6 +16,7 @@ function addObject(obj,dbpath){
 function deleteObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
+<<<<<<< HEAD
   let object = Object.keys(db).filter(x => x == idObject);
   object_deleted = new Object();
   if (object.length > 0) {
@@ -40,6 +41,11 @@ function modifyObject(idObject, dbpath, newObject){
   db[object] = newObject;
 
   fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
+=======
+  delete db[idObject];
+  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+  return idObject;
+>>>>>>> usergroup
 }
 
 function getObjectsList(dbpath){
@@ -87,7 +93,11 @@ function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
   }
 =======
     console.log("Object found :)");
+<<<<<<< HEAD
     return obj;
+=======
+    return db[object];
+>>>>>>> usergroup
   }
   else {
     console.log("Object NOT found :(");
@@ -95,6 +105,7 @@ function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
   }
 }
 
+<<<<<<< HEAD
 function deleteObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
@@ -145,6 +156,31 @@ function getReview (idReview){
 
 function getAllReview(){
   return getObjectsList(dbReviewPath);
+=======
+function getObjectByParam(idObject, dbPathidObject, dbPathObjectToFind){
+  let data = fs.readFileSync(dbPathidObject, 'utf8');
+  let db = JSON.parse(data);
+  let object = Object.keys(db).filter(x => x == idObject);
+  if (object.length > 0) {
+    let data2 = fs.readFileSync(dbPathObjectToFind, 'utf8');
+    let db2 = JSON.parse(data);
+    let object2 = Object.keys(db2).filter(x => x.professor == idObject);
+    return db[idObject];
+  }
+  else {
+    console.log("Object NOT found :(");
+    return null;
+  }
+}
+
+function modifyObject(idObject, dbpath, newObject){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  let object = Object.keys(db).filter(x => x == idObject);
+  db[object] = newObject;
+
+  fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
+>>>>>>> usergroup
 }
 
 function deleteReview(idReview){
@@ -180,6 +216,7 @@ function getAllTaskAnswers(){
 
 module.exports = {
 <<<<<<< HEAD
+<<<<<<< HEAD
   getObjectsList: getObjectsList,
   getObjectByParam: getObjectByParam,
   addObject: addObject,
@@ -201,4 +238,12 @@ module.exports = {
   modifyReview: modifyReview,
   writeTaskAnswer: writeTaskAnswer
 >>>>>>> review
+=======
+  addObject: addObject,
+  deleteObject: deleteObject,
+  getObjectsList: getObjectsList,
+  getObject: getObject,
+  getObjectByParam: getObjectByParam,
+  modifyObject: modifyObject
+>>>>>>> usergroup
 }
