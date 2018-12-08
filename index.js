@@ -30,7 +30,7 @@ app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdU
 
 //TASK
 app.get('/task', task.listAllTasks);
-app.get('/task/argument', task.getTaskByArgument);
+app.get('/task/argument', task.getTasksByArgument);
 app.get('/task/:idTask', task.getTask);
 app.post('/task', task.createTask);
 app.delete('/task/:idTask', task.deleteTask);

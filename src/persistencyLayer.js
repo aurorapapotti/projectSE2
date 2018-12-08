@@ -76,10 +76,22 @@ function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
   }
 }
 
+function getObjectByQuery(query, param, dbpath){
+  let data = fs.readFileSync(dbpath, 'utf8');
+  let db = JSON.parse(data);
+  object_filtered = new Object();
+  Object.keys(db).forEach(function(key){
+    if(db[key][param] == query)
+      object_filtered[key] = db[key];
+  });
+  return object_filtered;
+}
+
 module.exports = {
   getObjectsList: getObjectsList,
   getObjectByParam: getObjectByParam,
   addObject: addObject,
   getObject: getObject,
-  deleteObject: deleteObject
+  deleteObject: deleteObject,
+  getObjectByQuery: getObjectByQuery
 }

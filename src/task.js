@@ -38,54 +38,19 @@ function deleteTask(req, res){
   return res.status(200).json("Task deleted");
 }
 
-function getTaskByArgument(req, res){
+function getTasksByArgument(req, res){
   if (!req || !req.query || req.query.taskArgument === undefined || typeof (req.query.taskArgument) !== 'string' )
     return res.status(400).json("Bad Request");
   tasks = new Object();
-  let param = "professor";
-  assignments = userFunctions.getAssignments(req.params.idUser, param);
-  if (assignments.id)
-    return res.status(404).json("User NOT found");
-  else if (!assignments[req.params.idAssignment])
-    return res.status(404).json("Assignment NOT found");
-  else
-    return res.status(200).json(assignments[req.params.idAssignment]);
+  let param = "argument";
+  tasks = taskFunctions.getTasks(req.query.taskArgument, param);
+  return res.status(200).json(tasks);
 }
-
-
-/*
-
-
-function getTaskbyArgument(req,res){
-	const taskArgument = req.query.taskArgument;
-	const AllTasks = taskFunc.getAllTasks();
-
-	let searched = new Object();
-
-	console.log("\nArgomento cercato: ", taskArgument);
-
-	for (element in AllTasks) {
-		console.log("\nArgomento trovato: ", AllTasks[element]["taskArgument"]);
-
-		if (AllTasks[element]["taskArgument"] == taskArgument){
-			searched[element] = AllTasks[element];
-		}
-	}
-
-	if (taskArgument == null){
-		res.status(400).send("Invalid request");
-	}
-	else{
-		res.status(200).send(taskArgument);
-	}
-}
-}*/
 
 module.exports = {
   createTask : createTask,
 	listAllTasks: listAllTasks,
 	getTask : getTask,
-	//getTaskbyArgument: getTaskbyArgument,
-	//getTaskbyDescription : getTaskbyDescription,
+	getTasksByArgument: getTasksByArgument,
 	deleteTask : deleteTask
 }
