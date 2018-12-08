@@ -1,4 +1,4 @@
-const fetch = require("node-fetch");
+//const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
 const percLayer = require("./persistencyLayer.js");
 
@@ -12,7 +12,7 @@ function createTaskAnswer (req, res) {
 	taskAnswer["student"] = student;
 	taskAnswer["assignment"] = assignment;
 	taskAnswer["taskGroup"] = taskGroup;
-		
+
 	percLayer.writeTaskAnswer(taskAnswer);
 	res.status(201).send("Created");
 }
@@ -38,7 +38,7 @@ function getAllAnswers (req, res) {
 	if (taskAnswer === null){
 		res.status(400).send("Invalid request");
 	}
-	else { 
+	else {
 		res.status(200).send(taskAnswer["answers"]);
 	}
 }
@@ -86,7 +86,7 @@ function editTaskGroup (req, res) {
 }
 
 function editStudent(req, res){
-	
+
 }
 
 module.exports = {

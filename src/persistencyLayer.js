@@ -9,14 +9,13 @@ function addObject(obj,dbpath){
   let db = JSON.parse(data);
   let id = getUUID();
   db[id] = obj;
-  fs.writeFileSync(dbpath, JSON.stringify(db));
+  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
   return id;
 }
 
 function deleteObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
-<<<<<<< HEAD
   let object = Object.keys(db).filter(x => x == idObject);
   object_deleted = new Object();
   if (object.length > 0) {
@@ -38,14 +37,13 @@ function modifyObject(idObject, dbpath, newObject){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
-  db[object] = newObject;
-
-  fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
-=======
-  delete db[idObject];
-  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-  return idObject;
->>>>>>> usergroup
+  if (object.length > 0){
+    db[idObject] = newObject;
+    fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+    return db[idObject];
+  }
+  else
+    return idObject;
 }
 
 function getObjectsList(dbpath){
@@ -58,9 +56,7 @@ function getObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
-  let obj = db[object];
   if (object.length > 0) {
-<<<<<<< HEAD
     //console.log("Object found :)");
     return db[idObject];
   }
@@ -91,47 +87,6 @@ function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
     object_notFound = {"id": idObject};
     return object_notFound;
   }
-=======
-    console.log("Object found :)");
-<<<<<<< HEAD
-    return obj;
-=======
-    return db[object];
->>>>>>> usergroup
-  }
-  else {
-    console.log("Object NOT found :(");
-    return null;
-  }
-}
-
-<<<<<<< HEAD
-function deleteObject(idObject, dbpath){
-  let data = fs.readFileSync(dbpath, 'utf8');
-  let db = JSON.parse(data);
-  let object = Object.keys(db).filter(x => x == idObject);
-  delete db[object];
-  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-  return idObject;
-}
-
-function modifyObject(idObject, dbpath, newObject){
-  let data = fs.readFileSync(dbpath, 'utf8');
-  let db = JSON.parse(data);
-  let object = Object.keys(db).filter(x => x == idObject);
-  db[object] = newObject;
-
-  fs.writeFileSync(dbpath,JSON.stringify(db));
-}
-
-//USER
-function writeUser(user){
-  return addObject(user,dbUserPath);
-}
-
-function getAllUsers(){
-  return getObjectsList(dbUserPath);
->>>>>>> review
 }
 
 function getObjectByQuery(query, param, dbpath){
@@ -145,105 +100,12 @@ function getObjectByQuery(query, param, dbpath){
   return object_filtered;
 }
 
-//REVIEW
-function writeReview(review){
-  return addObject(review,dbReviewPath);
-}
-
-function getReview (idReview){
-	return getObject(idReview, dbReviewPath);
-}
-
-function getAllReview(){
-  return getObjectsList(dbReviewPath);
-=======
-function getObjectByParam(idObject, dbPathidObject, dbPathObjectToFind){
-  let data = fs.readFileSync(dbPathidObject, 'utf8');
-  let db = JSON.parse(data);
-  let object = Object.keys(db).filter(x => x == idObject);
-  if (object.length > 0) {
-    let data2 = fs.readFileSync(dbPathObjectToFind, 'utf8');
-    let db2 = JSON.parse(data);
-    let object2 = Object.keys(db2).filter(x => x.professor == idObject);
-    return db[idObject];
-  }
-  else {
-    console.log("Object NOT found :(");
-    return null;
-  }
-}
-
-function modifyObject(idObject, dbpath, newObject){
-  let data = fs.readFileSync(dbpath, 'utf8');
-  let db = JSON.parse(data);
-  let object = Object.keys(db).filter(x => x == idObject);
-  db[object] = newObject;
-
-  fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
->>>>>>> usergroup
-}
-
-function deleteReview(idReview){
-  return deleteObject(idReview, dbReviewPath);
-}
-
-function modifyReview(idReview, newObject){
-  return modifyObject(idReview, dbReviewPath, newObject);
-}
-
-//PEER REVIEW
-function getPeerReview(idPeerReview){
-  return getObject(idPeerReview, dbPeerReviewPath);
-}
-
-function getAllPeerReviews(){
-  return getObjectsList(dbPeerReviewPath);
-}
-
-//TASK ANSWERS
-function writeTaskAnswer(taskAnswer){
-  return addObject(taskAnswer, dbTaskAnswerPath);
-}
-
-function getTaskAnswer(idPeerReview){
-  return getObject(idPeerReview, dbTaskAnswerPath);
-}
-
-function getAllTaskAnswers(){
-  return getObjectsList(dbTaskAnswerPath);
-}
-
-
 module.exports = {
-<<<<<<< HEAD
-<<<<<<< HEAD
   getObjectsList: getObjectsList,
   getObjectByParam: getObjectByParam,
+  modifyObject: modifyObject,
   addObject: addObject,
   getObject: getObject,
   deleteObject: deleteObject,
   getObjectByQuery: getObjectByQuery
-=======
-  writeUser: writeUser,
-  getAllUsers: getAllUsers,
-  getUser: getUser,
-	writeReview: writeReview,
-  getAllReviews: getAllReview,
-  getReview: getReview,
-  getAllPeerReviews: getAllPeerReviews,
-  getPeerReview: getPeerReview,
-  getAllTaskAnswers: getAllTaskAnswers,
-  getTaskAnswer: getTaskAnswer,
-  deleteReview: deleteReview,
-  modifyReview: modifyReview,
-  writeTaskAnswer: writeTaskAnswer
->>>>>>> review
-=======
-  addObject: addObject,
-  deleteObject: deleteObject,
-  getObjectsList: getObjectsList,
-  getObject: getObject,
-  getObjectByParam: getObjectByParam,
-  modifyObject: modifyObject
->>>>>>> usergroup
 }

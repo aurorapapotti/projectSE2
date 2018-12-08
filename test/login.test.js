@@ -31,20 +31,20 @@ describe ('POST test invalid', () => {
     var user = {
       id: 1,
     }
-    expect(loginUser({"body": user},res)).toEqual(res.status(401).send("Bad Request"));
+    expect(loginUser({"body": user},res)).toEqual(res.status(400).send("Bad Request"));
   })
 
   test('POST /login body id is undefined', () => {
     var user = {
       id: undefined,
     }
-    expect(loginUser({"body": user},res)).toEqual(res.status(401).send("Bad Request"));
+    expect(loginUser({"body": user},res)).toEqual(res.status(400).send("Bad Request"));
   })
 
   test('POST /login body req is undefined', () => {
     var user = {
       id: "_qumn0x035",
     }
-    expect(loginUser({"": user},res)).toEqual(res.status(401).send("Bad Request"));
+    expect(loginUser({"": user},res)).toEqual(res.status(400).send("Bad Request"));
   })
 })

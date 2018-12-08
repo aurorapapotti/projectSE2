@@ -10,7 +10,22 @@ function getPeerReviewById(idPeerReview){
   return persistencyLayer.getObject(idPeerReview, dbPeerReviewPath);
 }
 
+function addPeerReview(peerReview){
+  return persistencyLayer.addObject(peerReview, dbPeerReviewPath);
+}
+
+function removePeerReview(idPeerReview){
+  return persistencyLayer.deleteObject(idPeerReview, dbPeerReviewPath);
+}
+
+function modifyPeerReview(idPeerReview, newPeerReview){
+  return persistencyLayer.modifyObject(idPeerReview, dbPeerReviewPath, newPeerReview);
+}
+
 module.exports = {
   getAllPeerReview: getAllPeerReview,
-  getPeerReviewById: getPeerReviewById
+  getPeerReviewById: getPeerReviewById,
+  addPeerReview: addPeerReview,
+  removePeerReview: removePeerReview,
+  modifyPeerReview: modifyPeerReview
 }

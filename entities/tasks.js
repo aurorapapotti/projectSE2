@@ -40,5 +40,11 @@
         "taskType": "multiple",
         "argument": "algoritmi",
         "correctAnswer": "vivere"
+    },
+    "_bm7j3b1p7": {
+        "taskType": "multiple",
+        "argument": "algoritmi",
+        "correctAnswer": "vivere",
+        "author": "_1o1ppwws8"
     }
 }

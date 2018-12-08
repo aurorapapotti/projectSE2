@@ -20,20 +20,60 @@ const taskAnswer = require("./src/taskAnswer.js");
 app.get('/', (req, res) => res.send('Hello World!'))
 
 //REGISTER
-app.post('/register',register.registerUser);
+app.post('/register',register.registerUser); //testOK
 
 //LOGIN
-app.post('/login', login.loginUser);
+app.post('/login', login.loginUser); //testOK
 
 //USER
-app.get('/user', user.listAllUsers);
-app.get('/user/:idUser', user.getUser);
-app.delete('/user/:idUser', user.deleteUser);
-app.get('/user/:idUser/assignments', user.getAssignmentsByIdUser);
-app.get('/user/:idUser/assignments/:idAssignment', user.getAssignmentByIdUser);
-app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdUser);
-//app.get('/user/:idUser/peerReview', user.getPeerReview
+app.get('/user', user.listAllUsers); //testOK
+app.get('/user/:idUser', user.getUser); //testOK
+app.put('/user/:idUser', user.putUser); //testOK
+app.delete('/user/:idUser', user.deleteUser); //testOK
 
+app.get('/user/:idUser/tasks', user.getTasksByIdUser);
+app.post('/user/:idUser/tasks', task.createTaskByIdUser);
+app.get('/user/:idUser/tasks/:idTask', user.getTaskByIdUser);
+app.put('/user/:idUser/tasks/:idTask', task.putTaskByIdUser);
+app.delete('/user/:idUser/tasks/:idTask', task.deleteTaskByIdUser);
+
+app.get('/user/:idUser/taskGroups', user.getTaskGroupsByIdUser);
+app.post('/user/:idUser/taskGroups', taskGroup.createTaskGroupByIdUser);
+app.get('/user/:idUser/taskGroups/:idTaskGroup', user.getTaskGroupByIdUser);
+app.put('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.putTaskGroupByIdUser);
+app.delete('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.deleteTaskGroupByIdUser);
+
+//app.get('/user/:idUser/userGroup', user.getUserGroupsByIdUser);
+//app.post('/user/:idUser/userGroup', userGroup.createUserGroup);
+//app.get('/user/:idUser/userGroup/:idUserGroup', user.getUserGroupByIdUser);
+//app.put('/user/:idUser/userGroup/:idUserGroup', userGroup.putUserGroup);
+//app.delete('/user/:idUser/userGroup/:idUserGroup', userGroup.deleteUserGroup);
+
+//app.get('/user/:idUser/taskAnswers', user.getTaskAnswersByIdUser);
+//app.post('/user/:idUser/assignments/:idAssignment/taskAnswers', taskAnswer.createTaskAnswer);
+//app.get('/user/:idUser/taskAnswers/:idTaskAnswer', user.getTaskAnswerByIdUser);
+//app.put('/user/:idUser/TaskAnswers/:idTaskAnswer', taskAnswer.putTaskAnswer);
+//app.delete('/user/:idUser/TaskAnswers/:idTaskAnswer', taskAnswer.deleteTaskAnswer);
+
+//app.get('/user/:idUser/reviews', user.getReviewsByIdUser);
+//app.post('/user/:idUser/taskAnswer/:idTaskAnswer/reviews', review.createReview);
+//app.get('/user/:idUser/reviews/:idReview, user.getReviewByIdUser);
+//app.put('/user/:idUser/reviews/:idUserGroup', review.putReview;
+//app.delete('/user/:idUser/reviews/:idReview', review.deleteReview);
+
+app.get('/user/:idUser/peerReviews', user.getPeerReviewsByIdUser);
+app.post('/user/:idUser/taskAnswers/:idTaskAnswer/peerReviews', peerReview.createPeerReviewByIdUser);
+app.get('/user/:idUser/peerReviews/:idPeerReview', user.getPeerReviewByIdUser);
+app.put('/user/:idUser/taskAnswers/:idTaskAnswer/peerReviews/:idPeerReview', peerReview.putPeerReviewByIdUser);
+app.delete('/user/:idUser/peerReviews/:idPeerReview', peerReview.deletePeerReviewByIdUser);
+
+
+//app.post('/user/:idUser/peerReview', peerReview.createPeerReview);
+//app.get('/user/:idUser/assignments', user.getAssignmentsByIdUser);
+//app.get('/user/:idUser/assignments/:idAssignment', user.getAssignmentByIdUser);
+//app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdUser);
+
+/*
 //USER GROUP
 app.get ('/userGroup', function(req, res){
 	res.send(userGroup.listUserGroups(req, res));
@@ -65,7 +105,7 @@ app.get ('/userGroup/:userGroupId/users', function(req, res){
 //...
 app.delete ('/userGroup/:userGroupId/users/:userId', function (req, res){
 	res.send(userGroup.deleteUserByIdUserGroup(req, res));
-})
+})*/
 
 //TASK
 app.get('/task', task.listAllTasks);
@@ -79,6 +119,7 @@ app.get('/taskGroup', taskGroup.listAllTaskGroups);
 app.get('/taskGroup', taskGroup.getTaskGroupByName);
 app.get('/taskGroup/:idTaskGroup', taskGroup.getTaskGroup);
 app.post('/taskGroup', taskGroup.createTaskGroup);
+app.put('/taskGroup/:idTaskGroup', taskGroup.putTaskGroup);
 app.delete('/taskGroup/:idTaskGroup', taskGroup.deleteTaskGroup);
 
 //ASSIGNMENT
@@ -191,6 +232,10 @@ app.get("/taskAnswers/:taskAnswerId/answers/:answerId", (req, res) => {
 
 //PEER REVIEW
 app.get('/peerReview', peerReview.listAllPeerReview);
+app.post('/peerReview', peerReview.createPeerReview);
 app.get('/peerReview/:idPeerReview', peerReview.getPeerReview);
+app.put('/peerReview/:idPeerReview', peerReview.putPeerReview);
+app.delete('/peerReview/:idPeerReview', peerReview.deletePeerReview);
+
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

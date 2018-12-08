@@ -19,6 +19,10 @@ function getTaskGroup(taskGroupName, param){
   return persistencyLayer.getObjectByQuery(taskGroupName, param, dbTaskGroupPath);
 }
 
+function modifyTaskGroup(idTaskGroup, newTaskGroup){
+  return persistencyLayer.modifyObject(idTaskGroup, dbTaskGroupPath, newTaskGroup);
+}
+
 function removeTaskGroup(idTaskGroup){
   return persistencyLayer.deleteObject(idTaskGroup, dbTaskGroupPath);
 }
@@ -28,5 +32,6 @@ module.exports = {
   getAllTaskGroups: getAllTaskGroups,
   getTaskGroupById: getTaskGroupById,
   getTaskGroup: getTaskGroup,
+  modifyTaskGroup: modifyTaskGroup,
   removeTaskGroup: removeTaskGroup
 }

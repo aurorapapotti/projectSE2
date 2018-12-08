@@ -15,7 +15,7 @@ test('POST /register return code 201', async () => {
     email: "gianni.morandi@email.it",
     badgeNumber: 123456
   }
-  expect(registerUser({"body": user},res)).toEqual(res.status(201).send("Created"));
+  expect(registerUser({"body": user},res)).toEqual(res.status(201).send("Created User"));
 });
 test('POST /register no name', async () => {
   var user = {
@@ -23,7 +23,7 @@ test('POST /register no name', async () => {
     email: "gianni.morandi@email.it",
     badgeNumber: 123456
   }
-  expect(registerUser({"body": user},res)).toEqual(res.status(401).send("Bad Request"));
+  expect(registerUser({"body": user},res)).toEqual(res.status(400).send("Bad Request"));
 });
 test('POST /register no email', async () => {
   var user = {
@@ -31,7 +31,7 @@ test('POST /register no email', async () => {
     surname: "Morandi",
     badgeNumber: 123456
   }
-  expect(registerUser({"body": user},res)).toEqual(res.status(401).send("Bad Request"));
+  expect(registerUser({"body": user},res)).toEqual(res.status(400).send("Bad Request"));
 });
 test('POST /register bad name format', async () => {
   var user = {
@@ -40,7 +40,7 @@ test('POST /register bad name format', async () => {
     email: "gianni.morandi@email.it",
     badgeNumber: 123456
   }
-  expect(registerUser({"body": user},res)).toEqual(res.status(401).send("Bad Request"));
+  expect(registerUser({"body": user},res)).toEqual(res.status(400).send("Bad Request"));
 });
 test('POST /register bad badgeNumber format', async () => {
   var user = {
@@ -49,5 +49,5 @@ test('POST /register bad badgeNumber format', async () => {
     email: "gianni.morandi@email.it",
     badgeNumber: 123456.5
   }
-  expect(registerUser({"body": user},res)).toEqual(res.status(401).send("Bad Request"));
+  expect(registerUser({"body": user},res)).toEqual(res.status(400).send("Bad Request"));
 });

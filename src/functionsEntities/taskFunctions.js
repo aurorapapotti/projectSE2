@@ -14,6 +14,10 @@ function getTaskById(idTask){
   return persistencyLayer.getObject(idTask, dbTaskPath);
 }
 
+function modifyTask(idTask, newTask){
+  return persistencyLayer.modifyObject(idTask, dbTaskPath, newTask);
+}
+
 function removeTask(idTask){
   return persistencyLayer.deleteObject(idTask, dbTaskPath);
 }
@@ -34,6 +38,7 @@ module.exports = {
   getTaskById: getTaskById,
   addTask: addTask,
   getTasks: getTasks,
+  modifyTask: modifyTask,
   getTaskByDescription: getTaskByDescription,
   removeTask: removeTask
 }

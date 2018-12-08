@@ -1,4 +1,4 @@
-const persistencyLayer = require('./functionEntities/userGroupFunctions.js');
+const userGroupFunctions = require('./functionsEntities/userGroupFunctions.js');
 const bodyParser = require("body-parser");
 
 function listUserGroups(req, res) {
@@ -17,13 +17,13 @@ function createUserGroup(req, res) {
 	const name = req.body.name;
 	const author = req.body.author;
 	const users = req.body.users;
-	
+
 	var userGroup = new Object();
 	userGroup["name"] = name;
 	userGroup["author"] = author;
 	userGroup["users"] = new Array();
 	//userGroup["users"].push(users);
-	
+
 	const us = userGroupFunctions.writeUserGroup(userGroup);
 	if (us == null) {
 		res.status(400).send("Invalid request");
@@ -37,7 +37,7 @@ function createUserGroup(req, res) {
 function getUserGroupById(req, res) {
 	var id = req.params.userGroupId;
 	console.log("recived request: ", id);
-	
+
 	const us = userGroupFunctions.getUserGroupById(id);
 	if (us == null) {
 		res.status(400).send("Invalid request");
@@ -115,7 +115,7 @@ function getUsersByIdUserGroup(req, res){
 	else {
 		var users = [];
 		var allUsers = userGroup["users"];
-		
+
 		for (var i=0; i<allUsers.length; i++){
 			console.log("Element: " + allUsers[i]);
 			var user = userGroupFunctions.getUser(allUsers[i]);
@@ -137,7 +137,7 @@ function deleteUserByIdUserGroup(req, res){
 
 	var trovato = -1;
 	var userGroup = userGroupFunctions.getUserGroupById(idUserGroup);
-	
+
 	if(userGroup === null){
 		res.status(400).send("Id userGroup null");
 	}
@@ -145,7 +145,7 @@ function deleteUserByIdUserGroup(req, res){
 		var users = userGroup["users"];
 		//console.log("Lunghezza: ", users.length);
 		for(var i = 0; i<(users.length) && (trovato ==-1); i++){
-			if(users[i] == idUser){			
+			if(users[i] == idUser){
 				trovato = i;
 				if(i == 0 && users.length == 1){
 					users = new Array();
@@ -158,14 +158,14 @@ function deleteUserByIdUserGroup(req, res){
 				console.log("Deleted.");
 				console.log("Users: ", users);
 				userGroupFunctions.modifyUserGroup(idUserGroup, userGroup);	//UPDATE
-				res.status(200).send(userGroup);	
+				res.status(200).send(userGroup);
 			}
 		}
-		
+
 		if(trovato == -1){
 			res.status(400).send("User not Found!");
 		}
-	}	
+	}
 }
 
 module.exports = {
