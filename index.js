@@ -10,6 +10,7 @@ const register = require("./src/register.js");
 const login = require("./src/login.js");
 const user = require("./src/user.js");
 const task = require("./src/task.js");
+const taskGroup = require("./src/taskGroup.js");
 
 //app.get('/', (req, res) => res.send('Hello World!'))
 
@@ -43,7 +44,15 @@ app.post ('/task', function(req, res){
 })
 
 app.get ('/task', function(req, res){
-  res.send(task.getAllTasks(req, res));
+  if (req.query.taskArgument !== null || req.query.taskArgument !== undefined){
+    res.send(task.getTaskbyArgument(req, res));
+  }
+  else if (req.query.taskDescription !== null || req.query.taskDescription !== undefined){
+    res.send(task.getTaskbyDescription(req, res));
+  }
+  else {
+    res.send(task.getAllTasks(req, res));
+  } 
 })
 
 app.delete ('/task/:taskId', function(req, res){
@@ -54,13 +63,27 @@ app.get ('/task/:taskId', function(req, res){
   res.send(task.getTaskbyId(req, res));
 })
 
-app.get ('/task/:taskArgument', function(req, res){
-  res.send(task.getTaskbyArgument(req, res));
+
+//TASKGROUP
+
+app.post ('/taskGroup', function(req, res){
+  res.send(taskGroup.createTaskGroup(req, res));
 })
 
-app.get ('/task/:taskDescription', function(req, res){
-  res.send(task.getTaskbyDescription(req, res));
+app.get ('/taskGroup', function(req, res){
+  res.send(taskGroup.getAllTaskGroups(req, res));
 })
 
+app.delete ('/taskGroup/:taskGroupId', function(req, res){
+  res.send(taskGroup.deleteTaskGroup(req, res));
+})
+
+app.get ('/taskGroup/:taskGroupId', function(req, res){
+  res.send(taskGroup.getTaskGroupById(req, res));
+})
+
+app.get ('/taskGroup/:taskGroupName', function(req, res){
+  res.send(taskGroup.getTaskByName(req, res));
+})
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

@@ -2,6 +2,7 @@ var fs = require("fs");
 
 const dbUserPath = "./entities/users.js";
 const dbTaskPath = "./entities/task.js";
+const dbTaskGroupPath = "./entities/taskGroup.js";
 
 function getUUID(){
   return '_' + Math.random().toString(36).substr(2, 9);

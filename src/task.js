@@ -33,12 +33,16 @@ function getTaskbyId(req, res){
 }
 
 function getTaskbyArgument(req,res){
-	const taskArgument = req.params.taskArgument;
+	const taskArgument = req.query.taskArgument;
 	const AllTasks = taskFunc.getAllTasks();
 	
-	let searched = {};
+	let searched = new Object();
 	
+	console.log("\nArgomento cercato: ", taskArgument);
+
 	for (element in AllTasks) {
+		console.log("\nArgomento trovato: ", AllTasks[element]["taskArgument"]);
+
 		if (AllTasks[element]["taskArgument"] == taskArgument){
 			searched[element] = AllTasks[element];
 		}
