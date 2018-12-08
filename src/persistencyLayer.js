@@ -38,9 +38,15 @@ function deleteObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
-  delete db[object];
-  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-  return idObject;
+  if (object.length > 0) {
+    delete db[object];
+    fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+    return idObject;
+  }
+  else {
+    return null;
+  }
+  
 }
 
 function modifyObject(idObject, dbpath, newObject){
