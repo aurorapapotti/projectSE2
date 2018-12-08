@@ -4,8 +4,12 @@ const dbUserPath = __dirname+"/../../entities/users.js";
 const dbUserGroupPath = __dirname+"/../../entities/usergroups.js";
 const dbTaskGroupPath = __dirname+"/../../entities/taskgroups.js";
 
-function writeAssignment(assignmentId){
+/*function writeAssignment(assignmentId){
 	return persistencyLayer.addObject(assignmentId, dbAssignmentPath);
+}*/
+
+function addAssignment (assignment){
+	return persistencyLayer.addObject(assignment, dbAssignmentPath);
 }
 
 function getAllAssignments(){
@@ -37,7 +41,7 @@ function getUserGroupById(id){
 }
 
 module.exports = {
-    writeAssignment: writeAssignment,
+    addAssignment: addAssignment,
     getAllAssignments: getAllAssignments,
     getAssignmentById: getAssignmentById,
     deleteAssignment: deleteAssignment,
