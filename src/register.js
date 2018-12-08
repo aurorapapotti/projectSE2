@@ -6,9 +6,9 @@ function registerUser(req, res) {
   if(typeof req.body.name !== "string" ||typeof req.body.surname !== "string" ||typeof req.body.email !== "string" || !Number.isInteger(req.body.badgeNumber) )
     return res.status(401).send("Bad Request");
   //console.log("recived request: ",req.body);
-  userFunctions.createUser(req.body);
+  let idUser = userFunctions.createUser(req.body);
   //console.log("wrote completed: ", userFunctions.getAllUsers());
-  return res.status(201).send("Created");
+  return res.status(201).send("Created User: ",idUser);
 }
 
 module.exports = {

@@ -9,31 +9,20 @@ const register = require("./src/register.js");
 const login = require("./src/login.js");
 const user = require("./src/user.js");
 
-//app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World!'))
 
 //REGISTER
-app.post ('/register',register.registerUser);
+app.post('/register',register.registerUser);
 
 //LOGIN
-app.post ('/login', function(req, res){
-  res.send(login.loginUser(req,res));
-})
+app.post('/login', login.loginUser);
 
 //USER
-app.get ('/user', function(req, res){
-  res.send(user.listAllUsers(req, res));
-})
-
-app.delete ('/user/:idUser', function(req, res){
-  res.send(user.deleteUser(req, res));
-})
-
-app.get ('/user/:idUser', function(req, res){
-  res.send(user.getUser(req, res));
-})
-
-app.get('/user/:idUser/assignments', function(req, res){
-  res.send(user.getAssignmentsByIdUser(req, res));
-})
+app.get('/user', user.listAllUsers);
+app.get('/user/:idUser', user.getUser);
+app.delete('/user/:idUser', user.deleteUser);
+app.get('/user/:idUser/assignments', user.getAssignmentsByIdUser);
+app.get('/user/:idUser/assignments/:idAssignment', user.getAssignmentByIdUser);
+app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdUser);
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))

@@ -11,17 +11,21 @@ function getAllUsers(){
 }
 
 function getUser(idUser){
-  console.log("Id passato:", idUser);
+  //console.log("Id passato:", idUser);
   return persistencyLayer.getObject(idUser, dbUserPath);
 }
 
 function getUserById(idUser){
-  console.log("Id passato:", idUser);
+  //console.log("Id passato:", idUser);
   return persistencyLayer.getObject(idUser, dbUserPath);
 }
 
 function removeUser(idUser){
   return persistencyLayer.deleteObject(idUser, dbUserPath);
+}
+
+function removeAssignment(idAssignment){
+  return persistencyLayer.deleteObject(idAssignment, dbAssignmentPath);
 }
 
 function getAssignments(idUser, param){
@@ -35,4 +39,5 @@ module.exports = {
   getUserById: getUserById,
   removeUser: removeUser,
   getAssignments: getAssignments,
+  removeAssignment: removeAssignment
 }

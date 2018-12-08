@@ -8,8 +8,6 @@ const res = {
    }}
 }
 
-
-
 test('POST /register return code 201', async () => {
   var user = {
     name: "Gianni",
