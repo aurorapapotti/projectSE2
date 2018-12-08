@@ -51,6 +51,25 @@ app.delete('/taskGroup/:idTaskGroup', taskGroup.deleteTaskGroup);
 app.get('/assignment', assignment.listAllAssignments);
 app.post('/assignment', assignment.createAssignment);
 
+//REVIEW
+app.post("/reviews", review.createReview);
+app.get("/reviews", review.getAllReviews);
+app.get("/reviews/:reviewId", review.getReview);
+app.get("/reviews/:reviewId/peerReviews", review.getAllPeerReviews);
+app.get("/reviews/:reviewId/peerReviews/:peerReviewId", review.getPeerReview);
+app.get("/reviews/:reviewId/taskAnswers", review.getAllTaskAnswers);
+app.get("/reviews/:reviewId/taskAnswers/:taskAnswerId", review.getTaskAnswer);
+app.delete("/reviews/:reviewId", review.deleteReview);
+app.put("/reviews/:reviewId/peerReviews/:peerReviewId", review.editPeerReview);
+app.put("/reviews/:reviewId/taskAnswers/:taskAnswerId", review.editTaskAnswer);
+
+//TASK ANSWER
+app.post("/taskAnswers", taskAnswer.createTaskAnswer);
+app.get("/taskAnswers", taskAnswer.getAllTaskAnswers);
+app.get("/taskAnswers/:taskAnswerId", taskAnswer.getTaskAnswer);
+app.get("/taskAnswers/:taskAnswerId/answers", taskAnswer.getAllAnswers);
+app.get("/taskAnswers/:taskAnswerId/answers/:answerId", taskAnswer.getAnswer);
+
 /*
 //ASSIGNMENT
 app.get ('/assignment', function (req, res){
@@ -94,65 +113,8 @@ app.update ('/assignment/:assignmentId/tasks', function(req, res){
 })*/
 
 //REVIEW
-app.post("/reviews", (req, res) => {
-  res.send(review.createReview(req, res));
-})
 
-app.get("/reviews", (req, res) => {
-  res.send(review.getAllReviews(req, res));
-})
 
-app.get("/reviews/:reviewId", (req, res) => {
-  res.send(review.getReview(req, res));
-});
-
-app.get("/reviews/:reviewId/peerReviews", (req, res) => {
-  res.send(review.getAllPeerReviews(req, res));
-});
-
-app.get("/reviews/:reviewId/peerReviews/:peerReviewId", (req, res) => {
-  res.send(review.getPeerReview(req, res));
-});
-
-app.get("/reviews/:reviewId/taskAnswers", (req, res) => {
-  res.send(review.getAllTaskAnswers(req, res));
-});
-
-app.get("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
-  res.send(review.getTaskAnswer(req, res));
-});
-
-app.delete("/reviews/:reviewId", (req, res) => {
-  res.send(review.deleteReview(req, res));
-});
-
-app.put("/reviews/:reviewId/peerReviews/:peerReviewId", (req, res) => {
-  res.send(review.addPeerReview(req, res));
-});
-
-app.put("/reviews/:reviewId/taskAnswers/:taskAnswerId", (req, res) => {
-  res.send(review.addTaskAnswer(req, res));
-});
-
-app.post("/taskAnswers", (req, res) => {
-  res.send(taskAnswer.createTaskAnswer(req, res));
-});
-
-app.get("/taskAnswers", (req, res) => {
-  res.send(taskAnswer.getAllTaskAnswers(req, res));
-});
-
-app.get("/taskAnswers/:taskAnswerId", (req, res) => {
-  res.send(taskAnswer.getTaskAnswer(req, res));
-});
-
-app.get("/taskAnswers/:taskAnswerId/answers", (req, res) => {
-  res.send(taskAnswer.getAllAnswers(req, res));
-});
-
-app.get("/taskAnswers/:taskAnswerId/answers/:answerId", (req, res) => {
-  res.send(taskAnswer.getAnswer(req, res));
-});
 
 
 //PEER REVIEW
