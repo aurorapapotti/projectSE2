@@ -9,6 +9,7 @@ const register = require("./src/register.js");
 const login = require("./src/login.js");
 const user = require("./src/user.js");
 const task = require("./src/task.js");
+const taskGroup = require("./src/taskGroup.js");
 const peerReview = require("./src/peerReview.js");
 
 app.get('/', (req, res) => res.send('Hello World!'))
@@ -30,10 +31,17 @@ app.delete('/user/:idUser/assignments/:idAssignment', user.deleteAssignmentByIdU
 
 //TASK
 app.get('/task', task.listAllTasks);
-app.get('/task/argument', task.getTasksByArgument);
+app.get('/task', task.getTasksByArgument);
 app.get('/task/:idTask', task.getTask);
 app.post('/task', task.createTask);
 app.delete('/task/:idTask', task.deleteTask);
+
+//TASKGROUP
+app.get('/taskGroup', taskGroup.listAllTaskGroups);
+app.get('/taskGroup', taskGroup.getTaskGroupByName);
+app.get('/taskGroup/:idTaskGroup', taskGroup.getTaskGroup);
+app.post('/taskGroup', taskGroup.createTaskGroup);
+app.delete('/taskGroup/:idTaskGroup', taskGroup.deleteTaskGroup);
 
 
 //PEER REVIEW

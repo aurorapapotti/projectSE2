@@ -1,7 +1,7 @@
 const persistencyLayer = require('../persistencyLayer.js')
-const dbTaskGroupPath = __dirname+"/../../entities/taskGroup.js";
+const dbTaskGroupPath = __dirname+"/../../entities/taskGroups.js";
 
-function createTaskGroup(taskGroup){
+function addTaskGroup(taskGroup){
   return persistencyLayer.addObject(taskGroup,dbTaskGroupPath);
 }
 
@@ -9,14 +9,14 @@ function getAllTaskGroups(){
   return persistencyLayer.getObjectsList(dbTaskGroupPath);
 }
 
-function getTaskGroupById(Id){
-  console.log("Id passato:", Id);
-  return persistencyLayer.getObject(Id, dbTaskGroupPath);
+function getTaskGroupById(idTaskGroup){
+  //console.log("Id passato:", Id);
+  return persistencyLayer.getObject(idTaskGroup, dbTaskGroupPath);
 }
 
-function getTaskGroupByName(taskGroupName){
-  console.log("Nome passato:", taskGroupName);
-  return persistencyLayer.getObject(taskGroupName, dbTaskGroupPath);
+function getTaskGroup(taskGroupName, param){
+  //console.log("Nome passato:", taskGroupName);
+  return persistencyLayer.getObjectByQuery(taskGroupName, param, dbTaskGroupPath);
 }
 
 function removeTaskGroup(idTaskGroup){
@@ -24,10 +24,9 @@ function removeTaskGroup(idTaskGroup){
 }
 
 module.exports = {
-  createTaskGroup: createTaskGroup,
+  addTaskGroup: addTaskGroup,
   getAllTaskGroups: getAllTaskGroups,
   getTaskGroupById: getTaskGroupById,
-  getTaskGroupByName: getTaskGroupByName,
+  getTaskGroup: getTaskGroup,
   removeTaskGroup: removeTaskGroup
 }
-
