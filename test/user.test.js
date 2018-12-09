@@ -60,7 +60,7 @@ describe ('GET /user invalid tests', () => {
 });
 
 describe ('GET /user/:idUser valid tests', () => {
-  test('GET /user/:idUser return code 200', () => {
+  test.skip('GET /user/:idUser return code 200', () => {
     var userID = userFunctions.createUser(user);
     expect(getUser({"params": {"idUser": userID}},res)).toEqual(res.status(200).json(user));
   })

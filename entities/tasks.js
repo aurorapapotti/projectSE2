@@ -100,5 +100,41 @@
         "argument": "Testing",
         "correctAnswer": "Black Box",
         "author": "_6nkpffugb"
+    },
+    "_ay4ekf8s8": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_15jen78c0"
+    },
+    "_ywn0p2bu6": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_5e6n6zcf0"
+    },
+    "_p6gs4b5i4": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_4q20amhr0"
+    },
+    "_jiv3d6hvl": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_gbd5ud3r1"
+    },
+    "_xny8ri95q": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_2nl2ua2tm"
+    },
+    "_ih0a0o5eg": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_qkt67x4ez"
     }
 }
