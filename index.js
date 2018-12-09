@@ -62,6 +62,7 @@ app.get("/reviews/:reviewId/taskAnswers/:taskAnswerId", review.getTaskAnswer);
 app.delete("/reviews/:reviewId", review.deleteReview);
 app.put("/reviews/:reviewId/peerReviews/:peerReviewId", review.editPeerReview);
 app.put("/reviews/:reviewId/taskAnswers/:taskAnswerId", review.editTaskAnswer);
+app.put("/reviews/:reviewId/vote", review.editVote);
 
 //TASK ANSWER
 app.post("/taskAnswers", taskAnswer.createTaskAnswer);

@@ -9,6 +9,8 @@ const getAllPeerReviews = require("../src/review.js").getAllPeerReviews;
 const getAllTaskAnswers = require("../src/review.js").getAllTaskAnswers;
 const getTaskAnswer = require("../src/review.js").getTaskAnswer;
 const deleteReview = require("../src/review.js").deleteReview;
+const editTaskAnswer = require("../src/review.js").editTaskAnswer;
+const editVote = require("../src/review.js").editVote;
 
 const res = {
 	"status": (statuscode) => { 
@@ -259,7 +261,7 @@ describe("GET /reviews/:reviewId/taskAnswers/:taskAnswersId", () => {
 		expect(getTaskAnswer({params: req}, res)).toEqual(res.status(200).json(taskAnswerFunctions.getTaskAnswer(searched)));
 	});
 
-	test("return code 404 taskAnswerId wrong", async () => {
+	test("return code 404 taskAnswerId wrong", () => {
 		var newTaskAnswer = {
 			answers: ["1", "2"],
 			student: "1",
@@ -327,7 +329,7 @@ describe("DELETE /reviews/:reviewId", () => {
 			reviewId: "a"
 		}
 
-		expect(deleteReview({params: req}, res)).toEqual(res.status(204));
+		expect(deleteReview({params: req}, res)).toEqual(res.status(204).json(""));
 	});
 
 	test("return code 400", async () => {
@@ -335,11 +337,180 @@ describe("DELETE /reviews/:reviewId", () => {
 	});
 });
 
-describe("PUT /reviews/:reviewId/peerReviews", () => {
+describe("PUT /reviews/:reviewId/peerReviews/:peerReviewId", () => {
+	/*test ("return code 200 add", () => {
+		var newReview = {
+			taskAnswer: ["1", "2"],
+			peerReview: ["1"],
+			vote: "3"
+		}
+
+		var newPeerReview = {
+
+		}
+
+		var req = {
+			reviewId: reviewFunctions.writeReview(newReview),
+			peerReviewId: 
+		}
+
+		var reqBody = {
+
+		}
+	})*/
 });
 
 describe("PUT /reviews/:reviewId/taskAnswers", () => {
+	test ("return code 200 add", async () => {
+		var newReview = {
+			taskAnswer: ["1", "2"],
+			peerReview: ["1"],
+			vote: "3"
+		}
+
+		var newTaskAnswer = {
+			answers: ["1", "2"],
+			student: "1",
+			assignment: "1",
+			task: "1"
+		}
+
+		var req = {
+			reviewId: reviewFunctions.writeReview(newReview),
+			taskAnswerId: taskAnswerFunctions.writeTaskAnswer(newTaskAnswer)
+		}
+
+		var reqBody = {
+			add: true
+		}
+
+		expect(editTaskAnswer({params: req, body: reqBody}, res)).toEqual(res.status(200).json("Modified"));
+	});
+
+	test ("return code 200 delete", async () => {
+		var newReview = {
+			taskAnswer: ["1", "2"],
+			peerReview: ["1"],
+			vote: "3"
+		}
+
+		var req = {
+			reviewId: reviewFunctions.writeReview(newReview),
+			taskAnswerId: "1"
+		}
+
+		var reqBody = {
+			delete: true
+		}
+
+		expect(editTaskAnswer({params: req, body: reqBody}, res)).toEqual(res.status(200).json("Modified"));
+	});
+
+	test ("return code 404 delete taskAnswerId wrong", async () => {
+		var newReview = {
+			taskAnswer: ["1", "2"],
+			peerReview: ["1"],
+			vote: "3"
+		}
+
+		var req = {
+			reviewId: reviewFunctions.writeReview(newReview),
+			taskAnswerId: "3"
+		}
+
+		var reqBody = {
+			delete: true
+		}
+
+		expect(editTaskAnswer({params: req, body: reqBody}, res)).toEqual(res.status(404).json("TaskAnswer "+req["taskAnswerId"]+" not found in review "+ req["reviewId"]));
+	});
+
+	test ("return code 400 delete/add undefined", async () => {
+		var newReview = {
+			taskAnswer: ["1", "2"],
+			peerReview: ["1"],
+			vote: "3"
+		}
+
+		var req = {
+			reviewId: reviewFunctions.writeReview(newReview),
+			taskAnswerId: "3"
+		}
+
+		expect(editTaskAnswer({params: req, body: {}}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
+
+	test ("return code 400 reviewId undefined", async () => {
+		var req = {
+			taskAnswerId: "1"
+		}
+
+		expect(editTaskAnswer({params: req, body: {add: true}}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
+
+	test ("return code 400 taskAnswerId undefined", async () => {
+		var req = {
+			reviewId: "1"
+		}
+
+		expect(editTaskAnswer({params: req, body: {add: true}}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
+
+	test ("return code 404 reviewId wrong", async () => {
+		var req = {
+			reviewId: "a",
+			taskAnswerId: "1"
+		}
+
+		expect(editTaskAnswer({params: req, body: {add: true}}, res)).toEqual(res.status(404).json("Review a not found"));
+	});
+
 });
 
 describe("PUT /reviews/:reviewId/vote", () => {
+	test ("return code 200", async () => {
+		var newReview = {
+			taskAnswer: ["1", "2"],
+			peerReview: ["1"],
+			vote: "3"
+		}
+
+		var req = {
+			reviewId: reviewFunctions.writeReview(newReview)
+		}
+
+		var reqBody = {
+			vote: "10"
+		}
+
+		expect(editVote({params: req, body: reqBody}, res)).toEqual(res.status(200).json("Modified"));
+	})
+
+	test ("return code 404 reviewId wrong", async () => {
+		var req = {
+			reviewId: "a"
+		}
+
+		var reqBody = {
+			vote: "10"
+		}
+
+		expect(editVote({params: req, body: reqBody}, res)).toEqual(res.status(404).json("Review a not found"));
+	})
+
+	test ("return code 400 reviewId undefined", async () => {
+		var reqBody = {
+			vote: "10"
+		}
+
+		expect(editVote({params: {}, body: reqBody}, res)).toEqual(res.status(400).json("Invalid request"));
+	})
+
+	test ("return code 400 vote undefined", async () => {
+		var req = {
+			reviewId: "a"
+		}
+
+		expect(editVote({params: req, body: {}}, res)).toEqual(res.status(400).json("Invalid request"));
+	})
 });

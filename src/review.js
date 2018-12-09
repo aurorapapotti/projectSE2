@@ -164,9 +164,11 @@ function getTaskAnswer (req, res) {
 
 function deleteReview (req, res) {
 	if (req.params.reviewId){
+		console.log(req.params.reviewId)
 		const deleted = reviewFunc.deleteReview(req.params.reviewId);
-		if (deleted["id"] !== undefined){
-			return res.status(204);
+		console.log("Deleted: "+deleted)
+		if (deleted["id"]){
+			return res.status(204).json("");
 		}
 		else{
 			return res.status(200).json("Review "+ req.params.reviewId + " deleted");
@@ -209,7 +211,7 @@ function editPeerReview (req, res){
 function editTaskAnswer (req, res){
 	if (req.params.reviewId && req.params.taskAnswerId){
 		let review = reviewFunc.getReview(req.params.reviewId);
-		if (review !== null) {
+		if (!review["id"]) {
 			if (req.body.add){
 				review["taskAnswer"].push(req.params.taskAnswerId);
 				reviewFunc.modifyReview(req.params.reviewId, review)
@@ -217,7 +219,7 @@ function editTaskAnswer (req, res){
 			}
 			else if (req.body.delete) {
 				for (let i=0; i<review["taskAnswer"].length; i++){
-					if (review["taskAnswer"] == req.params.taskAnswerId) {
+					if (review["taskAnswer"][i] == req.params.taskAnswerId) {
 						delete review["taskAnswer"][i];
 						reviewFunc.modifyReview(req.params.reviewId, review)
 						return res.status(200).json("Modified");
@@ -225,9 +227,29 @@ function editTaskAnswer (req, res){
 				}
 				return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found in review "+ req.params.reviewId);
 			}
+			else {
+				return res.status(400).json("Invalid request");
+			}
 		}
 		else {
 			return res.status(404).json("Review " + req.params.reviewId +" not found");
+		}
+	}
+	else {
+		return res.status(400).json("Invalid request");
+	}
+}
+
+function editVote (req, res){
+	if (req.params.reviewId && req.body.vote){
+		const review = reviewFunc.getReview(req.params.reviewId);
+		if (review["id"]){
+			return res.status(404).json("Review "+ req.params.reviewId + " not found");
+		}
+		else {
+			review["id"] = req.body.vote;
+			reviewFunc.modifyReview(req.params.reviewId, review);
+			return res.status(200).json("Modified");
 		}
 	}
 	else {
@@ -245,5 +267,6 @@ module.exports = {
 	getTaskAnswer: getTaskAnswer,
 	deleteReview: deleteReview,
 	editPeerReview: editPeerReview,
-	editTaskAnswer: editTaskAnswer
+	editTaskAnswer: editTaskAnswer,
+	editVote: editVote
 }
