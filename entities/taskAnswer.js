@@ -7639,5 +7639,869 @@
         "assignment": "1",
         "taskGroup": "1",
         "answers": []
+    },
+    "_1jims2enq": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_syb0r2czp": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_64x4n4458": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_on5syz6x1": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_w6zl09x83": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_zumu22kh7": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_ku3nnftqc": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_hg3gq0g90": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_3ajoff9t3": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_riwqdhosh": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_je33lev5u": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_61a5e9li6": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_5nzkkyfl4": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_d1zyifjqz": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_3hylb6iqe": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_uhnekbqrp": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_r424u29ij": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_uj64wh3an": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_oxh8qyr2x": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_wr0nyafoo": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_u6epwms55": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_p0w2xxmlo": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_6qr6p6y0l": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_1ad4nwj4k": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_eszlr44ti": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_wqverbuyh": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_snonsbm2m": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_oxprw9m0b": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_v7sewb06w": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_4ezdreog0": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_lje0mwhhi": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_cn46h77u8": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_cbe88cg3s": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_g78n76qjb": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_fiucuhtvm": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_6cvc53wu2": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_mcx90j1sk": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_fnosfoorw": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_2wk6slwt8": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_998hrfarl": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_778hel97u": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_6fub7cj1n": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_ul1c4aknk": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_ti68uqc6l": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_pqklyufhk": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_1murvhnli": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_x0d4fqayr": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_lrktvfib6": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_34556ib6x": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_s08ypejzl": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_j7oov5n99": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_aea68rm77": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_msmjt1oy9": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_19xbau1n8": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_gs4knlyey": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_0vbir465p": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_bt3upq8wi": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_e6evhqipy": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_kylk233lp": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_vlo85vf32": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_qqouclhou": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_ll24s4g9f": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_cx2i25otz": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_c7u1o2hda": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_r5c7mh5nx": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_922bfbohx": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_wg2eh23oh": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_97rx95lp7": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_akab9qcxu": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_uwg8q652b": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_ks6zuik56": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_ecfwsk9g5": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_mm81t90ax": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_daj96afjt": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_sq4fwlqr2": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_04t88bx1t": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_m2g4a4syn": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_4glbhx4r1": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_91c9qqii6": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_yw1sxp8sm": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_j1shl5mjl": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_59zjuwxgn": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_i04mcpb09": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_08fuy43uk": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_avk7abnf6": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_y1g51aphs": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_rl320v3kd": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_xk24i1mml": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_996e6ogvj": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_24bwpdnsf": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_oepj1rrt5": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_vo005ip51": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_9ostx16yx": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_2uyk41xhz": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_ibz3glpuh": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
+    },
+    "_5ay391z64": {
+        "answers": [
+            "1",
+            "2"
+        ],
+        "student": "1",
+        "assignment": "1",
+        "task": "1"
     }
 }

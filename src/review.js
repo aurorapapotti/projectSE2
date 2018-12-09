@@ -66,7 +66,7 @@ function getAllPeerReviews (req, res) {
 				var peerReview = peerReviewFunc.getPeerReviewById(allPeerReviews[i]);
 
 				if (peerReview["id"]){
-					return res.status(400).json("Something has gone wrong");
+					return res.status(404).json("Something has gone wrong");
 				}
 				else {
 					peerReviews.push(peerReview);
@@ -85,7 +85,7 @@ function getPeerReview (req, res) {
 
 		const review = reviewFunc.getReview(reviewId);
 
-		if (review === null){
+		if (review["id"]){
 			return res.status(404).json("Review "+ reviewId + " not found");
 		}
 		else {
@@ -93,7 +93,7 @@ function getPeerReview (req, res) {
 			
 			for (var i=0; i<allPeerReviews.length; i++){
 				if (allPeerReviews[i] == peerReviewId){
-					return res.status(200).json(peerReviewFunc.getPeerReview(allPeerReviews[i]));
+					return res.status(200).json(peerReviewFunc.getPeerReviewById(allPeerReviews[i]));
 				}
 			}
 
@@ -182,7 +182,7 @@ function deleteReview (req, res) {
 function editPeerReview (req, res){
 	if (req.params.reviewId && req.params.peerReviewId){
 		let review = reviewFunc.getReview(req.params.reviewId);
-		if (review !== null) {
+		if (!review["id"]) {
 			if (req.body.add){
 				review["peerReview"].push(req.params.peerReviewId);
 				reviewFunc.modifyReview(req.params.reviewId, review)
@@ -197,6 +197,9 @@ function editPeerReview (req, res){
 					}
 				}
 				return res.status(404).json("PeerReview "+req.params.peerReviewId+" not found in review "+ req.params.reviewId);
+			}
+			else {
+				return res.status(400).json("Invalid request");
 			}
 		}
 		else {
