@@ -17,13 +17,11 @@ function deleteObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
-  console.log("Oggetti trovati: "+object.length);
   object_deleted = new Object();
   if (object.length > 0) {
     object_deleted = db[idObject];
     delete db[idObject];
     fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
-    console.log("ID: "+idObject+ " Obj: "+object_deleted);
     return object_deleted;
   }
   else {

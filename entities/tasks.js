@@ -40,5 +40,17 @@
         "taskType": "multiple",
         "argument": "algoritmi",
         "correctAnswer": "vivere"
+    },
+    "_ka7959kke": {
+        "author": "a",
+        "taskType": "a",
+        "argument": "a",
+        "correctAnswer": "a"
+    },
+    "_7hzkbfp6s": {
+        "author": "a",
+        "taskType": "a",
+        "argument": "a",
+        "correctAnswer": "a"
     }
 }
