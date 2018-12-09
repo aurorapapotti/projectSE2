@@ -94,5 +94,17 @@
         "argument": "Testing",
         "correctAnswer": "Black Box",
         "author": "_tzl1fvzql"
+    },
+    "_flf0vg89f": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_ge7y3l36i"
+    },
+    "_uij4a890r": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_nn8msmbu5"
     }
 }

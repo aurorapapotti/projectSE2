@@ -1,1 +1,0 @@
-{"1":{"answers":["abc","cde"],"student":"1","assignment":"1","task":"1"},"2":{"answers":["abc","cde"],"student":"2","assignment":"2","task":"2"},"_alnlhze83":{"answers":[],"student":"2","assignment":"1","taskGroup":"0"}}
