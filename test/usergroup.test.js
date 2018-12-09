@@ -3,7 +3,7 @@ const usergroupFunc = require('../src/functionsEntities/userGroupFunctions.js');
 const userFunc = require('../src/functionsEntities/userFunctions.js');
 const usergroup = require("../src/usergroup.js");
 const user = require("../src/user.js");
-
+const req = {}
 const res = {
 	"status": (statuscode) =>{ return {
 		"json": (message) => {return {
@@ -17,7 +17,7 @@ const res = {
 describe ('GET /userGroup valid tests', () =>{
 	test('GET /userGroup return code 200', () => {
 		var req = {};
-		expect(usergroup.getAllUserGroups({body: req}, res)).toEqual(res.status(200).json(usergroupFunc.getAllUserGroups));
+		expect(usergroup.listUserGroups({body: req}, res)).toEqual(res.status(200).json(usergroupFunc.getAllUserGroups()));
 	})
 });
 
@@ -30,7 +30,7 @@ describe ('POST /userGroup valid tests', () =>{
 					"user2", 
 					"user3"]
 		}	
-		expect(userGroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(201).json("Created."));
+		expect(usergroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(201).json(userGroup));
 	})
 });
 
@@ -43,7 +43,7 @@ describe ('POST /userGroup invalid tests', () =>{
 					"user2", 
 					"user3"]
 		}
-		expect(userGroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(usergroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 
 	test('POST /userGroup author undefined', () => {
@@ -53,7 +53,7 @@ describe ('POST /userGroup invalid tests', () =>{
 					"user2", 
 					"user3"]
 		}
-		expect(userGroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(usergroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 
 	test('POST /userGroup author not exists', () => {
@@ -64,7 +64,7 @@ describe ('POST /userGroup invalid tests', () =>{
 					"user2", 
 					"user3"]
 		}
-		expect(userGroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(usergroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 
 	test('POST /userGroup users undefined', () => {
@@ -72,7 +72,7 @@ describe ('POST /userGroup invalid tests', () =>{
 			name: "classe 1",
 			author: "user 1"
 		}
-		expect(userGroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(usergroup.createUserGroup({body: userGroup}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 });
 
@@ -162,7 +162,7 @@ describe ('GET /userGroup/:userGroupId/author valid tests ', () =>{
 		var req = {
 			userGroupId: usergroupFunc.writeUserGroup(userGroup)
 		}
-		expect(usergroup.getAuthorByIdUserGroup({param: req}, res)).toEqual(res.status(200).json(req["author"]));
+		expect(usergroup.getAuthorByIdUserGroup({params: req}, res)).toEqual(res.status(200).json(req["author"]));
 	})
 });
 
@@ -189,9 +189,9 @@ describe ('GET /userGroup/:userGroupId/users valid tests', () =>{
 			users: ["1", "2"]
 		}
 		var req = {
-			userGroupId: userFunc.writeUserGroup(userGroup)
+			userGroupId: usergroup.createUserGroup(userGroup)
 		}
-		expect(usergroup.getUsersByIdUserGroup({param: req}, res)).toEqual(res.status(200).json(req["users"]));
+		expect(usergroup.getUsersByIdUserGroup({params: req}, res)).toEqual(res.status(200).json(req["users"]));
 	})
 });
 
@@ -200,12 +200,12 @@ describe ('GET /userGroup/:userGroupId/users invalid tests', () =>{
 		var req = {
 			userGroupId: "1"
 		}
-		expect(usergroup.getUsersByIdUserGroup({param: req}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(usergroup.getUsersByIdUserGroup({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 	
 	test('GET /userGroup/:userGroupId/users req empty', () => {
 		var req = {}
-		expect(usergroup.getUsersByIdUserGroup({param: req}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(usergroup.getUsersByIdUserGroup({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 
 	test('GET /userGroup/:userGroupId/users params empty', () => {
@@ -232,9 +232,9 @@ describe ('DELETE /userGroup/:userGroupId/users/:userId valid', () =>{
 		}
 		var req = {
 			userGroupId: usergroupFunc.writeUserGroup(userGroup),
-			userId: userFunc.writeUser(user)
+			userId: userFunc.createUser(user)
 		}
-		expect(userGroup.deleteUserByIdUserGroup({param: req}, res)).toEqual(res.status(200).json("Deleted."));
+		expect(usergroup.deleteUserByIdUserGroup({params: req}, res)).toEqual(res.status(200).json("Deleted."));
 	})
 });
 

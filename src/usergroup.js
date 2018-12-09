@@ -1,5 +1,8 @@
-const persistencyLayer = require('./functionEntities/userGroupFunctions.js');
+const userGroupFunctions = require('./functionsEntities/userGroupFunctions.js');
 const bodyParser = require("body-parser");
+
+var userGroupId;
+var userId;
 
 function listUserGroups(req, res) {
 	const us = userGroupFunctions.getAllUserGroups();
@@ -93,15 +96,20 @@ function deleteUserGroup(req, res){
 
 function getAuthorByIdUserGroup(req, res){
 	var id = req.params.userGroupId;
+
+	if(id == null || id == undefined){
+		res.status(400).json("Invalid request");
+	}
+
 	console.log("received request: ", id);
 	var us = userGroupFunctions.getUserGroupById(id);
 	author = us["author"];
 	if(author == null){
-		res.status(400).send("Invalid request, authorId null");
+		res.status(404).json("Not Found");
 	}
 	else{
 		console.log("Autore: ", author);
-		res.status(200).send(author);
+		res.status(200).json(author);
 	}
 }
 
@@ -113,8 +121,9 @@ function getUsersByIdUserGroup(req, res){
 		res.status(400).send("Invalid request");
 	}
 	else {
-		var users = [];
-		var allUsers = userGroup["users"];
+		var users = new Array();
+		var allUsers = new Array();
+		allUsers = userGroup["users"];
 		
 		for (var i=0; i<allUsers.length; i++){
 			console.log("Element: " + allUsers[i]);
@@ -136,13 +145,17 @@ function deleteUserByIdUserGroup(req, res){
 	const idUser = req.params.userId;
 
 	var trovato = -1;
-	var userGroup = userGroupFunctions.getUserGroupById(idUserGroup);
 	
-	if(userGroup === null){
-		res.status(400).send("Id userGroup null");
+	if(idUser == null || idUser == undefined){
+		return res.status(400).json("Id user invalid");
+	}
+	else if(idUserGroup == null || idUserGroup == undefined){
+		return res.status(400).json("Id userGroup invalid");
 	}
 	else{
-		var users = userGroup["users"];
+		var userGroup = userGroupFunctions.getUserGroupById(idUserGroup);
+		var users = new Array();
+		users = userGroup["users"];
 		//console.log("Lunghezza: ", users.length);
 		for(var i = 0; i<(users.length) && (trovato ==-1); i++){
 			if(users[i] == idUser){			
@@ -163,7 +176,7 @@ function deleteUserByIdUserGroup(req, res){
 		}
 		
 		if(trovato == -1){
-			res.status(400).send("User not Found!");
+			res.status(400).json("Bad request");
 		}
 	}	
 }

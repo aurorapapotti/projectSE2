@@ -9,7 +9,7 @@ function addObject(obj,dbpath){
   let db = JSON.parse(data);
   let id = getUUID();
   db[id] = obj;
-  fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
+  fs.writeFileSync(dbpath, JSON.stringify(db, null, 4));
   return id;
 }
 
@@ -17,19 +17,18 @@ function deleteObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
+  console.log("Oggetti trovati: "+object.length);
   object_deleted = new Object();
   if (object.length > 0) {
-    //console.log("Object found :)");
     object_deleted = db[idObject];
     delete db[idObject];
-    fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-    console.log(object_deleted);
+    fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
+    console.log("ID: "+idObject+ " Obj: "+object_deleted);
     return object_deleted;
   }
   else {
     object_deleted = {"id": idObject};
-    //console.log("Object NOT found :(");
-    return idObject;
+    return object_deleted;
   }
 }
 
@@ -37,13 +36,9 @@ function modifyObject(idObject, dbpath, newObject){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
-  if (object.length > 0){
-    db[idObject] = newObject;
-    fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-    return db[idObject];
-  }
-  else
-    return idObject;
+  db[object] = newObject;
+
+  fs.writeFileSync(dbpath,JSON.stringify(db, null, 4));
 }
 
 function getObjectsList(dbpath){
@@ -56,12 +51,11 @@ function getObject(idObject, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   let object = Object.keys(db).filter(x => x == idObject);
+
   if (object.length > 0) {
-    //console.log("Object found :)");
     return db[idObject];
   }
   else {
-    //console.log("Object NOT found :(");
     object_notFound = new Object();
     object_notFound = {"id": idObject};
     return object_notFound;
@@ -103,9 +97,9 @@ function getObjectByQuery(query, param, dbpath){
 module.exports = {
   getObjectsList: getObjectsList,
   getObjectByParam: getObjectByParam,
-modifyObject: modifyObject,
   addObject: addObject,
   getObject: getObject,
   deleteObject: deleteObject,
-  getObjectByQuery: getObjectByQuery
+  getObjectByQuery: getObjectByQuery,
+  modifyObject: modifyObject
 }
