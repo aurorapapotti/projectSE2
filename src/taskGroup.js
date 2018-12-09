@@ -1,4 +1,5 @@
 const taskGroupFunctions = require('./functionsEntities/taskGroupFunctions.js');
+const userFunctions = require('./functionsEntities/userFunctions.js');
 
 function listAllTaskGroups(req, res){
   if (!req)
@@ -77,21 +78,12 @@ function putTaskGroupByIdUser(req, res){
     	return res.status(400).json("Bad Request");
   });
   taskGroup_modify = new Object();
+  taskGroup_modify = userFunctions.getTaskGroups(req.params.idUser, "author");
+  if (!task_modify[req.params.idTaskGroup].author || !task_modify[req.params.idTaskGroup].name || !task_modify[req.params.idTaskGroup].tasks)
+    return res.status(404).json("TaskGroup NOT found");
   req.body.author = req.params.idUser;
-  task_modify = taskGroupFunctions.modifyTaskGroup(req.params.idTaskGroup, req.body);
-  if (!task_modify.author || !task_modify.name || !task_modify.tasks)
-    return res.status(404).json("TaskGroup NOT found");
+  taskGroupFunctions.modifyTaskGroup(req.params.idTaskGroup, req.body);
   return res.status(200).json("TaskGroup modified");
-}
-
-function deleteTaskGroupByIdUser(req, res){
-  if (!req || !req.params.idUser || !req.params.idTaskGroup || typeof req.params.idTaskGroup !== 'string')
-    return res.status(400).json("Bad Request");
-  taskGroup_deleted = new Object();
-  taskGroup_deleted = taskGroupFunctions.removeTaskGroup(req.params.idTaskGroup);
-  if (!taskGroup_deleted.name || !taskGroup_deleted.author|| !taskGroup_deleted.tasks)
-    return res.status(404).json("TaskGroup NOT found");
-  return res.status(200).json("TaskGroup deleted");
 }
 
 function deleteTaskGroup(req, res){
@@ -101,6 +93,17 @@ function deleteTaskGroup(req, res){
   taskGroup_deleted = taskGroupFunctions.removeTaskGroup(req.params.idTaskGroup);
   if (!taskGroup_deleted.name || !taskGroup_deleted.author|| !taskGroup_deleted.tasks)
     return res.status(404).json("TaskGroup NOT found");
+  return res.status(200).json("TaskGroup deleted");
+}
+
+function deleteTaskGroupByIdUser(req, res){
+  if (!req || !req.params.idUser || !req.params.idTaskGroup || typeof req.params.idTaskGroup !== 'string')
+    return res.status(400).json("Bad Request");
+  taskGroup_deleted = new Object();
+  taskGroup_deleted = userFunctions.getTaskGroups(req.params.idUser, "author");
+  if (!taskGroup_deleted[req.params.idTaskGroup].name || !taskGroup_deleted[req.params.idTaskGroup].author|| !taskGroup_deleted[req.params.idTaskGroup].tasks)
+    return res.status(404).json("TaskGroup NOT found");
+  taskGroupFunctions.removeTaskGroup(req.params.idTaskGroup);
   return res.status(200).json("TaskGroup deleted");
 }
 

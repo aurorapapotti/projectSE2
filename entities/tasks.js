@@ -46,5 +46,47 @@
         "argument": "algoritmi",
         "correctAnswer": "vivere",
         "author": "_1o1ppwws8"
+    },
+    "_vxebb13e9": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_4mgxx16tz"
+    },
+    "_y4h0g0jd4": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_akii8blle"
+    },
+    "_9l8m58to2": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_i2ztdh4k3"
+    },
+    "_viaqbqo37": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_l37500nah"
+    },
+    "_skojgxbu0": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_96nwjshxa"
+    },
+    "_nfhowxdse": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_a0hwqg32q"
+    },
+    "_xtymk7ry4": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_qm1do33n3"
     }
 }

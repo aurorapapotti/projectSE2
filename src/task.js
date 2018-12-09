@@ -1,4 +1,5 @@
 const taskFunctions = require('./functionsEntities/taskFunctions.js');
+const userFunctions = require('./functionsEntities/userFunctions.js');
 
 function listAllTasks(req, res){
   if (!req)
@@ -63,10 +64,11 @@ function putTaskByIdUser(req, res){
   if(typeof req.params.idUser !== "string" || typeof req.body.taskType !== "string" ||typeof req.body.argument !== "string" ||typeof req.body.correctAnswer !== "string")
     return res.status(400).json("Bad Request");
   task_modify = new Object();
-  req.body.author = req.params.idUser;
-  task_modify = taskFunctions.modifyTask(req.params.idTask, req.body);
-  if (!task_modify.author || !task_modify.taskType || !task_modify.argument || !task_modify.correctAnswer)
+  task_modify = userFunctions.getTasks(req.params.idUser, "author");
+  if (!task_modify[req.params.idTask].author || !task_modify[req.params.idTask].taskType || !task_modify[req.params.idTask].argument || !task_modify[req.params.idTask].correctAnswer)
     return res.status(404).json("Task NOT found");
+  req.body.author = req.params.idUser;
+  taskFunctions.modifyTask(req.params.idTask, req.body);
   return res.status(200).json("Task modified");
 }
 
@@ -84,9 +86,10 @@ function deleteTaskByIdUser(req, res){
   if (!req || !req.params.idUser || typeof req.params.idTask !== 'string')
     return res.status(400).json("Bad Request");
   task_deleted = new Object();
-  task_deleted = taskFunctions.removeTask(req.params.idTask);
-  if (!task_deleted.author || !task_deleted.taskType || !task_deleted.argument || !task_deleted.correctAnswer)
+  task_deleted = userFunctions.getTasks(req.params.idUser, "author");
+  if (!task_deleted[req.params.idTask].author || !task_deleted[req.params.idTask].taskType || !task_deleted[req.params.idTask].argument || !task_deleted[req.params.idTask].correctAnswer)
     return res.status(404).json("Task NOT found");
+  taskFunctions.removeTask(req.params.idTask);
   return res.status(200).json("Task deleted");
 }
 

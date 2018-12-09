@@ -1,163 +1,238 @@
-//const fetch = require("node-fetch");
-const bodyParser = require("body-parser");
-const percLayer = require("./persistencyLayer.js");
+const reviewFunc = require("./functionsEntities/reviewFunctions.js");
+const peerReviewFunc = require("./functionsEntities/peerReviewFunctions.js");
+const taskAnswerFunc = require("./functionsEntities/taskAnswerFunctions.js");
 
 function createReview (req, res) {
-	var taskAnswer = req.body.taskAnswer;
-	var peerReview = req.body.peerReview;
+	if (req.body.taskAnswer && req.body.peerReview && req.body.vote){
+		let taskAnswer = req.body.taskAnswer;
+		let peerReview = req.body.peerReview;
 
-	if (taskAnswer == null || peerReview == null)
-		res.status(400).send("Invalid request");
+		//if (taskAnswer.isArray() && peerReview.isArray()){
+			for (var i=0; i<taskAnswer.length; i++){
+				let found = taskAnswerFunc.getTaskAnswer(taskAnswer[i]);
+				if (found["id"])
+					return res.status(404).json("taskAnswer " + taskAnswer[i] + " doesn't exist");
+			}
 
-	var review = new Object();
-	review["taskAnswer"] = new Array();
-	review["taskAnswer"].push(taskAnswer);
-	review["peerReview"] = new Array();
-	review["peerReview"].push(peerReview);
+			for (var j=0; j<peerReview.length; j++){
+				let found = peerReviewFunc.getPeerReviewById(peerReview[j]);
+				if (found["id"])
+					return res.status(404).json("peerReview " + peerReview[j] + " doesn't exist");
+			}
 
-	percLayer.writeReview(review);
-	res.status(201).send("Created");
+			reviewFunc.writeReview(req.body);
+			return res.status(201).json("Created");
+		/*}
+		else {
+			return res.status(400).json("Invalid request: taskAnswer e peerRevie devono essere array")
+		}*/
+	}
+	else {
+		return res.status(400).json("Invalid request");
+	}
 }
 
 function getAllReviews (req, res)  {
-	res.status(200).send(percLayer.getAllReviews());
+	return res.status(200).json(reviewFunc.getAllReviews());
 }
 
 function getReview (req, res) {
-	const review = percLayer.getReview(req.params.reviewId);
-	if (review == null) {
-		res.status(400).send("Invalid request");
+	if (req.params.reviewId){
+		const review = reviewFunc.getReview(req.params.reviewId);
+		if (review["id"]) {
+			return res.status(404).json("Review "+req.params.reviewId+" not found");
+		}
+		else {
+			return res.status(200).json(review);
+		}
 	}
 	else {
-		res.status(200).send(review);
+		return res.status(400).json("Invalid request");
 	}
 }
 
 function getAllPeerReviews (req, res) {
-	const review = percLayer.getReview(req.params.reviewId);
-	console.log(review);
+	if (req.params.reviewId) {
+		const review = reviewFunc.getReview(req.params.reviewId);
 
-	if (review === null){
-		res.status(400).send("Invalid request");
-	}
-	else {
-		var peerReviews = [];
-		var allPeerReviews = review["peerReview"];
-		console.log(review["peerReview"][0])
-
-		for (var i=0; i<allPeerReviews.length; i++){
-			console.log("Element: " + allPeerReviews[i]);
-			var peerReview = percLayer.getPeerReview(allPeerReviews[i]);
-
-			console.log(peerReview);
-
-			if (peerReview == null){
-				res.status(400).send("Something has gone wrong");
-			}
-			else {
-				peerReviews.push(peerReview);
-			}
+		if (review["id"]){
+			return res.status(404).json("Review "+req.params.reviewId+"Not found");
 		}
+		else {
+			var peerReviews = [];
+			var allPeerReviews = review["peerReview"];
 
-		res.status(200).send(peerReviews);
+			for (var i=0; i<allPeerReviews.length; i++){
+				var peerReview = peerReviewFunc.getPeerReviewById(allPeerReviews[i]);
+
+				if (peerReview["id"]){
+					return res.status(400).json("Something has gone wrong");
+				}
+				else {
+					peerReviews.push(peerReview);
+				}
+			}
+
+			return res.status(200).json(peerReviews);
+		}
 	}
 }
 
 function getPeerReview (req, res) {
-	const reviewId = req.params.reviewId;
-	const peerReviewId = req.params.peerReviewId;
+	if (req.params.reviewId && req.params.peerReviewId){
+		const reviewId = req.params.reviewId;
+		const peerReviewId = req.params.peerReviewId;
 
-	const review = percLayer.getReview(reviewId);
-	console.log(review);
+		const review = reviewFunc.getReview(reviewId);
 
-	if (review === null){
-		res.status(400).send("Invalid request");
+		if (review === null){
+			return res.status(404).json("Review "+ reviewId + " not found");
+		}
+		else {
+			var allPeerReviews = review["peerReview"];
+
+			for (var i=0; i<allPeerReviews.length; i++){
+				if (allPeerReviews[i] == peerReviewId){
+					return res.status(200).json(peerReviewFunc.getPeerReview(allPeerReviews[i]));
+				}
+			}
+
+			return res.status(404).json("PeerReview " + peerReviewId + " not found in review "+ reviewId);
+		}
 	}
 	else {
-		var allPeerReviews = review["peerReview"];
-
-		for (var i=0; i<allPeerReviews.length; i++){
-			if (allPeerReviews[i] == peerReviewId){
-				res.status(200).send(percLayer.getPeerReview(allPeerReviews[i]));
-			}
-		}
-
-		res.status(404).send("Element not found in this review");
+		return res.status(400).json("Invalid request");
 	}
-
 }
 
 function getAllTaskAnswer (req, res) {
-	const review = percLayer.getReview(req.params.reviewId);
-	console.log(review);
+	if (req.params.reviewId){
+		const review = reviewFunc.getReview(req.params.reviewId);
 
-	if (review === null){
-		res.status(400).send("Invalid request");
+		if (review["id"]){
+			return res.status(404).json("Review "+ req.params.reviewId + " not found");
+		}
+		else {
+			var taskAnswers = [];
+			var allTaskAnswer = review["taskAnswer"];
+
+			for (var i=0; i<allTaskAnswer.length; i++){
+				var taskAnswer = taskAnswerFunc.getTaskAnswer(allTaskAnswer[i]);
+
+				if (taskAnswer["id"]){
+					return res.status(404).json("Something has gone wrong");
+				}
+				else {
+					taskAnswers.push(taskAnswer);
+				}
+			}
+
+			return res.status(200).json(taskAnswers);
+		}
 	}
 	else {
-		var taskAnswers = [];
-		var allTaskAnswer = review["taskAnswer"];
-
-		for (var i=0; i<allTaskAnswer.length; i++){
-			console.log("Element: " + allTaskAnswer[i]);
-			var taskAnswer = percLayer.getTaskAnswer(allTaskAnswer[i]);
-
-			if (taskAnswer == null){
-				res.status(400).send("Something has gone wrong");
-			}
-			else {
-				taskAnswers.push(taskAnswer);
-			}
-		}
-
-		res.status(200).send(taskAnswers);
+		return res.status(400).json("Invalid request")
 	}
 }
 
 function getTaskAnswer (req, res) {
-	const reviewId = req.params.reviewId;
-	const taskAnswerId = req.params.taskAnswerId;
+	if (req.params.reviewId && req.params.taskAnswerId) {
+		const reviewId = req.params.reviewId;
+		const taskAnswerId = req.params.taskAnswerId;
 
-	const review = percLayer.getReview(reviewId);
+		const review = reviewFunc.getReview(reviewId);
 
-	if (review === null){
-		res.status(400).send("Invalid request");
+		if (review["id"]){
+			return res.status(404).json("Review "+reviewId+" not found");
+		}
+		else {
+			var allTaskAnswer = review["taskAnswer"];
+
+			for (var i=0; i<allTaskAnswer.length; i++){
+				if (allTaskAnswer[i] == taskAnswerId){
+					return res.status(200).json(taskAnswerFunc.getTaskAnswer(allTaskAnswer[i]));
+				}
+			}
+
+			return res.status(404).json("TaskAnswer "+taskAnswerId+" not found in review "+ reviewId);
+		}
 	}
 	else {
-		var allTaskAnswer = review["taskAnswer"];
-
-		for (var i=0; i<allTaskAnswer.length; i++){
-			if (allTaskAnswer[i] == taskAnswerId){
-				res.status(200).send(percLayer.getTaskAnswer(allTaskAnswer[i]));
-			}
-		}
-
-		res.status(404).send("Element not found in this review");
+		return res.status(400).json("Invalid request");
 	}
-
 }
 
 function deleteReview (req, res) {
-	if (req.params.reviewId == undefined || req.params.reviewId == null){
-		res.status(400).send("Invalid request");
+	if (req.params.reviewId){
+		const deleted = reviewFunc.deleteReview(req.params.reviewId);
+		if (deleted["id"] !== undefined){
+			return res.status(204);
+		}
+		else{
+			return res.status(200).json("Review "+ req.params.reviewId + " deleted");
+		}
 	}
 	else {
-		res.status(201).send(percLayer.deleteReview(req.params.reviewId));
+		return res.status(400).json("Invalid request");
 	}
 }
 
-function addPeerReview (req, res){
-	let review = percLayer.getReview(req.params.reviewId);
-	review["peerReview"].push(req.params.peerReviewId);
-
-	res.status(200).send(percLayer.modifyReview(req.params.reviewId, review));
+function editPeerReview (req, res){
+	if (req.params.reviewId && req.params.peerReviewId){
+		let review = reviewFunc.getReview(req.params.reviewId);
+		if (review !== null) {
+			if (req.body.add){
+				review["peerReview"].push(req.params.peerReviewId);
+				reviewFunc.modifyReview(req.params.reviewId, review)
+				return res.status(200).json("Modified");
+			}
+			else if (req.body.delete) {
+				for (let i=0; i<review["peerReview"].length; i++){
+					if (review["peerReview"] == req.params.peerReviewId) {
+						delete review["peerReview"][i];
+						reviewFunc.modifyReview(req.params.reviewId, review)
+						return res.status(200).json("Modified");
+					}
+				}
+				return res.status(404).json("PeerReview "+req.params.peerReviewId+" not found in review "+ req.params.reviewId);
+			}
+		}
+		else {
+			return res.status(404).json("Review " + req.params.reviewId +" not found");
+		}
+	}
+	else {
+		return res.status(400).json("Invalid request");
+	}
 }
 
-function addTaskAnswer (req, res){
-	let review = percLayer.getReview(req.params.reviewId);
-	review["taskAnswer"].push(req.params.taskAnswerId);
-
-	res.status(200).send(percLayer.modifyReview(req.params.reviewId, review));
+function editTaskAnswer (req, res){
+	if (req.params.reviewId && req.params.taskAnswerId){
+		let review = reviewFunc.getReview(req.params.reviewId);
+		if (review !== null) {
+			if (req.body.add){
+				review["taskAnswer"].push(req.params.taskAnswerId);
+				reviewFunc.modifyReview(req.params.reviewId, review)
+				return res.status(200).json("Modified");
+			}
+			else if (req.body.delete) {
+				for (let i=0; i<review["taskAnswer"].length; i++){
+					if (review["taskAnswer"] == req.params.taskAnswerId) {
+						delete review["taskAnswer"][i];
+						reviewFunc.modifyReview(req.params.reviewId, review)
+						return res.status(200).json("Modified");
+					}
+				}
+				return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found in review "+ req.params.reviewId);
+			}
+		}
+		else {
+			return res.status(404).json("Review " + req.params.reviewId +" not found");
+		}
+	}
+	else {
+		return res.status(400).json("Invalid request");
+	}
 }
 
 module.exports = {
@@ -169,6 +244,6 @@ module.exports = {
 	getAllTaskAnswers: getAllTaskAnswer,
 	getTaskAnswer: getTaskAnswer,
 	deleteReview: deleteReview,
-	addPeerReview: addPeerReview,
-	addTaskAnswer: addTaskAnswer
+	editPeerReview: editPeerReview,
+	editTaskAnswer: editTaskAnswer
 }

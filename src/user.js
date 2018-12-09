@@ -118,22 +118,6 @@ function getAssignmentByIdUser(req, res){
     return res.status(200).json(assignments[req.params.idAssignment]);
 }
 
-function deleteAssignmentByIdUser(req, res){
-  if (!req || !req.params.idUser || !req.params.idAssignment || typeof req.params.idUser !== 'string'|| typeof req.params.idAssignment !== 'string')
-    return res.status(400).json("Bad Request");
-  assignments = new Object();
-  let param = "professor";
-  assignments = userFunctions.getAssignments(req.params.idUser, param);
-  if (assignments.id)
-    return res.status(404).json("User NOT found");
-  else if (!assignments[req.params.idAssignment])
-    return res.status(404).json("Assignment NOT found");
-  else {
-    userFunctions.removeAssignment(req.params.idAssignment);
-    return res.status(200).json("Assignment deleted");
-  }
-}
-
 function getPeerReviewsByIdUser(req, res){
   if (!req || !req.params.idUser || typeof req.params.idUser !== 'string')
     return res.status(400).json("Bad Request");
@@ -173,6 +157,5 @@ module.exports = {
   getAssignmentsByIdUser: getAssignmentsByIdUser,
   getAssignmentByIdUser: getAssignmentByIdUser,
   getPeerReviewsByIdUser: getPeerReviewsByIdUser,
-  getPeerReviewByIdUser: getPeerReviewByIdUser,
-  deleteAssignmentByIdUser: deleteAssignmentByIdUser
+  getPeerReviewByIdUser: getPeerReviewByIdUser
 }
