@@ -1,183 +1,143 @@
-const create = require('./Task').create;
+const taskFunctions = require('../src/functionsEntities/taskFunctions.js');
+const listAllTasks = require ('../src/task.js').listAllTasks;
+const deleteTask = require('../src/task.js').deleteTask;
+const getTask = require('../src/task.js').getTask;
+const getTasksByArgument = require ('../src/task.js').getTasksByArgument;
 
-test('Create a Task', () => {
-	var argument = 1;
-	var description = 1;
-	var author = 1;
-	
-	expect(create(argument, description, type, author)).toBe(200);
+const res = {
+  "status": (statuscode) =>{ return {
+    "json": (list) => { return {"code": statuscode, "list": list}
+     }
+   }}
+}
+
+const task = {
+  author: "Martina",
+  taskType: "multiple",
+  argument: "Algoritmi",
+  correctAnswer: "ciao"
+}
+
+// GET ALL TASKS
+
+describe ('GET /task valid tests', () => {
+  test('GET /task return code 200', () => {
+    var req = {};
+    expect(listAllTasks({"body": {}},res)).toEqual(res.status(200).json(taskFunctions.getAllTasks()));
+  })
 });
 
-test('Create a Task: argument null', () => {
-	var argument = null;
-	var description = 1;
-	var type = 1;
-	var author = 1;
-	
-	expect(create(argument, description, type, author)).toBe(400);
-});
-
-test('Create a Task: description null', () => {
-	var argument = 1;
-	var description = null;
-	var type = 1;
-	var author = 1;
-	
-	expect(create(argument, description, type, author)).toBe(400);
-});
-
-test('Create a Task: type null', () => {
-	var argument = 1;
-	var description = 1;
-	var type = null;
-	var author = 1;
-	
-	expect(create(argument, description, type, author)).toBe(400);
-});
-
-test('Create a Task: author null', () => {
-	var argument = 1;
-	var description = 1;
-	var type = 1;
-	var author = null;
-	
-	expect(create(argument, description, type, author)).toBe(400);
-});
-
-test('Create a task: all attributes null', () => {
-	var argument = null;
-	var description = null;
-	var type = null;
-	var author = null;
-	
-	expect(create(argument, description, type, author)).toBe(400);
-});
-
-const updateTask = require('./task/Id').update;
-
-test('Update the id of a task', () => {
-	var oldId = 1;
-	var newId = 2;
-	
-	expect(updateTask(oldId, newId)).toBe(200);
-});
-
-test('Update the id of a task: oldId null', () => {
-	var oldId = null;
-	var newId = 2;
-	
-	expect(updateTask(oldId, newId)).toBe(400);
-});
-
-test('Update the id of a task: newId null', () => {
-	var oldId = 1;
-	var newId = null;
-	
-	expect(updateTask(oldId, newId)).toBe(400);
-});
-
-test('Edit the id of a task: all attributes null', () => {
-	var oldId = null;
-	var newId = null;
-	
-	expect(updateTask(oldId, newId)).toBe(400);
-});
-
-const deleteTask = require('./task/Id').deleteTask;
-
-test('Delete task', () => {
-	var taskId = 1;
-	
-	expect(deleteTask(taskId)).toBe(204);
-});
-
-test('Delete task: id null', () => {
-	var taskId = null;
-	
-	expect(deleteTask(taskId)).toBe(400);
+describe ('GET /task invalid tests', () => {
+  test('GET /task req undefined', () => {
+    expect(listAllTasks(undefined,res)).toEqual(res.status(400).json("Bad Request"));
+  })
 });
 
 
-const updateArgument = require('./task/Id/argument').update;
+//GET TASK
 
-test('Update Argument', () => {
-	var taskId = 1;
-	var argument = 1;
-	var newArgument = 2;
-	
-	expect(updateArgument(taskId, argument, newArgument)).toBe(200);
+describe ('GET /task/:idTask', () => {
+  test('GET /task/:idTask return code 200', () => {
+    var idTask = taskFunctions.createTask(task);
+    expect(getTask({"params": {"idTask": idTask}},res)).toEqual(res.status(200).json(task));
+  })
 });
 
-test('Update Argument: taskId null', () => {
-	var taskId = null;
-	var argument = 1;
-	var newArgument = 2;
-	
-	expect(updateArgument(taskId, argument, newArgument)).toBe(400);
+describe ('GET /task/:idTask invalid tests', () => {
+  test('GET /task/:idTask return code 404', () => {
+    var idTask = "123"
+    expect(getTask({"params": {"idTask": idTask}},res)).toEqual(res.status(404).json("Task NOT found"));
+  })
+
+  test('GET /task/:idTask idTask is a number', () => {
+    var idTask = 1234
+    expect(getTask({"params": {"idTask": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /task/:idTask idTask is undefined', () => {
+    var idTask = undefined
+    expect(getTask({"params": {"idTask": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /task/:idTask idTask is null', () => {
+    var idTask = null
+    expect(getTask({"params": {"idTask": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /task/:idTask params is undefined', () => {
+    var idTask = "_xt7guc9e0"
+    expect(getTask({"params": {"": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /task/:idTask req is undefined', () => {
+    expect(getTask(undefined,res)).toEqual(res.status(400).json("Bad Request"));
+  })
+}); 
+
+//GET TASKGROUP BY ARGUMENT
+/*
+describe ('GET /task/:taskArgument', () => {
+	test('GET /task/:taskArgument return code 200', () => {
+	  var taskArgument = taskFunctions.getTaskByArgument(taskArgument);
+	  expect(getTasksByArgument({"params": {"TaskArgument": taskArgument}},res)).toEqual(res.status(200).json(taskArgument));
+	})
+  });
+  
+  describe ('GET /taskArgument/:taskArgument invalid tests', () => {
+	test('GET /taskArgument/:taskArgument return code 404', () => {
+	  var taskArgument = "algoritmi"
+	  expect(getTasksByArgument({"params": {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+	})
+  
+	test('GET /task/:TaskArgument taskArgument is undefined', () => {
+	  var taskArgument = undefined
+	  expect(getTasksByArgument({"params": {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+	})
+  
+	test('GET /task/:taskArgument taskArgument is null', () => {
+	  var taskArgument = null
+	  expect(getTasksByArgument({"params": {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+});
+  
+  */
+
+//DELETE TASK
+
+describe('DELETE /task/:idTask valid tests', () => {
+  test('DELETE /task/:idTask return code 200', () => {
+    var idTask = taskFunctions.createTask(task);
+    expect(deleteTask({"params": {"idTask": idTask}},res)).toEqual(res.status(200).json("Task deleted"));
+  })
 });
 
-test('Update Argument: argument null', () => {
-	var taskId = 1;
-	var argument = null;
-	var newArgument = 2;
-	
-	expect(updateArgument(taskId, argument, newArgument)).toBe(400);
-});
+describe('DELETE /task/:idTask invalid tests', () => {
+  test('DELETE /task/:idTask return code 404', async () => {
+    var idTask = "marti";
+    expect(deleteTask({"params": {"idTask": idTask}},res)).toEqual(res.status(404).json("Task NOT found"));
+  })
 
-test('Update Argument: newArgument null', () => {
-	var taskId = 1;
-	var argument = 1;
-	var newArgument = null;
-	
-	expect(updateArgument(taskId, argument, newArgument)).toBe(400);
-});
+  test('DELETE /task/:idTask idTask is a number', async () => {
+    var idTask = 12345;
+    expect(deleteTask({"params": {"idTask": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-test('Update Argument: all attributes null', () => {
-	var taskId = null;
-	var argument = null;
-	var newArgument = null;
-	
-	expect(updateArgument(taskId, argument, newArgument)).toBe(400);
-});
+  test('DELETE /task/:idTask idTask is undefined', async () => {
+    var idTask = undefined;
+    expect(deleteTask({"params": {"idTask": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-const updateAuthor = require('./task/Id/Author').update;
+  test('DELETE /task/:idTask idTask is null', async () => {
+    var idTask = null;
+    expect(deleteTask({"params": {"idTask": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-test('Update Author', () => {
-	var taskId = 1;
-	var author = 1;
-	var newAuthor = 2;
-	
-	expect(updateAuthor(taskId, author, newAuthor)).toBe(200);
-});
+  test('DELETE /task/:idTask params is undefined', async () => {
+    var idTask = "_xt7guc9e0";
+    expect(deleteTask({"params": {"": idTask}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-test('Update Author: taskId null', () => {
-	var taskId = null;
-	var author = 1;
-	var newAuthor = 2;
-	
-	expect(updateAuthor(taskId, author, newAuthor)).toBe(400);
-});
-
-test('Update Author: author null', () => {
-	var taskId = 1;
-	var author = null;
-	var newAuthor = 2;
-	
-	expect(updateAuthor(taskId, author, newAuthor)).toBe(400);
-});
-
-test('Update Author: newAuthor null', () => {
-	var taskId = 1;
-	var author = 1;
-	var newAuthor = null;
-	
-	expect(updateAuthor(taskId, author, newAuthor)).toBe(400);
-});
-
-test('Update Author: all attributes null', () => {
-	var taskId = null;
-	var author = null;
-	var newAuthor = null;
-	
-	expect(updateAuthor(taskId, author, newAuthor)).toBe(400);
+  test('DELETE /task/:idTask req is undefined', async () => {
+    expect(deleteTask(undefined,res)).toEqual(res.status(400).json("Bad Request"));
+  })
 });

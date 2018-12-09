@@ -1,7 +1,7 @@
 const persistencyLayer = require('../persistencyLayer.js')
 const dbTaskGroupPath = __dirname+"/../../entities/taskGroups.js";
 
-function addTaskGroup(taskGroup){
+function createTaskGroup(taskGroup){
   return persistencyLayer.addObject(taskGroup,dbTaskGroupPath);
 }
 
@@ -14,6 +14,10 @@ function getTaskGroupById(idTaskGroup){
   return persistencyLayer.getObject(idTaskGroup, dbTaskGroupPath);
 }
 
+function getTaskGroupByName (taskGroupName){
+  return persistencyLayer.getObject(taskGroupName, dbTaskGroupPath);
+}
+
 function getTaskGroup(taskGroupName, param){
   //console.log("Nome passato:", taskGroupName);
   return persistencyLayer.getObjectByQuery(taskGroupName, param, dbTaskGroupPath);
@@ -24,9 +28,10 @@ function removeTaskGroup(idTaskGroup){
 }
 
 module.exports = {
-  addTaskGroup: addTaskGroup,
+  createTaskGroup: createTaskGroup,
   getAllTaskGroups: getAllTaskGroups,
   getTaskGroupById: getTaskGroupById,
+  getTaskGroupByName: getTaskGroupByName,
   getTaskGroup: getTaskGroup,
   removeTaskGroup: removeTaskGroup
 }

@@ -1,170 +1,143 @@
-const create = require('./TaskGroup').create;
+const taskGroupFunctions = require('../src/functionsEntities/taskGroupFunctions.js');
+const listAllTaskGroups = require ('../src/taskGroup.js').listAllTaskGroups;
+const deleteTaskGroup = require('../src/taskGroup.js').deleteTaskGroup;
+const getTaskGroup = require('../src/taskGroup.js').getTaskGroup;
+const createTaskGroup = require('../src/taskGroup.js').createTaskGroup;
+const getTaskGroupByName = require ('../src/taskGroup.js').getTaskGroupByName;
 
-test('Create a TaskGroup', () => {
-	var name = 1;
-	var author = 1;
-	var tasks = 1;
-	
-	expect(create(name, author, tasks)).toBe(200);
+const res = {
+  "status": (statuscode) =>{ return {
+    "json": (list) => { return {"code": statuscode, "list": list}
+     }
+   }}
+}
+
+const taskGroup = {
+  name: "SEMA",
+  author: "Martina",
+  tasks: "123"
+}
+
+// GET ALL TASKGROUPS
+
+describe ('GET /taskGroup valid tests', () => {
+  test('GET /taskGroup return code 200', () => {
+    var req = {};
+    expect(listAllTaskGroups({"body": {}},res)).toEqual(res.status(200).json(taskGroupFunctions.getAllTaskGroups()));
+  })
 });
 
-test('Create a TaskGroup: name null', () => {
-	var name = null;
-	var author = 1;
-	var tasks = 1;
-	
-	expect(create(name, author, tasks)).toBe(400);
-});
-
-test('Create a TaskGroup: author null', () => {
-	var name = 1;
-	var author = null;
-	var tasks = 1;
-	
-	expect(create(name, author, tasks)).toBe(400);
-});
-
-test('Create a TaskGroup: tasks null', () => {
-	var name = 1;
-	var author = 1;
-	var tasks = null;
-	
-	expect(create(name, author, tasks)).toBe(400);
-});
-
-test('Create a TaskGroup: all attributes null', () => {
-	var name = null;
-	var author = null;
-	var tasks = null;
-	
-	expect(create(name, author, tasks)).toBe(400);
-});
-
-const updateTaskGroup = require('./taskGroup/Id').update;
-
-test('Update the id of a taskGroup', () => {
-	var oldId = 1;
-	var newId = 2;
-	
-	expect(updateTaskGroup(oldId, newId)).toBe(200);
-});
-
-test('Update the id of a taskGroup: oldId null', () => {
-	var oldId = null;
-	var newId = 2;
-	
-	expect(updateTaskGroup(oldId, newId)).toBe(400);
-});
-
-test('Update the id of a taskGroup: newId null', () => {
-	var oldId = 1;
-	var newId = null;
-	
-	expect(updateTaskGroup(oldId, newId)).toBe(400);
-});
-
-test('Edit the id of a taskGroup: all attributes null', () => {
-	var oldId = null;
-	var newId = null;
-	
-	expect(updateTaskGroup(oldId, newId)).toBe(400);
-});
-
-const deleteTaskGroup = require('./taskGroup/Id').deleteTaskGroup;
-
-test('Delete taskGroup', () => {
-	var taskGroupId = 1;
-	
-	expect(deleteTaskGroup(taskGroupId)).toBe(204);
-});
-
-test('Delete taskGroup: id null', () => {
-	var taskGroupId = null;
-	
-	expect(deleteTaskGroup(taskGroupId)).toBe(400);
+describe ('GET /taskGroup invalid tests', () => {
+  test('GET /taskGroup req undefined', () => {
+    expect(listAllTaskGroups(undefined,res)).toEqual(res.status(400).json("Bad Request"));
+  })
 });
 
 
-const updateName = require('./task/Id/name').update;
+//GET TASKGROUP
 
-test('Update Name', () => {
-	var taskGroupId = 1;
-	var name = 1;
-	var newName = 2;
-	
-	expect(updateName(taskGroupId, name, newName)).toBe(200);
+describe ('GET /taskGroup/:idTaskGroup', () => {
+  test('GET /taskGroup/:idTaskGroup return code 200', () => {
+    var idTaskGroup = taskGroupFunctions.createTaskGroup(taskGroup);
+    expect(getTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(200).json(taskGroup));
+  })
 });
 
-test('Update Name: taskId null', () => {
-	var taskGroupId = null;
-	var name = 1;
-	var newName = 2;
-	
-	expect(updateName(taskGroupId, name, newName)).toBe(400);
+describe ('GET /taskGroup/:idTaskGroup invalid tests', () => {
+  test('GET /taskGroup/:idTaskGroup return code 404', () => {
+    var idTaskGroup = "_epxye8be2"
+    expect(getTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(404).json("TaskGroup NOT found"));
+  })
+
+  test('GET /taskGroup/:idTaskGroup idTaskGroup is a number', () => {
+    var idTaskGroup = 1234567
+    expect(getTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /taskGroup/:idTaskGroup idTaskGroup is undefined', () => {
+    var idTaskGroup = undefined
+    expect(getTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /taskGroup/:idTaskGroup idTaskGroup is null', () => {
+    var idTaskGroup = null
+    expect(getTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /taskGroup/:idTaskGroup params is undefined', () => {
+    var idTaskGroup = "_epxye8be2"
+    expect(getTaskGroup({"params": {"": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('GET /taskGroup/:idTaskGroup req is undefined', () => {
+    expect(getTaskGroup(undefined,res)).toEqual(res.status(400).json("Bad Request"));
+  })
+}); 
+
+//GET TASKGROUP BY NAME
+
+/*
+describe ('GET /taskGroup/:taskGroupName', () => {
+	test('GET /taskGroup/:taskGroupName return code 200', () => {
+	  var taskGroupName = taskGroupFunctions.getTaskGroupByName(taskGroupName);
+	  expect(getTaskGroupByName({"params": {"TaskGroupName": taskGroupName}},res)).toEqual(res.status(200).json(taskGroupName));
+	})
+  });
+  
+  describe ('GET /taskGroupName/:taskGroupName invalid tests', () => {
+	test('GET /taskGroup/:taskGroupName return code 404', () => {
+	  var taskGroupName = "SEMA"
+	  expect(getTaskGroupByName({"params": {"taskGroupName": taskGroupName}},res)).toEqual(res.status(400).json("Bad Request"));
+	})
+  
+	test('GET /taskGroup/:TaskGroupName taskGroupName is undefined', () => {
+	  var taskGroupName = undefined
+	  expect(getTaskGroupByName({"params": {"taskGroupName": taskGroupName}},res)).toEqual(res.status(400).json("Bad Request"));
+	})
+  
+	test('GET /taskGroup/:taskGroupName taskGroupName is null', () => {
+	  var taskGroupName = null
+	  expect(getTaskGroupByName({"params": {"taskGroupName": taskGroupName}},res)).toEqual(res.status(400).json("Bad Request"));
+	});
+  }); 
+
+*/
+//DELETE TASKGROUP
+
+describe('DELETE /taskGroup/:idTaskGroup valid tests', () => {
+  test('DELETE /taskGroup/:idTaskGroup return code 200', () => {
+    var idTaskGroup = taskGroupFunctions.createTaskGroup(taskGroup);
+    expect(deleteTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(200).json("TaskGroup deleted"));
+  })
 });
 
-test('Update Name: name null', () => {
-	var taskGroupId = 1;
-	var name = null;
-	var newName = 2;
-	
-	expect(updateName(taskGroupId, name, newName)).toBe(400);
-});
+describe('DELETE /taskGroup/:idTaskGroup invalid tests', () => {
+  test('DELETE /taskGroup/:idTaskGroup return code 404', async () => {
+    var idTaskGroup = "_epxye8be2";
+    expect(deleteTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(404).json("TaskGroup NOT found"));
+  })
 
-test('Update Name: newName null', () => {
-	var taskGroupId = 1;
-	var name = 1;
-	var newName = null;
-	
-	expect(updateName(taskGroupId, name, newName)).toBe(400);
-});
+  test('DELETE /taskGroup/:idTaskGroup idTaskGroup is a number', async () => {
+    var idTaskGroup = 12345678;
+    expect(deleteTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-test('Update Name: all attributes null', () => {
-	var taskGroupId = null;
-	var name = null;
-	var newName = null;
-	
-	expect(updateName(taskGroupId, name, newName)).toBe(400);
-});
+  test('DELETE /taskGroup/:idTaskGroup idTaskGroup is undefined', async () => {
+    var idTaskGroup = undefined;
+    expect(deleteTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-const updateAuthor = require('./taskGroup/Id/Author').update;
+  test('DELETE /taskGroup/:idTaskGroup idTaskGroup is null', async () => {
+    var idTaskGroup = null;
+    expect(deleteTaskGroup({"params": {"idTaskGroup": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-test('Update Author', () => {
-	var taskGroupId = 1;
-	var author = 1;
-	var newAuthor = 2;
-	
-	expect(updateAuthor(taskGroupId, author, newAuthor)).toBe(200);
-});
+  test('DELETE /taskGroup/:idTaskGroup params is undefined', async () => {
+    var idTaskGroup = "_epxye8be2";
+    expect(deleteTaskGroup({"params": {"": idTaskGroup}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 
-test('Update Author: taskId null', () => {
-	var taskGroupId = null;
-	var author = 1;
-	var newAuthor = 2;
-	
-	expect(updateAuthor(taskGroupId, author, newAuthor)).toBe(400);
-});
-
-test('Update Author: author null', () => {
-	var taskGroupId = 1;
-	var author = null;
-	var newAuthor = 2;
-	
-	expect(updateAuthor(taskGroupId, author, newAuthor)).toBe(400);
-});
-
-test('Update Author: newAuthor null', () => {
-	var taskGroupId = 1;
-	var author = 1;
-	var newAuthor = null;
-	
-	expect(updateAuthor(taskGroupId, author, newAuthor)).toBe(400);
-});
-
-test('Update Author: all attributes null', () => {
-	var taskGroupId = null;
-	var author = null;
-	var newAuthor = null;
-	
-	expect(updateAuthor(taskGroupId, author, newAuthor)).toBe(400);
+  test('DELETE /taskGroup/:idTaskGroup req is undefined', async () => {
+    expect(deleteTaskGroup(undefined,res)).toEqual(res.status(400).json("Bad Request"));
+  })
 });
