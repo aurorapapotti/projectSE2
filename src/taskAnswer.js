@@ -11,53 +11,91 @@ function createTaskAnswer (req, res) {
 	const assignment = req.body.assignment;
 	const taskGroup = req. body.taskGroup;
 
-	var taskAnswer = new Object();
-	taskAnswer["answers"] = new Array();
-	taskAnswer["student"] = student;
-	taskAnswer["assignment"] = assignment;
-	taskAnswer["taskGroup"] = taskGroup;
-		
-	taskAnswerFunc.writeTaskAnswer(taskAnswer);
-	res.status(201).send("Created");
+	if (student && assignment && taskGroup) {
+		var taskAnswer = new Object();
+		taskAnswer["answers"] = new Array();
+		const user = userFunc.getUserById(student);
+		if (user["id"]){
+			return res.status(404).json("Student "+student+" not found");
+		}
+		const assign = assignmentFunc.getAssignmentById(assignment);
+		if(assign["id"]){
+			return res.status(404).json("Assignment "+assignment+" not found");
+		}
+		const taskG = taskGroupFunc.getTaskGroupById(taskGroup);
+		if (taskG["id"]){
+			return res.status(404).json("TaskGroup "+taskGroup+" not found");
+		}
+		taskAnswer["student"] = student;
+		taskAnswer["assignment"] = assignment;
+		taskAnswer["taskGroup"] = taskGroup;
+			
+		taskAnswerFunc.writeTaskAnswer(taskAnswer);
+		return res.status(201).json("Created");
+	}
+	else {
+		return res.status(400).json("Invalid request");
+	}
 }
 
 function getAllTaskAnswers (req, res)  {
-	res.status(200).send(taskAnswerFunc.getAllTaskAnswers());
+	return res.status(200).json(taskAnswerFunc.getAllTaskAnswers());
 }
 
 function getTaskAnswer (req, res) {
-	const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
-	if (taskAnswer == null) {
-		res.status(400).send("Invalid request");
+	if (req.params.taskAnswerId){
+		const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
+		if (taskAnswer["id"]) {
+			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found");
+		}
+		else {
+			return res.status(200).json(taskAnswer);
+		}
 	}
 	else {
-		res.status(200).send(taskAnswer);
+		return res.status(400).json("Invalid request");
 	}
 }
 
 function getAllAnswers (req, res) {
-	const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
-	console.log(taskAnswer);
+	if (req.params.taskAnswerId){
+		const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
 
-	if (taskAnswer === null){
-		res.status(400).send("Invalid request");
+		if (taskAnswer["id"]){
+			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found");
+		}
+		else { 
+			return res.status(200).json(taskAnswer["answers"]);
+		}
 	}
-	else { 
-		res.status(200).send(taskAnswer["answers"]);
+	else {
+		return res.status(400).json("Invalid request");
 	}
 }
 
 function getAnswer (req, res) {
 	const taskAnswerId = req.params.taskAnswerId;
 	const answerId = req.params.answerId;
-	console.log(answerId);
-	const taskAnswer = taskAnswerFunc.getTaskAnswer(taskAnswerId);
 
-	if (taskAnswer === null){
-		res.status(400).send("Invalid request");
+	if (taskAnswerId && answerId){
+		const taskAnswer = taskAnswerFunc.getTaskAnswer(taskAnswerId);
+		if (taskAnswer["id"]){
+			return res.status(404).json("TaskAnswer "+taskAnswerId+" not found");
+		}
+		else {
+			const answers = taskAnswer["answers"];
+
+			for (let i=0; i<answers.length; i++){
+				if (answers[i]["task"] == answerId){
+					return res.status(200).json(answer[i]["response"]);
+				}
+			}
+
+			return res.status(404).json("Answer "+answerId+ "not found in this taskAnswer");
+		}
 	}
 	else {
-		res.status(200).send(taskAnswer["answers"][parseInt(answerId)]);
+		return res.status(400).json("Invalid request");
 	}
 }
 

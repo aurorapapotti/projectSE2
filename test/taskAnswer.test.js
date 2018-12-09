@@ -1,253 +1,268 @@
-const create = require('./taskAnswer').create;
+const taskAnswerFunctions = require('../src/functionsEntities/taskAnswerFunctions.js');
+const userFunctions = require('../src/functionsEntities/userFunctions.js');
+const taskGroupFunctions = require('../src/functionsEntities/taskGroupFunctions.js');
+const assignmentFunctions = require('../src/functionsEntities/assignmentFunctions.js');
 
-test('Create a taskAnswer', () => {
-	var student = 1;
-	var assignment = 1;
-	var taskGroup = 1;
-	
-	expect(create(student, assignment, taskGroup)).toBe(200);
+const createTaskAnswer = require('../src/taskAnswer.js').createTaskAnswer;
+const getAllTaskAnswers = require('../src/taskAnswer.js').getAllTaskAnswers;
+const getTaskAnswer = require('../src/taskAnswer.js').getTaskAnswer;
+const getAllAnswers = require('../src/taskAnswer.js').getAllAnswers;
+
+const res = {
+	"status": (statuscode) => { 
+		return {
+	  		"json": (message) => { 
+				  return {
+					"code": statuscode, 
+					"message": message
+				}
+	   		}
+		}
+	}
+}
+
+describe ("POST /taskAnswers", () =>{
+	test("return code 201", async () => {
+		var newStudent = {
+			name: "A",
+			surname: "a",
+			email: "a@a.com",
+			badgeNumber: "1234"
+		}
+
+		var newAssignment = {
+			title: "B",
+			professor: "b",
+			tasks: "b",
+			userGroup: "b",
+			start: "12.00",
+			deadline: "3"
+		}
+
+		var newTaskGroup = {
+			name: "c",
+			author: "C",
+			tasks: ["1", ""]
+		}
+
+		var newTaskAnswer = {
+			student: userFunctions.createUser(newStudent),
+			assignment: assignmentFunctions.addAssignment(newAssignment),
+			taskGroup: taskGroupFunctions.addTaskGroup(newTaskGroup)
+		}
+
+		expect(createTaskAnswer({body: newTaskAnswer}, res)).toEqual(res.status(201).json("Created"));
+	});
+
+	test("return code 404 student wrong", async () => {
+		var newAssignment = {
+			title: "B",
+			professor: "b",
+			tasks: "b",
+			userGroup: "b",
+			start: "12.00",
+			deadline: "3"
+		}
+
+		var newTaskGroup = {
+			name: "c",
+			author: "C",
+			tasks: ["1", ""]
+		}
+
+		var newTaskAnswer = {
+			student: "a",
+			assignment: assignmentFunctions.addAssignment(newAssignment),
+			taskGroup: taskGroupFunctions.addTaskGroup(newTaskGroup)
+		}
+
+		expect(createTaskAnswer({body: newTaskAnswer}, res)).toEqual(res.status(404).json("Student a not found"));
+	});
+
+	test("return code 404 assignment wrong", async () => {
+		var newStudent = {
+			name: "A",
+			surname: "a",
+			email: "a@a.com",
+			badgeNumber: "1234"
+		}
+
+		var newTaskGroup = {
+			name: "c",
+			author: "C",
+			tasks: ["1", ""]
+		}
+
+		var newTaskAnswer = {
+			student: userFunctions.createUser(newStudent),
+			assignment: "a",
+			taskGroup: taskGroupFunctions.addTaskGroup(newTaskGroup)
+		}
+
+		expect(createTaskAnswer({body: newTaskAnswer}, res)).toEqual(res.status(404).json("Assignment a not found"));
+	});
+
+	test("return code 404 TaskGroup wrong", async () => {
+		var newStudent = {
+			name: "A",
+			surname: "a",
+			email: "a@a.com",
+			badgeNumber: "1234"
+		}
+
+		var newAssignment = {
+			title: "B",
+			professor: "b",
+			tasks: "b",
+			userGroup: "b",
+			start: "12.00",
+			deadline: "3"
+		}
+
+		var newTaskAnswer = {
+			student: userFunctions.createUser(newStudent),
+			assignment: assignmentFunctions.addAssignment(newAssignment),
+			taskGroup: "a"
+		}
+
+		expect(createTaskAnswer({body: newTaskAnswer}, res)).toEqual(res.status(404).json("TaskGroup a not found"));
+	});
+
+	test("return code 400 student undefined", async () => {
+		var reqBody = {
+			assignment: "1",
+			taskGroup: "1"
+		}
+
+		expect(createTaskAnswer({body: reqBody}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
+
+	test("return code 400 assignment undefined", async () => {
+		var reqBody = {
+			student: "1",
+			taskGroup: "1"
+		}
+
+		expect(createTaskAnswer({body: reqBody}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
+
+	test("return code 400 taskGroup undefined", async () => {
+		var reqBody = {
+			student: "1",
+			assignment: "1"
+		}
+
+		expect(createTaskAnswer({body: reqBody}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
 });
 
-test('Create a taskAnswer: student null', () => {
-	var student = null;
-	var assignment = 1;
-	var taskGroup = 1;
-	
-	expect(create(student, assignment, taskGroup)).toBe(400);
+describe ("GET /taskAnswers", () => {
+	test("return code 200", async() => {
+		expect(getAllTaskAnswers({params:{}}, res)).toEqual(res.status(200).json(taskAnswerFunctions.getAllTaskAnswers()));
+	})
 });
 
-test('Create a taskAnswer: assignment null', () => {
-	var student = 1;
-	var assignment = null;
-	var taskGroup = 1;
-	
-	expect(create(student, assignment, taskGroup)).toBe(400);
+describe("GET /taskAnswers/:taskAnswerId", () => {
+	test("return code 200", async () => {
+		var newTaskAnswer = {
+			student: "1",
+			assignment: "1",
+			taskGroup: "1"
+		}
+
+		var req = {
+			taskAnswerId: taskAnswerFunctions.writeTaskAnswer(newTaskAnswer)
+		}
+
+		expect(getTaskAnswer({params: req}, res)).toEqual(res.status(200).json(taskAnswerFunctions.getTaskAnswer(req["taskAnswerId"])));
+	});
+
+	test("return code 404 taskAnswerId wrong", async () => {
+		var req = {
+			taskAnswerId: "a"
+		}
+
+		expect(getTaskAnswer({params: req}, res)).toEqual(res.status(404).json("TaskAnswer a not found"));
+	});
+
+	test("return code 400 taskAnswerId undefined", async () => {
+		expect(getTaskAnswer({params: {}}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
 });
 
-test('Create a taskAnswer: taskGroup null', () => {
-	var student = 1;
-	var assignment = 1;
-	var taskGroup = null;
-	
-	expect(create(student, assignment, taskGroup)).toBe(400);
+describe("GET /taskAnswers/:taskAnswerId/answers", () => {
+	test ("return code 200", async () => {
+		var newTaskAnswer = {
+			student: "1",
+			assignment: "1",
+			taskGroup: "1"
+		}
+
+		var id = taskAnswerFunctions.writeTaskAnswer(newTaskAnswer);
+		var taskAnswer = taskAnswerFunctions.getTaskAnswer(id);
+
+		taskAnswer["answers"] = new Array();
+		taskAnswer["answers"].push({task: "1", response: "a"});
+		taskAnswer["answers"].push({task: "2", response: "b"});
+
+		taskAnswerFunctions.modifyTaskAnswer(id, taskAnswer)
+
+		var req = {
+			taskAnswerId: id
+		}
+
+		expect(getAllAnswers({params: req}, res)).toEqual(res.status(200).json((taskAnswerFunctions.getTaskAnswer(id))["answers"]));
+	});
+
+	test ("return code 404 taskAnswerId wrong", async () => {
+		var req = {
+			taskAnswerId: "a"
+		}
+
+		expect(getAllAnswers({params: req}, res)).toEqual(res.status(404).json("TaskAnswer a not found"));
+	});
+
+	test ("return code 400 taskAnswerId undefined", async () => {
+		expect(getAllAnswers({params: {}}, res)).toEqual(res.status(400).json("Invalid request"));
+	});
 });
 
-test('Create a taskAnswer: all attributes null', () => {
-	var student = null;
-	var assignment = null;
-	var taskGroup = null;
-	
-	expect(create(student, assignment, taskGroup)).toBe(400);
+describe("GET /taskAnswers/:taskAnswerId/answers/:answerId", () => {
+	/*test("return code 200", async () => {
+		var newTaskAnswer = {
+			student: "1",
+			assignment: "1",
+			taskGroup: "1"
+		}
+
+		var id = taskAnswerFunctions.writeTaskAnswer(newTaskAnswer);
+		var taskAnswer = taskAnswerFunctions.getTaskAnswer(id);
+
+		taskAnswer["answers"] = new Array();
+		taskAnswer["answers"].push({task: "1", response: "a"});
+		taskAnswer["answers"].push({task: "2", response: "b"});
+
+		taskAnswerFunctions.modifyTaskAnswer(id, taskAnswer)
+
+		var req = {
+			taskAnswerId: id
+		}
+
+	});*/
 });
 
-const editTaskAnswer = require('./taskAnswers/taskAnswerId').edit;
+describe("PUT /taskAnswers/:taskAnswerId/answers/:answerId", () => {
 
-test('Edit the id of a taskAnswer', () => {
-	var taskAnswerId = 1;
-	var newTaskAnswerId = 2;
-	
-	expect(editTaskAnswer(taskAnswerId, newTaskAnswerId)).toBe(200);
 });
 
-test('Edit the id of a taskAnswer: taskAnswerId null', () => {
-	var taskAnswerId = null;
-	var newTaskAnswerId = 2;
-	
-	expect(editTaskAnswer(taskAnswerId, newTaskAnswerId)).toBe(400);
+describe("PUT /taskAnswers/:taskAnswerId/assignment", () => {
+
 });
 
-test('Edit the id of a taskAnswer: newTaskAnswerId null', () => {
-	var taskAnswerId = 1;
-	var newTaskAnswerId = null;
-	
-	expect(editTaskAnswer(taskAnswerId, newTaskAnswerId)).toBe(400);
+describe("PUT /taskAnswers/:taskAnswerId/taskGroup", () => {
+
 });
 
-test('Edit the id of a taskAnswer: all attributes null', () => {
-	var taskAnswerId = null;
-	var newTaskAnswerId = null;
-	
-	expect(editTaskAnswer(taskAnswerId, newTaskAnswerId)).toBe(400);
-});
+describe("PUT /taskAnswers/:taskAnswerId/student", () => {
 
-const deleteTaskAnswer = require('./taskAnswer/taskAnswerId').deleteTaskAnswer;
-
-test('Delete taskAnswer', () => {
-	var taskAnswerId = 1;
-	
-	expect(deleteTaskAnswer(taskAnswerId)).toBe(204);
-});
-
-test('Delete taskAnswer: id null', () => {
-	var taskAnswerId = null;
-	
-	expect(deleteTaskAnswer(taskAnswerId)).toBe(400);
-});
-
-const editAnswer = require('./taskAnswer/taskAnswerId/answers/answerId').edit;
-
-test('Edit answer', () => {
-	var taskAnswerId = 1;
-	var answerId = 1;
-	var newAnswerId = 2;
-	
-	expect(editAnswer(taskAnswerId, answerId, newAnswerId)).toBe(200);
-});
-
-test('Edit answer: taskAnswerId null', () => {
-	var taskAnswerId = null;
-	var answerId = 1;
-	var newAnswerId = 2;
-	
-	expect(editAnswer(taskAnswerId, answerId, newAnswerId)).toBe(400);
-});
-
-test('Edit answer: answerId null', () => {
-	var taskAnswerId = 1;
-	var answerId = null;
-	var newAnswerId = 2;
-	
-	expect(editAnswer(taskAnswerId, answerId, newAnswerId)).toBe(400);
-});
-
-test('Edit answer: newAnswerId null', () => {
-	var taskAnswerId = 1;
-	var answerId = 1;
-	var newAnswerId = null;
-	
-	expect(editAnswer(taskAnswerId, answerId, newAnswerId)).toBe(400);
-});
-
-test('Edit answer: all attributes null', () => {
-	var taskAnswerId = null;
-	var answerId = null;
-	var newAnswerId = null;
-	
-	expect(editAnswer(taskAnswerId, answerId, newAnswerId)).toBe(400);
-});
-
-const editStudent = require('./taskAnswers/taskAnswerId/student').edit;
-
-test('Edit student', () => {
-	var taskAnswerId = 1;
-	var student = 1;
-	var newStudent = 2;
-	
-	expect(editStudent(taskAnswerId, student, newStudent)).toBe(200);
-});
-
-test('Edit student: taskAnswerId null', () => {
-	var taskAnswerId = null;
-	var student = 1;
-	var newStudent = 2;
-	
-	expect(editStudent(taskAnswerId, student, newStudent)).toBe(400);
-});
-
-test('Edit student: student null', () => {
-	var taskAnswerId = 1;
-	var student = null;
-	var newStudent = 2;
-	
-	expect(editStudent(taskAnswerId, student, newStudent)).toBe(400);
-});
-
-test('Edit student: newStudent null', () => {
-	var taskAnswerId = 1;
-	var student = 1;
-	var newStudent = null;
-	
-	expect(editStudent(taskAnswerId, student, newStudent)).toBe(400);
-});
-
-test('Edit student: all attributes null', () => {
-	var taskAnswerId = null;
-	var student = null;
-	var newStudent = null;
-	
-	expect(editStudent(taskAnswerId, student, newStudent)).toBe(400);
-});
-
-const editAssignment = require('./taskAnswers/taskAnswerId/assignment').edit;
-
-test('Edit assignment', () => {
-	var taskAnswerId = 1;
-	var assignment = 1;
-	var newAssignment = 2;
-	
-	expect(editStudent(taskAnswerId, assignment, newAssignment)).toBe(200);
-});
-
-test('Edit assignment: taskAnswerId null', () => {
-	var taskAnswerId = null;
-	var assignment = 1;
-	var newAssignment = 2;
-	
-	expect(editStudent(taskAnswerId, assignment, newAssignment)).toBe(400);
-});
-
-test('Edit assignment: assignment null', () => {
-	var taskAnswerId = 1;
-	var assignment = null;
-	var newAssignment = 2;
-	
-	expect(editStudent(taskAnswerId, assignment, newAssignment)).toBe(400);
-});
-
-test('Edit assignment: newAssignment null', () => {
-	var taskAnswerId = 1;
-	var assignment = 1;
-	var newAssignment = null;
-	
-	expect(editStudent(taskAnswerId, assignment, newAssignment)).toBe(400);
-});
-
-test('Edit assignment: all attributes null', () => {
-	var taskAnswerId = null;
-	var assignment = null;
-	var newAssignment = null;
-	
-	expect(editStudent(taskAnswerId, assignment, newAssignment)).toBe(400);
-});
-
-const editTaskGroup = require('./taskAnswer/taskAnswerId/taskGroup').edit;
-
-test('Edit taskGroup', () => {
-	var taskAnswerId = 1;
-	var taskGroup = 1;
-	var newTaskGroup = 2;
-	
-	expect(editTaskGroup(taskAnswerId, taskGroup, newTaskGroup)).toBe(200);
-});
-
-test('Edit taskGroup: taskAnswerId null', () => {
-	var taskAnswerId = null;
-	var taskGroup = 1;
-	var newTaskGroup = 2;
-	
-	expect(editTaskGroup(taskAnswerId, taskGroup, newTaskGroup)).toBe(400);
-});
-
-test('Edit taskGroup: taskGroup null', () => {
-	var taskAnswerId = 1;
-	var taskGroup = null;
-	var newTaskGroup = 2;
-	
-	expect(editTaskGroup(taskAnswerId, taskGroup, newTaskGroup)).toBe(400);
-});
-
-test('Edit taskGroup: newTaskGroup', () => {
-	var taskAnswerId = 1;
-	var taskGroup = 1;
-	var newTaskGroup = null;
-	
-	expect(editTaskGroup(taskAnswerId, taskGroup, newTaskGroup)).toBe(400);
-});
-
-test('Edit taskGroup: all attributes null', () => {
-	var taskAnswerId = null;
-	var taskGroup = null;
-	var newTaskGroup = null;
-	
-	expect(editTaskGroup(taskAnswerId, taskGroup, newTaskGroup)).toBe(400);
 });
