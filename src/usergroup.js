@@ -1,4 +1,4 @@
-const persistencyLayer = require('./functionEntities/userGroupFunctions.js');
+const persistencyLayer = require('./functionsEntities/userGroupFunctions.js');
 const bodyParser = require("body-parser");
 
 function listUserGroups(req, res) {

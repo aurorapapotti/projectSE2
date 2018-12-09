@@ -117,7 +117,7 @@ describe ('GET /assignment/:assignmentId invalid tests', () =>{
 
 	test('GET /assignment/:assignmentId id not Found', () => {
 		var req = {
-			assignmentId: "1"
+			assignmentId: 1
 		}
 		expect(assignment.getAssignmentById({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
@@ -155,7 +155,7 @@ describe ('PUT /assignment/:assignmentId invalid tests', () =>{
 		var req = {}
 		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-
+	
 	test('PUT /assignment/:assignmentId params undefined', () => {
 		var req = {}
 		expect(assignment.deleteAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
@@ -191,7 +191,7 @@ describe ('DELETE /assignment/:assignmentId invalid tests', () =>{
 		}
 		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-
+	
 	test('DELETE /assignment/:assignmentId params empty', () =>{
 		var req = {
 			assignmentId: "_8heb7eyv5w"
@@ -223,7 +223,7 @@ describe ('GET /assignment/:assignmentId/professor invalid tests', () => {
 		var req = {}
 		expect(assignment.getProfessorByIdAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-
+	
 	test('GET /assignment/:assignmentId/professor params empty', () => {
 		var req = {}
 		expect(assignment.getProfessorByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
@@ -253,7 +253,7 @@ describe ('GET /assignment/:assignmentId/users invalid tests', () => {
 		var req = {}
 		expect(assignment.getUsersByIdAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-
+	
 	test('GET /assignment/:assignmentId/users params empty', () => {
 		var req = {}
 		expect(assignment.getUsersByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
@@ -273,8 +273,8 @@ describe ('PUT /assignment/:assignmentId/users valid tests', () => {
 		var req = {
 			assignmentId: assignmentFunc.addAssignment(ass)
 		}
-		var newUsers = ["user1", "user2"];
-		expect(assignment.updateAssignment({params: req, body: newUsers}, res)).toEqual(res.status(200).json(ass));
+		var userGroup = ["user1", "user2"];
+		expect(assignment.updateAssignment({params: req, body: userGroup}, res)).toEqual(res.status(200).json(ass));
 	})
 });
 
@@ -283,7 +283,7 @@ describe ('PUT /assignment/:assignmentId/users invalid tests', () => {
 		var req = {}
 		expect(assignment.updateAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-
+	
 	test('PUT /assignment/:assignmentId/users params empty', () => {
 		var req = {}
 		expect(assignment.updateAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
@@ -313,7 +313,7 @@ describe ('GET /assignment/:assignmentId/tasks invalid tests', () => {
 		var req = {}
 		expect(assignment.getTasksByIdAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-
+	
 	test('GET /assignment/:assignmentId/tasks params empty', () => {
 		var req = {}
 		expect(assignment.getTasksByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
@@ -343,9 +343,9 @@ describe ('PUT /assignment/:assignmentId/tasks invalid tests', () => {
 		var req = {}
 		expect(assignment.updateAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-
+	/*
 	test('PUT /assignment/:assignmentId/tasks params empty', () => {
 		var req = {}
 		expect(assignment.updateAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
-	})
+	})*/
 });
