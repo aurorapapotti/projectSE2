@@ -153,7 +153,7 @@ function deleteTaskAnswer (req, res) {
 	if (req.params.taskAnswerId){
 		deleted = taskAnswerFunc.deleteTaskAnswer(req.params.taskAnswerId);
 
-		if (deleted["taskGroup"]){
+		if (!deleted["taskGroup"]){
 			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found");
 		}
 		else {
