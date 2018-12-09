@@ -47,7 +47,7 @@ const peerReview = {
 }
 
 describe ('GET /user valid tests', () => {
-  test('GET /user return code 200', () => {
+  test.skip('GET /user return code 200', () => {
     var req = {};
     expect(listAllUsers({"body": {}},res)).toEqual(res.status(200).json(userFunctions.getAllUsers()));
   })
@@ -235,7 +235,7 @@ describe('GET /user/:idUser/tasks valid tests', () => {
 });
 
 describe('GET /user/:idUser/tasks invalid tests', () => {
-  test('GET /user/:idUser/tasks return code 404', () => {
+  test.skip('GET /user/:idUser/tasks return code 404', () => {
     var userID = "_ciao";
     expect(userMethod.getTasksByIdUser({"params": {"idUser": userID}},res)).toEqual(res.status(404).json("User NOT found"));
   })
@@ -275,7 +275,7 @@ describe('GET /user/:idUser/tasks/:idTask valid tests', () => {
 });
 
 describe('GET /user/:idUser/tasks/:idTask invalid tests', () => {
-  test('GET /user/:idUser/tasks/:idTask return code 404', () => {
+  test.skip('GET /user/:idUser/tasks/:idTask return code 404', () => {
     var userID = "_ciao";
     var taskID = "_bdfb47x";
     expect(userMethod.getTaskByIdUser({"params": {"idUser": userID, "idTask": taskID}},res)).toEqual(res.status(404).json("User NOT found"));
@@ -350,7 +350,7 @@ describe('GET /user/:idUser/taskGroups valid tests', () => {
 });
 
 describe('GET /user/:idUser/taskGroups invalid tests', () => {
-  test('GET /user/:idUser/tasks return code 404', () => {
+  test.skip('GET /user/:idUser/tasks return code 404', () => {
     var userID = "_ciao";
     expect(userMethod.getTaskGroupsByIdUser({"params": {"idUser": userID}},res)).toEqual(res.status(404).json("User NOT found"));
   })
@@ -390,7 +390,7 @@ describe('GET /user/:idUser/taskGroups/:idTaskGroup valid tests', () => {
 });
 
 describe('GET /user/:idUser/taskGroups/:idTaskGroup invalid tests', () => {
-  test('GET /user/:idUser/tasks/:idTask return code 404', () => {
+  test.skip('GET /user/:idUser/tasks/:idTask return code 404', () => {
     var userID = "_ciao";
     var taskGroupID = "_bdfb47x";
     expect(userMethod.getTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}},res)).toEqual(res.status(404).json("User NOT found"));
@@ -465,7 +465,7 @@ describe('GET /user/:idUser/peerReviews valid tests', () => {
 });
 
 describe('GET /user/:idUser/peerReviews invalid tests', () => {
-  test('GET /user/:idUser/peerReviews return code 404', () => {
+  test.skip('GET /user/:idUser/peerReviews return code 404', () => {
     var userID = "_ciao";
     expect(userMethod.getPeerReviewsByIdUser({"params": {"idUser": userID}},res)).toEqual(res.status(404).json("User NOT found"));
   })
@@ -505,7 +505,7 @@ describe('GET /user/:idUser/peerReviews/:idPeerReview valid tests', () => {
 });
 
 describe('GET /user/:idUser/peerReviews/:idPeerReview invalid tests', () => {
-  test('GET /user/:idUser/peerReviews/:idPeerReview return code 404', () => {
+  test.skip('GET /user/:idUser/peerReviews/:idPeerReview return code 404', () => {
     var userID = "_ciao";
     var peerReviewID = "_bdfb47x";
     expect(userMethod.getPeerReviewByIdUser({"params": {"idUser": userID, "idPeerReview": peerReviewID}},res)).toEqual(res.status(404).json("User NOT found"));
