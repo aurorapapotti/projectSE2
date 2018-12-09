@@ -134,6 +134,8 @@ function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
           return object_filtered;
         }
       }
+      else
+        return object_notFound;
     }
   }
   else
