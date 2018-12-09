@@ -564,7 +564,7 @@ describe("PUT /reviews/:reviewId/peerReviews/:peerReviewId", () => {
 	});
 });
 
-describe("PUT /reviews/:reviewId/taskAnswers", () => {
+describe("PUT /reviews/:reviewId/taskAnswers/:taskAnswerId", () => {
 	test ("return code 200 add", async () => {
 		var newReview = {
 			taskAnswer: ["1", "2"],

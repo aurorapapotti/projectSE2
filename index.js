@@ -70,6 +70,14 @@ app.get("/taskAnswers", taskAnswer.getAllTaskAnswers);
 app.get("/taskAnswers/:taskAnswerId", taskAnswer.getTaskAnswer);
 app.get("/taskAnswers/:taskAnswerId/answers", taskAnswer.getAllAnswers);
 app.get("/taskAnswers/:taskAnswerId/answers/:answerId", taskAnswer.getAnswer);
+app.get("/taskAnswers/:taskAnswerId/student", taskAnswer.getStudent);
+app.get("/taskAnswers/:taskAnswerId/assignment", taskAnswer.getAssignment);
+app.get("/taskAnswers/:taskAnswerId/taskGroup", taskAnswer.getTaskGroup);
+app.delete("/taskAnswers/:taskAnswerId", taskAnswer.deleteTaskAnswer);
+app.put("/taskAnswers/:taskAnswerId/assignment", taskAnswer.editAssignment);
+app.put("/taskAnswers/:taskAnswerId/taskGroup", taskAnswer.editTaskGroup);
+app.put("/taskAnswers/:taskAnswerId/student", taskAnswer.editAnswer);
+app.put("/taskAnswers/:taskAnswerId/answers", taskAnswer.editAnswer);
 
 //PEER REVIEW
 app.get('/peerReview', peerReview.listAllPeerReview);
