@@ -1,13 +1,11 @@
 
-const assignmentFunctions = require('./functionsEntities/assignmentFunctions.js');
+const assignmentFunc = require('./functionsEntities/assignmentFunctions.js');
 const userFunc = require('./functionsEntities/userFunctions.js');
 const taskGroupFunc = require('./functionsEntities/taskGroupFunctions.js');
 
 const bodyParser = require("body-parser");
 
-/*function createAssignment(req, res) {
-	console.log("recived request: ",req.body);
-
+function createAssignment(req, res) {
 	var title = req.body.title;
 	var professor = req.body.professor;
 	var tasks = req.body.taskGroup;
@@ -16,6 +14,8 @@ const bodyParser = require("body-parser");
 	var deadline = req.body.deadline;
 
 	if (title == null || professor == null || tasks == null || users == null)
+		res.status(400).send("Invalid request");
+	if (title == undefined || professor == undefined || tasks == undefined || users == undefined)
 		res.status(400).send("Invalid request");
 
 	var ass = new Object();
@@ -26,7 +26,7 @@ const bodyParser = require("body-parser");
 	ass["start"] = start;
 	ass["deadline"] = deadline;
 
-	const a = assignmentFunc.writeAssignment(ass);
+	const a = assignmentFunc.createAssignment(ass);
 	if(a == null){
 		res.status(400).send("Invalid request");
 	}
@@ -34,14 +34,15 @@ const bodyParser = require("body-parser");
 		console.log("Created: ",assignmentFunc.getAllAssignments());
 		res.status(201).send("Created");
 	}
-}*/
+}
 
 function listAllAssignments(req, res){
   if (!req)
     return res.status(400).json("Bad Request");
-  return res.status(200).json(assignmentFunctions.getAllAssignments());
+  return res.status(200).json(assignmentFunc.getAllAssignments());
 }
 
+/*
 function createAssignment(req, res) {
   if(!req || !req.body || !req.body.title|| !req.body.professor || !req.body.tasks || !req.body.userGroup || !req.body.start || !req.body.deadline )
     return res.status(401).json("Bad Request");
@@ -51,22 +52,22 @@ function createAssignment(req, res) {
 		if (typeof req.body.tasks[key] !== 'string')
 			return res.status(401).json("Bad Request");
 	});
-  //console.log("recived request: ",req.body);
+	
   let idAssignment = assignmentFunctions.addAssignment(req.body);
 	console.log(idAssignment);
   //console.log("wrote completed: ", userFunctions.getAllUsers());
   return res.status(201).json("Created Assignment");
-}
-/*
+}*/
+
 function getAssignmentById(req, res){
 	var id = req.params.assignmentId;
 	var ass = assignmentFunc.getAssignmentById(id);
 
 	if(ass == undefined || ass == null){
-		res.status(400).send("Invalid request");
+		res.status(400).json("Invalid request");
 	}
 	else{
-		res.status(201).send(ass);
+		res.status(201).json(ass);
 	}
 }
 
@@ -205,19 +206,18 @@ function updateTasks(req, res){
 			res.status(200).send(ass);
 		}
 	}
-}*/
-
+}
 
 module.exports = {
   createAssignment: createAssignment,
-	//getAssignment: getAssignment,
+	getAssignment: getAssignment,
 	listAllAssignments: listAllAssignments,
-	/*getAssignmentById: getAssignmentById,
+	getAssignmentById: getAssignmentById,
 	updateAssignment: updateAssignment,
 	deleteAssignment: deleteAssignment,
 	getProfessorByIdAssignment: getProfessorByIdAssignment,
 	getUsersByIdAssignment: getUsersByIdAssignment,
 	updateUsers: updateUsers,
 	getTasksByIdAssignment: getTasksByIdAssignment,
-	updateTasks: updateTasks*/
+	updateTasks: updateTasks
 }

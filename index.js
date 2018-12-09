@@ -82,13 +82,9 @@ app.post('/taskGroup', taskGroup.createTaskGroup);
 app.delete('/taskGroup/:idTaskGroup', taskGroup.deleteTaskGroup);
 
 //ASSIGNMENT
-app.get('/assignment', assignment.listAllAssignments);
-app.post('/assignment', assignment.createAssignment);
 
-/*
-//ASSIGNMENT
 app.get ('/assignment', function (req, res){
-	res.send(assignment.getAllAssignments());
+	res.send(assignment.listAllAssignments(req, res));
 })
 
 app.post ('/assignment', function (req, res){
@@ -115,7 +111,7 @@ app.get ('/assignment/:assignmentId/users', function(req, res){
 	res.send(assignment.getUsersByIdAssignment(req, res));
 })
 
-app.update ('/assignment/:assignmentId/users', function(req, res){
+app.put ('/assignment/:assignmentId/users', function(req, res){
 	res.send(assignment.updateUsers(req, res));
 })
 
@@ -123,9 +119,9 @@ app.get ('/assignment/:assignmentId/tasks', function(req, res){
 	res.send(assignment.getTasksByIdAssignment(req, res));
 })
 
-app.update ('/assignment/:assignmentId/tasks', function(req, res){
+app.put ('/assignment/:assignmentId/tasks', function(req, res){
 	res.send(assignment.updateTasks(req, res));
-})*/
+})
 
 //REVIEW
 app.post("/reviews", (req, res) => {

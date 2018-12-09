@@ -1,240 +1,351 @@
-//--- POST ASSIGNMENT ---
-const createAssignment = require('./assignment').createAssignment
 
-test('create assignment (prof pos, tasks pos, clas pos, start pos, deadline pos)', () => {
-	var prof = 1;
-	var tasks = 1;
-	var clas = 1;
-	var start = 1;
-	var deadline = 1;
-	
-	expect(createAssignment(prof, tasks, clas, start, deadline)).toBe(200);
+const usergroupFunc = require('../src/functionsEntities/userGroupFunctions.js');
+const userFunc = require('../src/functionsEntities/userFunctions.js');
+const assignmentFunc = require('../src/functionsEntities/assignmentFunctions.js');
+const usergroup = require("../src/usergroup.js");
+const user = require("../src/user.js");
+const assignment = require('../src/assignment.js');
+
+
+const req = {}
+const res = {
+	"status": (statuscode) =>{ return {
+		"json": (message) => {return {
+			"code": statuscode,
+			"message": message
+		}}
+	}}
+}
+
+//	/assignment
+describe ('GET /assignment valid tests', () =>{
+	test('GET /assignment return code 200', () => {
+		var req = {};
+		expect(assignment.listAllAssignments({body: req}, res)).toEqual(res.status(200).json(assignmentFunc.getAllAssignments()));
+	})
 });
 
-test('create assignment (prof null, tasks null, clas null, start null, deadline null)', () => {
-	var prof = null;
-	var tasks = null;
-	var clas = null;
-	var start = null;
-	var deadline = null;
-	
-	expect(createAssignment(prof, tasks, clas, start, deadline)).toBe(404);
+describe ('POST /assignment valid tests', () =>{
+	test('POST /assignment valid creation', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: "user1",
+			tasks: "t1",
+			class: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(201).json(ass));
+	})
 });
 
-test('create assignment (prof null, tasks pos, clas pos, start pos, deadline pos)', () => {
-	var prof = null;
-	var tasks = 1;
-	var clas = 1;
-	var start = 1;
-	var deadline = 1;
-	
-	expect(createAssignment(prof, tasks, clas, start, deadline)).toBe(200);
+describe ('POST /assignment invalid tests', () =>{
+	test('POST /assignment title not string', () => {
+		var ass = {
+			title: 1,
+			professor: "user1",
+			tasks: "t1",
+			class: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('POST /assignment professor undefined', () => {
+		var ass = {
+			title: 1,
+			tasks: "t1",
+			class: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('POST /assignment tasks undefined', () => {
+		var ass = {
+			title: 1,
+			professor: "user 1",
+			class: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('POST /assignment class undefined', () => {
+		var ass = {
+			title: 1,
+			professor: "user 1",
+			tasks: "t1",
+			start: "12",
+			deadline: 2
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('POST /assignment req empty', () => {
+		var req = {}
+		expect(assignment.createAssignment({body: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-test('create assignment (prof pos, tasks null, clas pos, start pos, deadline pos)', () => {
-	var prof = 1;
-	var tasks = null;
-	var clas = 1;
-	var start = 1;
-	var deadline = 1;
-	
-	expect(createAssignment(prof, tasks, clas, start, deadline)).toBe(200);
+//	/assignment/:assignmentId
+describe ('GET /assignment/:assignmentId valid tests', () =>{
+	test('GET /assignment/:assignmentId return code 200', () => {
+		var ass = {
+			title: 1,
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		expect(assignment.getAssignmentById({params: req}, res)).toEqual(res.status(200).json(req["assignmentId"]));
+	})
 });
 
-test('create assignment (prof pos, tasks pos, clas null, start pos, deadline pos)', () => {
-	var prof = 1;
-	var tasks = 1;
-	var clas = null;
-	var start = 1;
-	var deadline = 1;
-	
-	expect(createAssignment(prof, tasks, clas, start, deadline)).toBe(200);
+describe ('GET /assignment/:assignmentId invalid tests', () =>{
+	test('GET /assignment/:assignmentId req empty', () => {
+		var req = {}
+		expect(assignment.getAssignmentById({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('GET /assignment/:assignmentId id not Found', () => {
+		var req = {
+			assignmentId: "1"
+		}
+		expect(assignment.getAssignmentById({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-test('create assignment (prof pos, tasks pos, clas pos, start null, deadline pos)', () => {
-	var prof = 1;
-	var tasks = 1;
-	var clas = 1;
-	var start = null;
-	var deadline = 1;
-	
-	expect(createAssignment(prof, tasks, clas, start, deadline)).toBe(200);
+describe ('PUT /assignment/:assignmentId valid tests', () =>{
+	test('PUT /assignment/:assignmentId edited', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+
+		var newAss = {
+			title: "ingegneria",
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+
+		expect(assignment.updateAssignment({params: req, body: newAss}, res)).toEqual(res.status(200).json(newAss));
+	})
 });
 
-test('create assignment (prof pos, tasks pos, clas pos, start pos, deadline null)', () => {
-	var prof = 1;
-	var tasks = 1;
-	var clas = 1;
-	var start = 1;
-	var deadline = null;
-	
-	expect(createAssignment(prof, tasks, clas, start, deadline)).toBe(200);
+describe ('PUT /assignment/:assignmentId invalid tests', () =>{
+	test('PUT /assignment/:assignmentId req undefined', () => {
+		var req = {}
+		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('PUT /assignment/:assignmentId params undefined', () => {
+		var req = {}
+		expect(assignment.deleteAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-
-//--- GET ASSIGNMENTS ---
-const getAssignments = require('./assignment').getAssignments
-
-test('get assignment (id null)', () => {
-	var id = null;
-	
-	expect(getAssignments(id)).toBe(404);
+describe ('DELETE /assignment/:assignmentId valid tests', () =>{
+	test('DELETE /assignment/:assignmentId return code 200', () =>{
+		var ass = {
+			title: 1,
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(200).json("Deleted."));
+	})
 });
 
-test('get assignment (id pos)', () => {
-	var id = 1;
-	
-	expect(getAssignments(id)).toBe(200);
+describe ('DELETE /assignment/:assignmentId invalid tests', () =>{
+	test('DELETE /assignment/:assignmentId req empty', () =>{
+		var req = {}
+		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('DELETE /assignment/:assignmentId assignment not exists', () =>{
+		var req = {
+			assignmentId: "1"
+		}
+		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('DELETE /assignment/:assignmentId params empty', () =>{
+		var req = {
+			assignmentId: "_8heb7eyv5w"
+		}
+		expect(assignment.deleteAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-
-//--- PUT ASSIGNMENT/ASSIGNMENT_ID ---
-const editAssignment = require('./assignment/assignmentId').editAssignment
-
-test('edit assignment (old null, new pos)', () => {
-	var oldAss = null;
-	var newAss = 3;
-	
-	expect(editAssignment(oldAss, newAss)).toBe(404);
+//	/assignment/:assignmentId/professor
+describe ('GET /assignment/:assignmentId/professor valid tests', () => {
+	test('GET /assignment/:assignmentId/professor valid professor', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		expect(assignment.getProfessorByIdAssignment({params: req}, res)).toEqual(res.status(200).json(ass["professor"]));
+	})
 });
 
-test('edit assignment (old pos, new null)', () => {
-	var oldAss = 3;
-	var newAss = null;
-	
-	expect(editAssignment(oldAss, newAss)).toBe(404);
+describe ('GET /assignment/:assignmentId/professor invalid tests', () => {
+	test('GET /assignment/:assignmentId/professor req empty', () => {
+		var req = {}
+		expect(assignment.getProfessorByIdAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('GET /assignment/:assignmentId/professor params empty', () => {
+		var req = {}
+		expect(assignment.getProfessorByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-test('edit assignment (old null, new null)', () => {
-	var oldAss = null;
-	var newAss = null;
-	
-	expect(editAssignment(oldAss, newAss)).toBe(404);
+//	/assignment/:assignmentId/users
+describe ('GET /assignment/:assignmentId/users valid tests', () => {
+	test('GET /assignment/:assignmentId/users valid users', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		expect(assignment.getUsersByIdAssignment({params: req}, res)).toEqual(res.status(200).json(ass["users"]));
+	})
 });
 
-test('edit assignment (old pos, new pos)', () => {
-	var oldAss = 4;
-	var newAss = 3;
-	
-	expect(editAssignment(oldAss, newAss)).toBe(200);
+describe ('GET /assignment/:assignmentId/users invalid tests', () => {
+	test('GET /assignment/:assignmentId/users req empty', () => {
+		var req = {}
+		expect(assignment.getUsersByIdAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('GET /assignment/:assignmentId/users params empty', () => {
+		var req = {}
+		expect(assignment.getUsersByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-
-//--- GET ASSIGNMENT/ASSIGNMENT_ID ---
-const getAssignment = require('./assignment/assignmentId').getAssignment
-
-test('get assignment (id null)', () => {
-	var id = null;
-	
-	expect(getAssignment(id)).toBe(404);
+describe ('PUT /assignment/:assignmentId/users valid tests', () => {
+	test('PUT /assignment/:assignmentId/users valid users', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		var newUsers = ["user1", "user2"];
+		expect(assignment.updateAssignment({params: req, body: newUsers}, res)).toEqual(res.status(200).json(ass));
+	})
 });
 
-test('get assignment (id pos)', () => {
-	var id = 1;
-	
-	expect(getAssignment(id)).toBe(200);
+describe ('PUT /assignment/:assignmentId/users invalid tests', () => {
+	test('PUT /assignment/:assignmentId/users req empty', () => {
+		var req = {}
+		expect(assignment.updateAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('PUT /assignment/:assignmentId/users params empty', () => {
+		var req = {}
+		expect(assignment.updateAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-
-//--- DELETE ASSIGNMENT/ASSIGNMENT_ID ---
-const deleteAssignment = require('./assignment/assignmentId').deleteAssignment
-
-test('delete assignment (id null)', () => {
-	var id = null;
-	
-	expect(delete(id)).toBe(404);
+//	/assignment/:assignmentId/tasks
+describe ('GET /assignment/:assignmentId/tasks valid tests', () => {
+	test('GET /assignment/:assignmentId/tasks valid professor', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		expect(assignment.getTasksByIdAssignment({params: req}, res)).toEqual(res.status(200).json(ass["tasks"]));
+	})
 });
 
-test('delete assignment (id pos)', () => {
-	var id = 1;
-	
-	expect(delete(id)).toBe(200);
+describe ('GET /assignment/:assignmentId/tasks invalid tests', () => {
+	test('GET /assignment/:assignmentId/tasks req empty', () => {
+		var req = {}
+		expect(assignment.getTasksByIdAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('GET /assignment/:assignmentId/tasks params empty', () => {
+		var req = {}
+		expect(assignment.getTasksByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
 
-
-//--- GET ASSIGNMENT/PROFESSOR ---
-const getProfessor = require('./assignment/Professor').getProfessor
-
-test('get professor (id null)', () => {
-	var id = null;
-	
-	expect(getProfessor(id)).toBe(404);
+describe ('PUT /assignment/:assignmentId/tasks valid tests', () => {
+	test('PUT /assignment/:assignmentId/tasks valid users', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: "user 1",
+			tasks: "t1",
+			users: "u1",
+			start: "12",
+			deadline: 2
+		}	
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		var newTasks = ["user1", "user2"];
+		expect(assignment.updateAssignment({params: req, body: newTasks}, res)).toEqual(res.status(200).json(ass));
+	})
 });
 
-test('get professor (id pos)', () => {
-	var id = 1;
-	
-	expect(getProfessor(id)).toBe(200);
-});
+describe ('PUT /assignment/:assignmentId/tasks invalid tests', () => {
+	test('PUT /assignment/:assignmentId/tasks req empty', () => {
+		var req = {}
+		expect(assignment.updateAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 
-
-//--- GET USERS ---
-const getUsers = require('./assignment/assignmentId/users').getUsers
-...........................
-
-
-//--- PUT USERS ---
-const editUsers = require('./assignment/assignmentId/users').editUsers
-
-test('edit users (old null, new pos)', () => {
-	var oldAss = null;
-	var newAss = 3;
-	
-	expect(editUsers(oldAss, newAss)).toBe(404);
-});
-
-test('edit users (old pos, new null)', () => {
-	var oldAss = 3;
-	var newAss = null;
-	
-	expect(editUsers(oldAss, newAss)).toBe(404);
-});
-
-test('edit users (old null, new null)', () => {
-	var oldAss = null;
-	var newAss = null;
-	
-	expect(editUsers(oldAss, newAss)).toBe(404);
-});
-
-test('edit users (old pos, new pos)', () => {
-	var oldAss = 4;
-	var newAss = 3;
-	
-	expect(editUsers(oldAss, newAss)).toBe(200);
-});
-
-
-//--- GET TASKS ---
-..........................
-
-//--- PUT TASKS ---
-const editUsers = require('./assignment/assignmentId/tasks').editUsers
-
-test('edit users (old null, new pos)', () => {
-	var oldAss = null;
-	var newAss = 3;
-	
-	expect(editUsers(oldAss, newAss)).toBe(404);
-});
-
-test('edit users (old pos, new null)', () => {
-	var oldAss = 3;
-	var newAss = null;
-	
-	expect(editUsers(oldAss, newAss)).toBe(404);
-});
-
-test('edit users (old null, new null)', () => {
-	var oldAss = null;
-	var newAss = null;
-	
-	expect(editUsers(oldAss, newAss)).toBe(404);
-});
-
-test('edit users (old pos, new pos)', () => {
-	var oldAss = 4;
-	var newAss = 3;
-	
-	expect(editUsers(oldAss, newAss)).toBe(200);
+	test('PUT /assignment/:assignmentId/tasks params empty', () => {
+		var req = {}
+		expect(assignment.updateAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
 });
