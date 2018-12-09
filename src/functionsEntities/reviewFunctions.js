@@ -11,7 +11,7 @@ function getReview (idReview){
 
 function getAllReview(){
     return persistencyLayer.getObjectsList(dbReviewPath);
-}
+} 
 
 function deleteReview(idReview){
     return persistencyLayer.deleteObject(idReview, dbReviewPath);
