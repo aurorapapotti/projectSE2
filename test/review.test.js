@@ -29,9 +29,22 @@ const res = {
 
 describe ("POST /reviews", () => {
     test ("return code 201", async () => {
+		var newPeerReview = {
+			user: "1",
+			taskAnswer: "1",
+			comment: "a"
+		}
+
+		var newTaskAnswer = {
+			answers: ["1", "2"],
+			student: "1",
+			assignment: "1",
+			task: "1"
+		}
+
 		var review = {
-			taskAnswer: ["1", "2"],
-			peerReview: ["1"],
+			taskAnswer: [taskAnswerFunctions.writeTaskAnswer(newTaskAnswer), taskAnswerFunctions.writeTaskAnswer(newTaskAnswer)],
+			peerReview: [peerReviewFunctions.addPeerReview(newPeerReview)],
 			vote: "3"
 		}
 
