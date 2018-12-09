@@ -648,5 +648,191 @@
         "surname": "Morandi",
         "email": "gianni.morandi@email.it",
         "badgeNumber": 123456
+    },
+    "_qsba4nppd": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_gfrxifug2": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_g4r2wjjzz": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_rvr3y3e9z": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_wti5gm3fi": {
+        "name": "Chiara",
+        "surname": "Ferragni",
+        "email": "chiara.ferragni@email.it",
+        "badgeNumber": 654321
+    },
+    "_g9v3aai5b": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_fzi40wjp8": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_8dx9vy0t3": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_lj5aoxtnw": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_si3kzqxn1": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_fpol7osrt": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_6nkpffugb": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_ua3at70a1": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_7t65tm068": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_21wauzwik": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_6b99r8oh2": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_qxmjv7vsn": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_sut444pez": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_943hgdwqh": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_qq4t2wgl9": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_hfxnbr9w6": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_4hqzyp47a": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_zp681vgs2": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_l1wwx5ztx": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_nrgqozcl6": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_r9r3uuka8": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_ncaz5z1y8": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_724n70ryh": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_ej7zkctxy": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_tnt32hm1e": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
+    },
+    "_zpzz3lru3": {
+        "name": "Gianni",
+        "surname": "Morandi",
+        "email": "gianni.morandi@email.it",
+        "badgeNumber": 123456
     }
 }
