@@ -160,5 +160,23 @@
             "_37bsaj2"
         ],
         "author": "_889tob9lw"
+    },
+    "_7kl1m1rgs": {
+        "name": "SEMA",
+        "tasks": [
+            "_hdeh53x",
+            "_nde8ws",
+            "_37bsaj2"
+        ],
+        "author": "_1fg4e0xum"
+    },
+    "_8xxzezzjc": {
+        "name": "SEMA",
+        "tasks": [
+            "_hdeh53x",
+            "_nde8ws",
+            "_37bsaj2"
+        ],
+        "author": "_fu7zrk3a0"
     }
 }

@@ -106,5 +106,17 @@
         "argument": "Testing",
         "correctAnswer": "Black Box",
         "author": "_nn8msmbu5"
+    },
+    "_h5ckgurqf": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_8uwgxdj27"
+    },
+    "_cc5bf86mn": {
+        "taskType": "multiple choice",
+        "argument": "Testing",
+        "correctAnswer": "Black Box",
+        "author": "_t2r6zlh55"
     }
 }
