@@ -1,39 +1,52 @@
-const userGroupFunctions = require('./functionsEntities/userGroupFunctions.js');
+const userGroupFunc = require('./functionsEntities/userGroupFunctions.js');
+const userFunc = require('./functionsEntities/userFunctions.js');
+
 const bodyParser = require("body-parser");
 
-var userGroupId;
-var userId;
-
 function listUserGroups(req, res) {
-	const us = userGroupFunctions.getAllUserGroups();
-	if (us == null) {
-		res.status(400).send("Invalid request");
-	}
-	else {
-		console.log("GetAll: ",userGroupFunctions.getAllUserGroups());
-		res.status(201).send(us);
-	}
+	if (!req)
+		return res.status(400).json("Bad request");
+	return res.status(200).json(userGroupFunc.getAllUserGroups());
 }
 
 function createUserGroup(req, res) {
-	console.log("recived request: ",req.body);
-	const name = req.body.name;
-	const author = req.body.author;
-	const users = req.body.users;
-	
-	var userGroup = new Object();
-	userGroup["name"] = name;
-	userGroup["author"] = author;
-	userGroup["users"] = new Array();
-	//userGroup["users"].push(users);
-	
-	const us = userGroupFunctions.writeUserGroup(userGroup);
-	if (us == null) {
-		res.status(400).send("Invalid request");
+	if(req && req.body && req.body.name && req.body.author && req.body.users){
+		const name = req.body.name;
+		const authorId = req.body.author;
+		const users = req.body.users;
+
+		var author = userFunc.getUser(authorId);
+		
+		if(author["id"]){
+			return res.status(404).json("Author not found");
+		}
+		else{
+			var userGroup = new Object();
+			if(typeof name === 'string'){
+				userGroup["name"] = name;
+			}
+			else{
+				return res.status(400).json("Bad request");
+			}
+			userGroup["author"] = authorId;
+			
+			for(i = 0; i<users.length; i++){
+				var us = userFunc.getUser(users[i]);
+				if(us["id"]){
+					return res.status(404).json("User not found");
+				}
+			}
+			
+			userGroup["users"] = users;
+
+			userGroupFunc.writeUserGroup(userGroup);
+
+			console.log("Created: ", userGroupFunc.getAllUserGroups());
+			return res.status(201).json("Created");
+		}
 	}
-	else {
-		console.log("Created: ",userGroupFunctions.getAllUserGroups());
-		res.status(201).send(userGroup);
+	else{
+		return res.status(400).json("Bad request");
 	}
 }
 
