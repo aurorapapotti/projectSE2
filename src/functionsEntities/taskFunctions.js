@@ -10,7 +10,6 @@ function getAllTasks(){
 }
 
 function getTaskById(idTask){
-  //console.log("Id passato:", Id);
   return persistencyLayer.getObject(idTask, dbTaskPath);
 }
 

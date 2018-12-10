@@ -10,7 +10,6 @@ function getAllTaskGroups(){
 }
 
 function getTaskGroupById(idTaskGroup){
-  //console.log("Id passato:", Id);
   return persistencyLayer.getObject(idTaskGroup, dbTaskGroupPath);
 }
 
@@ -19,7 +18,6 @@ function getTaskGroupByName (taskGroupName){
 }
 
 function getTaskGroup(taskGroupName, param){
-  //console.log("Nome passato:", taskGroupName);
   return persistencyLayer.getObjectByQuery(taskGroupName, param, dbTaskGroupPath);
 }
 
