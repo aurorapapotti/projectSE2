@@ -15,11 +15,11 @@ const editPeerReview = require("../src/review.js").editPeerReview;
 const editVote = require("../src/review.js").editVote;
 
 const res = {
-	"status": (statuscode) => { 
+	"status": (statuscode) => {
 		return {
-	  		"json": (message) => { 
+	  		"json": (message) => {
 				  return {
-					"code": statuscode, 
+					"code": statuscode,
 					"message": message
 				}
 	   		}
@@ -29,9 +29,22 @@ const res = {
 
 describe ("POST /reviews", () => {
     test ("return code 201", async () => {
+		var newPeerReview = {
+			user: "1",
+			taskAnswer: "1",
+			comment: "a"
+		}
+
+		var newTaskAnswer = {
+			answers: ["1", "2"],
+			student: "1",
+			assignment: "1",
+			task: "1"
+		}
+
 		var review = {
-			taskAnswer: ["1", "2"],
-			peerReview: ["1"],
+			taskAnswer: [taskAnswerFunctions.writeTaskAnswer(newTaskAnswer), taskAnswerFunctions.writeTaskAnswer(newTaskAnswer)],
+			peerReview: [peerReviewFunctions.addPeerReview(newPeerReview)],
 			vote: "3"
 		}
 
@@ -49,8 +62,15 @@ describe ("POST /reviews", () => {
 	});
 
 	test("return code 404 peerReview wrong", async () => {
+		var newTaskAnswer = {
+			answers: ["1", "2"],
+			student: "1",
+			assignment: "1",
+			task: "1"
+		}
+
 		var review = {
-			taskAnswer: ["1", "2"],
+			taskAnswer: [taskAnswerFunctions.writeTaskAnswer(newTaskAnswer), taskAnswerFunctions.writeTaskAnswer(newTaskAnswer)],
 			peerReview: ["a"],
 			vote: "3"
 		}

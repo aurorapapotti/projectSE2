@@ -1,4 +1,3 @@
-const fetch = require("node-fetch");
 const bodyParser = require("body-parser");
 
 const taskAnswerFunc = require("./functionsEntities/taskAnswerFunctions.js");
@@ -30,7 +29,7 @@ function createTaskAnswer (req, res) {
 		taskAnswer["student"] = student;
 		taskAnswer["assignment"] = assignment;
 		taskAnswer["taskGroup"] = taskGroup;
-			
+
 		taskAnswerFunc.writeTaskAnswer(taskAnswer);
 		return res.status(201).json("Created");
 	}
@@ -65,7 +64,7 @@ function getAllAnswers (req, res) {
 		if (taskAnswer["id"]){
 			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found");
 		}
-		else { 
+		else {
 			return res.status(200).json(taskAnswer["answers"]);
 		}
 	}
@@ -135,7 +134,7 @@ function getAssignment(req, res){
 function getTaskGroup(req, res){
 	if (req.params.taskAnswerId) {
 		const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
-		
+
 		if (taskAnswer["id"]){
 			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found")
 		}
@@ -177,7 +176,7 @@ function editAnswer (req, res){
 			if (req.body.add && req.body.task && req.body.answer){
 				const taskGroup = taskGroupFunc.getTaskGroupById(taskAnswer["taskGroup"]);
 				const tasks = taskGroup["tasks"];
-				
+
 				for (let i=0; i<tasks.length; i++){
 					if (taskGroup["tasks"][i] == req.body.task){
 						const newAnswer = {
@@ -190,7 +189,7 @@ function editAnswer (req, res){
 						return res.status(201).json("Added new answer");
 					}
 				}
-				
+
 				return res.status(404).json("Task "+req.body.task+" not found in this taskGroup");
 			}
 			else if (req.body.delete && req.body.task){
@@ -229,7 +228,7 @@ function editAnswer (req, res){
 function editAssignment (req, res){
 	if (req.params.taskAnswerId && req.body.assignment){
 		const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
-		
+
 		if (taskAnswer["id"]){
 			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found");
 		}
@@ -254,7 +253,7 @@ function editAssignment (req, res){
 function editTaskGroup (req, res) {
 	if (req.params.taskAnswerId && req.body.taskGroup){
 		const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
-		
+
 		if (taskAnswer["id"]){
 			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found");
 		}
@@ -279,7 +278,7 @@ function editTaskGroup (req, res) {
 function editStudent(req, res){
 	if (req.params.taskAnswerId && req.body.student){
 		const taskAnswer = taskAnswerFunc.getTaskAnswer(req.params.taskAnswerId);
-		
+
 		if (taskAnswer["id"]){
 			return res.status(404).json("TaskAnswer "+req.params.taskAnswerId+" not found");
 		}

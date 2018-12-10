@@ -47,6 +47,7 @@ const peerReview = {
 }
 
 describe ('GET /user valid tests', () => {
+  userFunctions.createUser(user);
   test('GET /user return code 200', () => {
     var req = {};
     expect(listAllUsers({"body": {}},res)).toEqual(res.status(200).json(userFunctions.getAllUsers()));
@@ -63,13 +64,6 @@ describe ('GET /user/:idUser valid tests', () => {
   test('GET /user/:idUser return code 200', () => {
     var userID = userFunctions.createUser(user);
     expect(getUser({"params": {"idUser": userID}},res)).toEqual(res.status(200).json(user));
-  })
-});
-
-describe ('GET /user valid tests', () => {
-  test('GET /user return code 200', () => {
-    var req = {};
-    expect(listAllUsers({"body": {}},res)).toEqual(res.status(200).json(userFunctions.getAllUsers()));
   })
 });
 
