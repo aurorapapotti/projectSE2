@@ -47,11 +47,11 @@ const peerReview = {
 }
 
 describe ('GET /user valid tests', () => {
-  userFunctions.createUser(user);
+  userFunctions.createUser(user)
   test('GET /user return code 200', () => {
     var req = {};
     expect(listAllUsers({"body": {}},res)).toEqual(res.status(200).json(userFunctions.getAllUsers()));
-  })
+  });
 });
 
 describe ('GET /user invalid tests', () => {

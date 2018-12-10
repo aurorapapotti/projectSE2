@@ -4,7 +4,7 @@
   "description": "Project for SEII class. Group SEMA.",
   "main": "index.js",
   "scripts": {
-    "test": "rm -r entities && mkdir -p entities && jest",
+    "test": "mkdir -p entities && jest --runInBand",
     "start": "node index.js"
   },
   "repository": {
@@ -25,7 +25,10 @@
   },
   "jest": {
     "verbose": true,
-    "collectCoverage": true
+    "collectCoverage": true,
+    "setupFiles": [
+      "./test/utils/resetEntities.js"
+    ]
   },
   "devDependencies": {
     "jest": "^23.6.0"
