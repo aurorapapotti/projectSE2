@@ -6,19 +6,16 @@ const taskGroupFunc = require('./functionsEntities/taskGroupFunctions.js');
 const bodyParser = require("body-parser");
 
 function createAssignment(req, res) {
-	if(req && req.params && 
-		req.body.title && req.body.professor && req.body.tasks && req.body.users && req.body.start && req.body.deadline){
+	if(req && req.body && 
+		req.body.title && req.body.professor && req.body.taskGroup && req.body.userGroup && req.body.start && req.body.deadline){
 		var title = req.body.title;
 		var professor = req.body.professor;
 		var tasks = req.body.taskGroup;
 		var users = req.body.userGroup;
 		var start = req.body.start;
 		var deadline = req.body.deadline;
-
-		if (title == null || professor == null || tasks == null || users == null)
-			res.status(400).json("Invalid request");
-		if (title == undefined || professor == undefined || tasks == undefined || users == undefined)
-			res.status(400).json("Invalid request");
+		
+		//MANCANO controlli per vedere se taskGroup, userGroup e user esistono
 
 		var ass = new Object();
 		ass["title"] = title;
@@ -28,22 +25,18 @@ function createAssignment(req, res) {
 		ass["start"] = start;
 		ass["deadline"] = deadline;
 
-		const a = assignmentFunc.createAssignment(ass);
-		if(a == null){
-			res.status(400).json("Invalid request");
-		}
-		else{
-			console.log("Created: ",assignmentFunc.getAllAssignments());
-			res.status(201).json("Created");
-		}
+		assignmentFunc.addAssignment(ass);
+		
+		console.log("Created: ",assignmentFunc.getAllAssignments());
+		return res.status(201).json("Created");
 	}
 	else{
-		res.status(400).json("Bad request");
+		return res.status(400).json("Bad request");
 	}
 }
 
 function listAllAssignments(req, res){
-	if (req)
+	if (!req)
     	return res.status(400).json("Bad Request");
   	return res.status(200).json(assignmentFunc.getAllAssignments());
 }
@@ -91,26 +84,32 @@ function updateAssignment(req, res){
 		var users = req.body.userGroup;
 		var start = req.body.start;
 		var deadline = req.body.deadline;
+		
+		//La seguente funzione ritorna l'oggetto trovato in caso di successo
+		//e un oggetto {id: idObject} quando non lo trova, per questo motivo devi fare l'if come ti ho scritto
 
-		var ass = assignmentFunc.getAssignmentById(id);
+		var ass = assignmentFunc.getAssignmentById(id); 
 
-		if(id == null || id == undefined){
-			return res.status(400).json("Invalid request: id not valid");
+		//if(id == null || id == undefined){
+		if (ass["id"]){ 
+			//return res.status(400).json("Invalid request: id not valid");
+			//Questo è un 404 perchè non trova l'assignment, sarebbe 400 se id dell'assignment fosse undefined
+			return res.status(404).json("Assignment not found");
 		}
 		else{
 			if(typeof title === string){
 				ass["title"] = title;
 			}
 			var prof = userFunc.getUserById(professor);
-			if(prof != null && prof != undefined){
+			if(prof["id"]){
 				ass["professor"] = professor;
 			}
 			var t = taskGroupFunc.getTaskGroupById(tasks);
-			if(t != null && t != undefined){
+			if(t ["id"]){
 				ass["tasks"] = tasks;
 			}
 			var u = userGroupFunc.getUserGroupById(users);
-			if(u != null && u != undefined){
+			if(u["id"]){
 				ass["users"] = users;
 			}
 			if(typeof start instanceof Date){

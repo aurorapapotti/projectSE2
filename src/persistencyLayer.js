@@ -7,6 +7,7 @@ function getUUID(){
 function addObject(obj,dbpath){
   let data = fs.readFileSync( dbpath, 'utf8');
   let db = JSON.parse(data);
+  console.log(obj)
   let id = getUUID();
   db[id] = obj;
   fs.writeFileSync(dbpath, JSON.stringify(db, null, 4));
