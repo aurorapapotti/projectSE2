@@ -95,34 +95,33 @@ describe ('POST /userGroup invalid tests', () =>{
 //	/userGroup/:userGroupId
 describe ('GET /userGroup/:userGroupId valid tests', () =>{
 	test('GET /userGroup/:userGroupId return code 200', () => {
-		var userGroup = {
+		var users = {
 			name: "classe 1",
-			author: "user 1",
-			users: ["user1", 
-					"user2", 
-					"user3"]
+			author: userFunc.createUser(newUser),
+			users: [userFunc.createUser(newUser), userFunc.createUser(newUser2)]
 		}
 		var req = {
-			userGroupId: usergroupFunc.writeUserGroup(userGroup)
+			userGroupId: userGroupFunc.writeUserGroup(users)
 		}
-		expect(usergroup.getUserGroupById({params: req}, res)).toEqual(res.status(200).json(req["userGroupId"]));
+
+		expect(usergroup.getUserGroupById({params: req}, res)).toEqual(res.status(200).json(users));
 	})
 });
-/*
+
 describe ('GET /userGroup/:userGroupId invalid tests', () =>{
 	test('GET /userGroup/:userGroupId userGroup NOT found', () => {
 		var req = {
-			userGroupId: "u"
+			userGroupId: "not exists"
 		}
-		expect(usergroup.getUserGroupById({params: req}, res)).toEqual(res.status(404).json("UserGroup NOT Found"));
+		expect(usergroup.getUserGroupById({params: req}, res)).toEqual(res.status(404).json("UserGroup not found"));
 	})
 
 	test('GET /userGroup/:userGroupId req empty', () => {
 		var req = {}
-		expect(usergroup.getUserGroupById({params: req}, res)).toEqual(res.status(400).json("Bad Request"));
+		expect(usergroup.getUserGroupById({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 });
-
+/*
 describe ('PUT /userGroup/:userGroupId valid tests', () =>{
 
 });

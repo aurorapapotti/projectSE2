@@ -371,5 +371,325 @@
             "_b6r1161u9",
             "not exists"
         ]
+    },
+    "_6zieob8wh": {
+        "name": "classe 1",
+        "author": "_60d2j1i7c",
+        "users": [
+            "_h9xo2o8kf",
+            "_42c84vyie"
+        ]
+    },
+    "_hl8q2k4xz": {
+        "name": "classe 1",
+        "author": "_60d2j1i7c",
+        "users": [
+            "_h9xo2o8kf",
+            "_42c84vyie"
+        ]
+    },
+    "_gbzcs32yo": {
+        "name": 1,
+        "author": "_umxw32ui2",
+        "users": [
+            "_xse4deg51",
+            "_v3ew5in07"
+        ]
+    },
+    "_ip6z2vb8w": {
+        "name": "classe 1",
+        "author": "not exists",
+        "users": [
+            "_jsftzeiif",
+            "_sx8zw0rg6"
+        ]
+    },
+    "_1wvwhcslj": {
+        "name": "classe 1",
+        "author": "_35pvr56za",
+        "users": [
+            "_6k2z6kry1",
+            "not exists"
+        ]
+    },
+    "_pnbzpez6w": {
+        "name": "classe 1",
+        "author": "_iuslplod6",
+        "users": [
+            "_5o32uq47h",
+            "_nfjmhmhun"
+        ]
+    },
+    "_93oiua28h": {
+        "name": "classe 1",
+        "author": "_iuslplod6",
+        "users": [
+            "_5o32uq47h",
+            "_nfjmhmhun"
+        ]
+    },
+    "_kmuazdfxu": {
+        "name": 1,
+        "author": "_dside6iz9",
+        "users": [
+            "_gwg8ywg8p",
+            "_aoef1vfih"
+        ]
+    },
+    "_kfjroy1qn": {
+        "name": "classe 1",
+        "author": "not exists",
+        "users": [
+            "_1n26zp51b",
+            "_q7qc811or"
+        ]
+    },
+    "_tq6fcl7xy": {
+        "name": "classe 1",
+        "author": "_vg2wjwoqk",
+        "users": [
+            "_crsav7qjg",
+            "not exists"
+        ]
+    },
+    "_2lpo6h541": {
+        "name": "classe 1",
+        "author": "_bqpywdj75",
+        "users": [
+            "_p496bvn1r",
+            "_qf709j213"
+        ]
+    },
+    "_23lcbj7b9": {
+        "name": "classe 1",
+        "author": "_bqpywdj75",
+        "users": [
+            "_p496bvn1r",
+            "_qf709j213"
+        ]
+    },
+    "_6tweqogww": {
+        "name": 1,
+        "author": "_rc1i0tvi1",
+        "users": [
+            "_s53cuhvqn",
+            "_gv9yk50et"
+        ]
+    },
+    "_4y4l4tf7t": {
+        "name": "classe 1",
+        "author": "not exists",
+        "users": [
+            "_9sn5zh7d7",
+            "_222yoo2ov"
+        ]
+    },
+    "_34nhx96zi": {
+        "name": "classe 1",
+        "author": "_9h2oq01ia",
+        "users": [
+            "_drpn8rvjc",
+            "not exists"
+        ]
+    },
+    "_bhvd9k2dk": {
+        "name": "classe 1",
+        "author": "_h8v7y2lyc",
+        "users": [
+            "_vq19uiesf",
+            "_swk3jtn0s"
+        ]
+    },
+    "_ob8u2ky02": {
+        "name": "classe 1",
+        "author": "_0ddqspg6h",
+        "users": [
+            "_vcwk05dhk",
+            "_wcxwth8gs"
+        ]
+    },
+    "_b91ukbrbk": {
+        "name": "classe 1",
+        "author": "_0ddqspg6h",
+        "users": [
+            "_vcwk05dhk",
+            "_wcxwth8gs"
+        ]
+    },
+    "_eacnmvo4j": {
+        "name": 1,
+        "author": "_6pc4vpowa",
+        "users": [
+            "_tgwkd0mkl",
+            "_b46q74j0e"
+        ]
+    },
+    "_uhf6obhhj": {
+        "name": "classe 1",
+        "author": "not exists",
+        "users": [
+            "_eqa57gd4d",
+            "_0tp4eony9"
+        ]
+    },
+    "_f9wxsbgnw": {
+        "name": "classe 1",
+        "author": "_5gy1jri0f",
+        "users": [
+            "_acffkybm9",
+            "not exists"
+        ]
+    },
+    "_n5zk8k7s8": {
+        "name": "classe 1",
+        "author": "_ebplsa91t",
+        "users": [
+            "_i5wh65kwm",
+            "_z5cymy3ip"
+        ]
+    },
+    "_spn3zcezj": {
+        "name": "classe 1",
+        "author": "_0crnmc57s",
+        "users": [
+            "_0lhfc056b",
+            "_8tkp5m0ni"
+        ]
+    },
+    "_uqgj5hbwu": {
+        "name": "classe 1",
+        "author": "_0crnmc57s",
+        "users": [
+            "_0lhfc056b",
+            "_8tkp5m0ni"
+        ]
+    },
+    "_ve3meg1dd": {
+        "name": 1,
+        "author": "_lvideyc8y",
+        "users": [
+            "_gxsztri07",
+            "_vtxm1mror"
+        ]
+    },
+    "_ddvkgr4tn": {
+        "name": "classe 1",
+        "author": "not exists",
+        "users": [
+            "_xren7fvlu",
+            "_u8pgmzz1f"
+        ]
+    },
+    "_m0i7nzddn": {
+        "name": "classe 1",
+        "author": "_5aci5pt9i",
+        "users": [
+            "_au62fcj8x",
+            "not exists"
+        ]
+    },
+    "_j2ugvpjt6": {
+        "name": "classe 1",
+        "author": "_4knhamthv",
+        "users": [
+            "_tlrv09xrq",
+            "_vbrlin3an"
+        ]
+    },
+    "_gcgfiql40": {
+        "name": "classe 1",
+        "author": "_7doq9c0uz",
+        "users": [
+            "_kmubxy0am",
+            "_xs8v86o3i"
+        ]
+    },
+    "_s14itlogb": {
+        "name": "classe 1",
+        "author": "_7doq9c0uz",
+        "users": [
+            "_kmubxy0am",
+            "_xs8v86o3i"
+        ]
+    },
+    "_zu2rshfe7": {
+        "name": 1,
+        "author": "_jde1grl3l",
+        "users": [
+            "_ycfnwarkl",
+            "_uicsn093w"
+        ]
+    },
+    "_kay6zg74n": {
+        "name": "classe 1",
+        "author": "not exists",
+        "users": [
+            "_08q26obhw",
+            "_rbjeij6x8"
+        ]
+    },
+    "_tkfuvwce6": {
+        "name": "classe 1",
+        "author": "_0y9r1th1k",
+        "users": [
+            "_ithtq8e08",
+            "not exists"
+        ]
+    },
+    "_0s7ddl8tk": {
+        "name": "classe 1",
+        "author": "_jgwg6bywy",
+        "users": [
+            "_vhpt521z4",
+            "_5c0aqz88g"
+        ]
+    },
+    "_by1mz6dt0": {
+        "name": "classe 1",
+        "author": "_pvlthkjy2",
+        "users": [
+            "_qergb0zno",
+            "_t3elnxn5h"
+        ]
+    },
+    "_cg1e3pufx": {
+        "name": "classe 1",
+        "author": "_pvlthkjy2",
+        "users": [
+            "_qergb0zno",
+            "_t3elnxn5h"
+        ]
+    },
+    "_96api13ml": {
+        "name": 1,
+        "author": "_xyytno2qz",
+        "users": [
+            "_y5bngkk2a",
+            "_oidhtumyk"
+        ]
+    },
+    "_14fqksm7z": {
+        "name": "classe 1",
+        "author": "not exists",
+        "users": [
+            "_ed616zd1o",
+            "_2wml5j89o"
+        ]
+    },
+    "_157vlqm5i": {
+        "name": "classe 1",
+        "author": "_o6ebju2m8",
+        "users": [
+            "_ft79emhfu",
+            "not exists"
+        ]
+    },
+    "_9jgxzygvx": {
+        "name": "classe 1",
+        "author": "_vqsubl4qa",
+        "users": [
+            "_ffq3jp86e",
+            "_9s92cl399"
+        ]
     }
 }

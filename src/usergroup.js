@@ -51,16 +51,19 @@ function createUserGroup(req, res) {
 }
 
 function getUserGroupById(req, res) {
-	var id = req.params.userGroupId;
-	console.log("recived request: ", id);
-	
-	const us = userGroupFunctions.getUserGroupById(id);
-	if (us == null) {
-		res.status(400).send("Invalid request");
+	if(req && req.params && req.params.userGroupId){
+		var id = req.params.userGroupId;
+		var us = userGroupFunc.getUserGroupById(id);
+
+		if(us["id"]){
+			return res.status(404).json("UserGroup not found");
+		}
+		else{
+			return res.status(200).json(us);
+		}
 	}
-	else {
-		console.log(us);
-		res.status(201).send(us);
+	else{
+		return res.status(400).json("Bad request");
 	}
 }
 
