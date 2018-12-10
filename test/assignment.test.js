@@ -26,10 +26,29 @@ const newUser = {
 	badgeNumber: "1234"
 }
 
+const newUser2 = {
+	name: "b",
+	surname: "b",
+	email: "a@gmail.it",
+	badgeNumber: "65"
+}
+
 const newTaskGroup = {
 	name: "a",
 	author: "a",
 	tasks: ["1"]
+}
+
+const newTaskGroup2 = {
+	name: "b",
+	author: "b",
+	tasks: ["1"]
+}
+
+const newUserGroup2 = {
+	name: "c",
+	author: "c",
+	users: ["a"]
 }
 
 const newUserGroup = {
@@ -182,7 +201,7 @@ describe ('GET /assignment/:assignmentId invalid tests', () =>{
 });
 
 
-describe ('PUT /assignment/:assignmentId valid tests', () =>{
+describe ('PUT /assignment/:assignmentId valid tests', () => {
 	test('PUT /assignment/:assignmentId edited', () => {
 		var ass = {
 			title: "ingegneria",
@@ -197,18 +216,11 @@ describe ('PUT /assignment/:assignmentId valid tests', () =>{
 			assignmentId: id
 		}
 
-		const user = {
-			name: "b",
-			surname: "b",
-			email: "a@gmail.it",
-			badgeNumber: "65"
-		}
-
 		var newAss = {
 			title: "filosofia",
-			professor: userFunc.createUser(user),
-			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
-			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			professor: userFunc.createUser(newUser2),
+			userGroup: ass["userGroup"],
+			taskGroup: ass["taskGroup"],
 			start: "13.00",
 			deadline: "1"
 		}
@@ -227,11 +239,25 @@ describe ('PUT /assignment/:assignmentId invalid tests', () =>{
 		var req = {}
 		expect(assignment.updateAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-/*
+	
 	test('PUT /assignment/:assignmentId id not exists', () => {
 		var req = {
-			idAssignment: "not exists"
+			assignmentId: "not exists"
 		}
+		var ass = {
+			title: "filosofia",
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "13.00",
+			deadline: "1"
+		}
+		expect(assignment.updateAssignment({params: req, body: ass}, res)).toEqual(res.status(404).json("Assignment not found"));
+	})
+});
+
+describe ('DELETE /assignment/:assignmentId valid tests', () =>{
+	test('DELETE /assignment/:assignmentId return code 200', () =>{
 		var ass = {
 			title: "ingegneria",
 			professor: userFunc.createUser(newUser),
@@ -240,25 +266,10 @@ describe ('PUT /assignment/:assignmentId invalid tests', () =>{
 			start: "12.00",
 			deadline: "2"
 		}
-		var id = assignmentFunc.addAssignment(ass);
-		expect(assignment.updateAssignment({body: req, body: ass}, res)).toEqual(res.status(404).json("Assignment not found"));
-	})*/
-});
-/*
-describe ('DELETE /assignment/:assignmentId valid tests', () =>{
-	test('DELETE /assignment/:assignmentId return code 200', () =>{
-		var ass = {
-			title: 1,
-			professor: "user 1",
-			tasks: "t1",
-			users: "u1",
-			start: "12",
-			deadline: 2
-		}	
 		var req = {
 			assignmentId: assignmentFunc.addAssignment(ass)
 		}
-		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(200).json("Deleted."));
+		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(200).json(ass));
 	})
 });
 
@@ -272,12 +283,20 @@ describe ('DELETE /assignment/:assignmentId invalid tests', () =>{
 		var req = {
 			assignmentId: "1"
 		}
-		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(404).json("Assignment not found"));
 	})
 	
 	test('DELETE /assignment/:assignmentId params empty', () =>{
+		var ass = {
+			title: "ingegneria",
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
 		var req = {
-			assignmentId: "_8heb7eyv5w"
+			assignmentId: assignmentFunc.addAssignment(ass)
 		}
 		expect(assignment.deleteAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
@@ -288,12 +307,12 @@ describe ('GET /assignment/:assignmentId/professor valid tests', () => {
 	test('GET /assignment/:assignmentId/professor valid professor', () => {
 		var ass = {
 			title: "ingegneria",
-			professor: "user 1",
-			tasks: "t1",
-			users: "u1",
-			start: "12",
-			deadline: 2
-		}	
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
 		var req = {
 			assignmentId: assignmentFunc.addAssignment(ass)
 		}
@@ -311,6 +330,13 @@ describe ('GET /assignment/:assignmentId/professor invalid tests', () => {
 		var req = {}
 		expect(assignment.getProfessorByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
+
+	test('GET /assignment/:assignmentId/professor assignment not found', () => {
+		var req = {
+			assignmentId: "not exists"
+		}
+		expect(assignment.getProfessorByIdAssignment({params: req}, res)).toEqual(res.status(404).json("Assignment not found"));
+	})
 });
 
 //	/assignment/:assignmentId/users
@@ -318,12 +344,12 @@ describe ('GET /assignment/:assignmentId/users valid tests', () => {
 	test('GET /assignment/:assignmentId/users valid users', () => {
 		var ass = {
 			title: "ingegneria",
-			professor: "user 1",
-			tasks: "t1",
-			users: "u1",
-			start: "12",
-			deadline: 2
-		}	
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
 		var req = {
 			assignmentId: assignmentFunc.addAssignment(ass)
 		}
@@ -341,49 +367,99 @@ describe ('GET /assignment/:assignmentId/users invalid tests', () => {
 		var req = {}
 		expect(assignment.getUsersByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
+
+	test('GET /assignment/:assignmentId/users assignment not found', () => {
+		var req = {
+			assignmentId: "not exists"
+		}
+		expect(assignment.getUsersByIdAssignment({params: req}, res)).toEqual(res.status(404).json("Assignment not found"));
+	})
 });
+
 
 describe ('PUT /assignment/:assignmentId/users valid tests', () => {
 	test('PUT /assignment/:assignmentId/users valid users', () => {
 		var ass = {
 			title: "ingegneria",
-			professor: "user 1",
-			tasks: "t1",
-			users: "u1",
-			start: "12",
-			deadline: 2
-		}	
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
 		var req = {
 			assignmentId: assignmentFunc.addAssignment(ass)
 		}
-		var userGroup = ["user1", "user2"];
-		expect(assignment.updateAssignment({params: req, body: userGroup}, res)).toEqual(res.status(200).json(ass));
+
+		var req2 = {
+			userGroupId: userGroupFunc.writeUserGroup(newUserGroup2)
+		}
+
+		var ass2 = {
+			title: "ingegneria",
+			professor: ass["professor"],
+			userGroup: req2["userGroupId"],
+			taskGroup: ass["taskGroup"],
+			start: "12.00",
+			deadline: "2"
+		}		
+		
+		expect(assignment.updateUsers({params: req, body: req2}, res)).toEqual(res.status(200).json(ass2));
 	})
 });
 
 describe ('PUT /assignment/:assignmentId/users invalid tests', () => {
 	test('PUT /assignment/:assignmentId/users req empty', () => {
 		var req = {}
-		expect(assignment.updateAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(assignment.updateUsers({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 	
 	test('PUT /assignment/:assignmentId/users params empty', () => {
 		var req = {}
-		expect(assignment.updateAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(assignment.updateUsers({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('PUT /assignment/:assignmentId/users assignment not found', () => {
+		var req = {
+			assignmentId: "not exists"
+		}
+		var req2 = {
+			userGroupId: userGroupFunc.writeUserGroup(newUserGroup2)
+		}
+		expect(assignment.updateUsers({params: req, body: req2}, res)).toEqual(res.status(404).json("Assignment not found"));
+	})
+
+	test('PUT /assignment/:assignmentId/users userGroup not found', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		var req2 = {
+			userGroupId: "not exists"
+		}
+		expect(assignment.updateUsers({params: req, body: req2}, res)).toEqual(res.status(404).json("UserGroup not found"));
 	})
 });
+
 
 //	/assignment/:assignmentId/tasks
 describe ('GET /assignment/:assignmentId/tasks valid tests', () => {
 	test('GET /assignment/:assignmentId/tasks valid professor', () => {
 		var ass = {
 			title: "ingegneria",
-			professor: "user 1",
-			tasks: "t1",
-			users: "u1",
-			start: "12",
-			deadline: 2
-		}	
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
 		var req = {
 			assignmentId: assignmentFunc.addAssignment(ass)
 		}
@@ -401,36 +477,83 @@ describe ('GET /assignment/:assignmentId/tasks invalid tests', () => {
 		var req = {}
 		expect(assignment.getTasksByIdAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
+
+	test('GET /assignment/:assignmentId/tasks assignment not found', () => {
+		var req = {
+			assignmentId: "not exists"
+		}
+		expect(assignment.getTasksByIdAssignment({params: req}, res)).toEqual(res.status(404).json("Assignment not found"));
+	})
 });
+
 
 describe ('PUT /assignment/:assignmentId/tasks valid tests', () => {
 	test('PUT /assignment/:assignmentId/tasks valid users', () => {
-
-
 		var ass = {
 			title: "ingegneria",
-			professor: "user 1",
-			tasks: "t1",
-			users: "u1",
-			start: "12",
-			deadline: 2
-		}	
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
 		var req = {
 			assignmentId: assignmentFunc.addAssignment(ass)
 		}
-		var newTasks = ["user1", "user2"];
-		expect(assignment.updateAssignment({params: req, body: newTasks}, res)).toEqual(res.status(200).json(ass));
+
+		var req2 = {
+			taskGroupId: taskGroupFunc.addTaskGroup(newTaskGroup2)
+		}
+
+		var ass2 = {
+			title: "ingegneria",
+			professor: ass["professor"],
+			userGroup: ass["userGroup"],
+			taskGroup: req2["taskGroupId"],
+			start: "12.00",
+			deadline: "2"
+		}		
+		
+		expect(assignment.updateTasks({params: req, body: req2}, res)).toEqual(res.status(200).json(ass2));
 	})
 });
 
 describe ('PUT /assignment/:assignmentId/tasks invalid tests', () => {
 	test('PUT /assignment/:assignmentId/tasks req empty', () => {
 		var req = {}
-		expect(assignment.updateAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(assignment.updateTasks({params: req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 	
 	test('PUT /assignment/:assignmentId/tasks params empty', () => {
 		var req = {}
-		expect(assignment.updateAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
+		expect(assignment.updateTasks({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
-});*/
+
+	test('PUT /assignment/:assignmentId/tasks assignment not found', () => {
+		var req = {
+			assignmentId: "not exists"
+		}
+		var req2 = {
+			taskGroupId: taskGroupFunc.addTaskGroup(newTaskGroup2)
+		}
+		expect(assignment.updateTasks({params: req, body: req2}, res)).toEqual(res.status(404).json("Assignment not found"));
+	})
+
+	test('PUT /assignment/:assignmentId/tasks taskGroup not found', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: "2"
+		}
+		var req = {
+			assignmentId: assignmentFunc.addAssignment(ass)
+		}
+		var req2 = {
+			taskGroupId: "not exists"
+		}
+		expect(assignment.updateTasks({params: req, body: req2}, res)).toEqual(res.status(404).json("TaskGroup not found"));
+	})
+});

@@ -106,31 +106,20 @@ function getAssignmentById(req, res){
 }
 
 function updateAssignment(req, res){
-	if(req && req.params && req.params.assignmentId && 
+	if(req && req.params && req.body && req.params.assignmentId && 
 		(req.body.title || req.body.professor || req.body.taskGroup || req.body.userGroup || req.body.start|| req.body.deadline)){
-
 		var id = req.params.assignmentId;
 		
-		if(req.body.title != undefined)
-			var title = req.body.title;
-		if(req.body.professor != undefined)
-			var professor = req.body.professor;
-		if(req.body.taskGroup != undefined)
-			var tasks = req.body.taskGroup;
-		if(req.body.users != undefined)
-			var users = req.body.userGroup;
-		if(req.body.start != undefined)
-			var start = req.body.start;
-		if(req.body.deadline != undefined)
-			var deadline = req.body.deadline;
+		var title = req.body.title;
+		var professor = userFunc.getUser(req.body.professor);
+		var tasks = taskGroupFunc.getTaskGroupById(req.body.taskGroup);
+		var users = userGroupFunc.getUserGroupById(req.body.userGroup);
+		var start = req.body.start;
+		var deadline = req.body.deadline;
 		
-		var ass = assignmentFunc.getAssignmentById(id); 
-		var prof = userFunc.getUser(professor);
-		var t = taskGroupFunc.getTaskGroupById(tasks);
-		var u = userGroupFunc.getUserGroupById(users);
+		var ass = assignmentFunc.getAssignmentById(id);
 
 		if (ass["id"]){		//Questo è un 404 perchè non trova l'assignment, sarebbe 400 se id dell'assignment fosse undefined
-			console.log("\n\n\n\n\n\nAss[id]\n\n\n\n\n\n");
 			return res.status(404).json("Assignment not found");
 		}
 		else{
@@ -138,64 +127,66 @@ function updateAssignment(req, res){
 				ass["title"] = title;
 			}
 			else{
-				console.log("\n\n\n\n\n\nTitle\n\n\n\n\n\n");
 				return res.status(400).json("Bad request");
 			}
 
-			if(prof["id"]){
+			if(professor["id"]){
 				return res.status(404).json("Professor not found");
 			}
 			else{
-				ass["professor"] = professor;
+				ass["professor"] = req.body.professor;
 			}
 
-			if(t["id"]){
+			if(tasks["id"]){
 				return res.status(404).json("TaskGroup not found");
 			}
 			else{
-				ass["tasks"] = tasks;
+				ass["taskGroup"] = req.body.taskGroup;
 			}
 
-			if(u["id"]){
-				return res.status(404).json("TaskGroup not found");
+			if(users["id"]){
+				return res.status(404).json("UserGroup not found");
 			}
 			else{
-				ass["users"] = users;
+				ass["userGroup"] = req.body.userGroup;
 			}
 
 			if(typeof start === 'string'){
-				console.log("\n\n\n\n\n\nstart\n\n\n\n\n\n");
-				return res.status(400).json("Bad request");
+				ass["start"] = start;
 			}
 			else{
-				ass["start"] = start;
+				return res.status(400).json("Bad request");
 			}
 
 			if(typeof deadline === 'string'){
-				console.log("\n\n\n\n\n\ndeadline\n\n\n\n\n\n");
-				return res.status(400).json("Bad request");
+				ass["deadline"] = deadline;
 			}
 			else{
-				ass["deadline"] = deadline;
+				return res.status(400).json("Bad request");
 			}
 
 			assignmentFunc.modifyAssignment(id, ass);
-			console.log("Updated.");
 			return res.status(200).json(ass);
 		}
 	}
 	else{
-		console.log("\n\n\n\n\n\nelse\n\n\n\n\n\n");
 		return res.status(400).json("Bad request");
 	}
 }
 
 function deleteAssignment(req, res){
 	if(req && req.params && req.params.assignmentId){
-		res.status(201).json(assignmentFunc.deleteAssignment(req.params.assignmentId));
+		var id = req.params.assignmentId;
+		var obj = assignmentFunc.getAssignmentById(id);
+		if(obj["id"]){
+			return res.status(404).json("Assignment not found");
+		}
+		else{
+			return res.status(200).json(assignmentFunc.deleteAssignment(id));
+		}
 	}
 	else{
-		res.status(400).json("Bad request");
+		return res.status(400).json("Bad request");
 	}
 }
 
@@ -203,10 +194,16 @@ function getProfessorByIdAssignment(req, res){
 	if(req && req.params && req.params.assignmentId){
 		var id = req.params.assignmentId;
 		var ass = assignmentFunc.getAssignmentById(id);
-		res.status(200).json(ass["professor"]);
+
+		if(ass["id"]){
+			return res.status(404).json("Assignment not found");
+		}
+		else{
+			return res.status(200).json(ass["professor"]);
+		}
 	}
 	else{
-		res.status(400).json("Id null");
+		return res.status(400).json("Bad request");
 	}
 }
 
@@ -214,31 +211,43 @@ function getUsersByIdAssignment(req, res){
 	if(req && req.params && req.params.assignmentId){
 		var id = req.params.assignmentId;
 		var ass = assignmentFunc.getAssignmentById(id);
-		res.status(200).json(ass["users"]);
+
+		if(ass["id"]){
+			return res.status(404).json("Assignment not found");
+		}
+		else{
+			return res.status(200).json(ass["users"]);
+		}
 	}
 	else{
-		res.status(400).json("Id null");
+		return res.status(400).json("Bad request");
 	}
 }
 
 function updateUsers(req, res){
-	if(req && req.params && req.params.assignmentId && req.body.users){
-		const idAssignment = req.body.assignmentId;
-		const users = req.body.users;
+	if(req && req.params && req.body && req.params.assignmentId && req.body.userGroupId){
+		const idAssignment = req.params.assignmentId;
+		const usersId = req.body.userGroupId;
 
 		var ass = assignmentFunc.getAssignmentById(idAssignment);
+		var users = userGroupFunc.getUserGroupById(usersId);
 
-		if(ass == null){
-			res.status(400).json("Bad request");
+		if(ass["id"]){
+			return res.status(404).json("Assignment not found");
 		}
 		else{
-			ass["users"] = users;
-			assignmentFunc.modifyAssignment(idAssignment, ass);
-			res.status(200).json(ass);
+			if(users["id"]){
+				return res.status(404).json("UserGroup not found");
+			}
+			else{
+				ass["userGroup"] = usersId;
+				assignmentFunc.modifyAssignment(idAssignment, ass);
+				return res.status(200).json(ass);
+			}
 		}
 	}
 	else{
-		res.status(400).json("Id null or undefined");
+		return res.status(400).json("Bad request");
 	}
 }
 
@@ -246,31 +255,43 @@ function getTasksByIdAssignment(req, res){
 	if(req && req.params && req.params.assignmentId){
 		var id = req.params.assignmentId;
 		var ass = assignmentFunc.getAssignmentById(id);
-		res.status(200).json(ass["tasks"]);
+
+		if(ass["id"]){
+			return res.status(404).json("Assignment not found");
+		}
+		else{
+			return res.status(200).json(ass["tasks"]);
+		}
 	}
 	else{
-		res.status(400).json("Id null");
+		return res.status(400).json("Bad request");
 	}
 }
 
 function updateTasks(req, res){
-	if(req && req.params && req.params.assignmentId && req.body.tasks){
-		const idAssignment = req.body.assignmentId;
-		const tasks = req.body.tasks;
-
+	if(req && req.params && req.body && req.params.assignmentId && req.body.taskGroupId){
+		const idAssignment = req.params.assignmentId;
+		const idTasks = req.body.taskGroupId;
+		
 		var ass = assignmentFunc.getAssignmentById(idAssignment);
-
-		if(ass == null){
-			res.status(400).json("Bad request");
+		var tasks = taskGroupFunc.getTaskGroupById(idTasks);
+		
+		if(ass["id"]){
+			return res.status(404).json("Assignment not found");
 		}
 		else{
-			ass["tasks"] = tasks;
-			assignmentFunc.modifyAssignment(idAssignment, ass);
-			res.status(200).json(ass);
+			if(tasks["id"]){
+				return res.status(404).json("TaskGroup not found");
+			}
+			else{
+				ass["taskGroup"] = idTasks;
+				assignmentFunc.modifyAssignment(idAssignment, ass);
+				return res.status(200).json(ass);
+			}
 		}
 	}
 	else{
-		res.status(400).json("Id null or undefined");
+		return res.status(400).json("Bad request");
 	}
 }
 
