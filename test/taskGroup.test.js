@@ -1,8 +1,8 @@
 const taskGroupFunctions = require('../src/functionsEntities/taskGroupFunctions.js');
+const taskFunctions = require('../src/functionsEntities/taskFunctions.js');
 const listAllTaskGroups = require ('../src/taskGroup.js').listAllTaskGroups;
 const deleteTaskGroup = require('../src/taskGroup.js').deleteTaskGroup;
 const getTaskGroup = require('../src/taskGroup.js').getTaskGroup;
-const createTaskGroup = require('../src/taskGroup.js').createTaskGroup;
 const getTaskGroupByName = require ('../src/taskGroup.js').getTaskGroupByName;
 
 const res = {
@@ -76,32 +76,28 @@ describe ('GET /taskGroup/:idTaskGroup invalid tests', () => {
 
 //GET TASKGROUP BY NAME
 
-/*
+
 describe ('GET /taskGroup/:taskGroupName', () => {
 	test('GET /taskGroup/:taskGroupName return code 200', () => {
-	  var taskGroupName = taskGroupFunctions.getTaskGroupByName(taskGroupName);
-	  expect(getTaskGroupByName({"params": {"TaskGroupName": taskGroupName}},res)).toEqual(res.status(200).json(taskGroupName));
+    expect(getTaskGroupByName({query: {"TaskGroupName": "sema"}},res)).toEqual(res.status(200).json(taskFunctions.getTasks("sema", "name")));
 	})
   });
   
   describe ('GET /taskGroupName/:taskGroupName invalid tests', () => {
 	test('GET /taskGroup/:taskGroupName return code 404', () => {
-	  var taskGroupName = "SEMA"
-	  expect(getTaskGroupByName({"params": {"taskGroupName": taskGroupName}},res)).toEqual(res.status(400).json("Bad Request"));
+	  expect(getTaskGroupByName({"params": {"taskGroupName": "sema"}},res)).toEqual(res.status(400).json("Bad Request"));
 	})
   
 	test('GET /taskGroup/:TaskGroupName taskGroupName is undefined', () => {
-	  var taskGroupName = undefined
-	  expect(getTaskGroupByName({"params": {"taskGroupName": taskGroupName}},res)).toEqual(res.status(400).json("Bad Request"));
+	  expect(getTaskGroupByName({"params": {"taskGroupName": "sema"}},res)).toEqual(res.status(400).json("Bad Request"));
 	})
   
 	test('GET /taskGroup/:taskGroupName taskGroupName is null', () => {
-	  var taskGroupName = null
-	  expect(getTaskGroupByName({"params": {"taskGroupName": taskGroupName}},res)).toEqual(res.status(400).json("Bad Request"));
+	  expect(getTaskGroupByName({"params": {"taskGroupName": "sema"}},res)).toEqual(res.status(400).json("Bad Request"));
 	});
   }); 
 
-*/
+
 //DELETE TASKGROUP
 
 describe('DELETE /taskGroup/:idTaskGroup valid tests', () => {

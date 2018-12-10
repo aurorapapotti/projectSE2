@@ -1,5 +1,4 @@
 const taskFunctions = require('../src/functionsEntities/taskFunctions.js');
-const taskGroupFunctions = require('../src/functionsEntities/taskGroupFunctions.js');
 
 const listAllTasks = require ('../src/task.js').listAllTasks;
 const deleteTask = require('../src/task.js').deleteTask;
@@ -82,22 +81,19 @@ describe ('GET /task/:taskArgument', () => {
 	test('GET /task/:taskArgument return code 200', () => {
 	  expect(getTasksByArgument({query: {"taskArgument": "a"}},res)).toEqual(res.status(200).json(taskFunctions.getTasks("a", "argument")));
 	})
-  /*
+
   describe ('GET /taskArgument/:taskArgument invalid tests', () => {
 	test('GET /taskArgument/:taskArgument return code 404', () => {
-	  var taskArgument = "algoritmi"
-	  expect(getTasksByArgument({"params": {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+	  expect(getTasksByArgument({query: {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
 	})
   
 	test('GET /task/:TaskArgument taskArgument is undefined', () => {
-	  var taskArgument = undefined
-	  expect(getTasksByArgument({"params": {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+	  expect(getTasksByArgument({query: {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
 	})
   
 	test('GET /task/:taskArgument taskArgument is null', () => {
-	  var taskArgument = null
-	  expect(getTasksByArgument({"params": {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
-  })*/
+	  expect(getTasksByArgument({query: {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+  })
 });
   
   

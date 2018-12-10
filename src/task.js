@@ -21,10 +21,8 @@ function createTask(req, res) {
     return res.status(401).json("Bad Request");
   if(typeof req.body.author !== "string" ||typeof req.body.taskType !== "string" || typeof req.body.argument !== "string" || typeof req.body.correctAnswer !== "string" )
     return res.status(401).json("Bad Request");
-  //console.log("recived request: ",req.body);
   let idTask = taskFunctions.addTask(req.body);
 	console.log(idTask);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
   return res.status(201).json("Created Task");
 }
 
