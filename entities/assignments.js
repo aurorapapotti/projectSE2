@@ -1152,5 +1152,357 @@
         "taskGroup": "_rs4kc0rs7",
         "start": "12.00",
         "deadline": "2"
+    },
+    "_y2um32vx0": {
+        "title": "ingegneria",
+        "professor": "_0eguy65xo",
+        "tasks": "_cce5zdths",
+        "users": "_curyjwve6",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_lft75ibhd": {
+        "title": "ingegneria",
+        "professor": "_enx55evfc",
+        "userGroup": "_aoq1gane4",
+        "taskGroup": "_9okrnba6t",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_roc3pk7wx": {
+        "title": "filosofia",
+        "professor": "_a4fsro5np",
+        "userGroup": "_7eyo8w5op",
+        "taskGroup": "_sz97pwjm4",
+        "start": "13.00",
+        "deadline": "1"
+    },
+    "_k9w5z1by1": {
+        "title": "ingegneria",
+        "professor": "_42qcg8a0f",
+        "userGroup": "_yyg2volzr",
+        "taskGroup": "_ym9lvnncb",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_rnxmy1fmk": {
+        "title": "ingegneria",
+        "professor": "_jlhfte3yr",
+        "userGroup": "_psk11pmej",
+        "taskGroup": "_nrxvujil0",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_phq1kdbbi": {
+        "title": "ingegneria",
+        "professor": "_0ikqgutlr",
+        "userGroup": "_4sm1c0dsx",
+        "taskGroup": "_dmejl2fyz",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_obzai1mcd": {
+        "title": "ingegneria",
+        "professor": "_756wgvvyo",
+        "userGroup": "_eh72ya2mt",
+        "taskGroup": "_r3qv7s7qb",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_gwpu69nqg": {
+        "title": "ingegneria",
+        "professor": "_lhd78i3wu",
+        "userGroup": "_vvbmw9uca",
+        "taskGroup": "_9dqyikuno",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_zl37kh8wx": {
+        "title": "ingegneria",
+        "professor": "_hzzhqr7gv",
+        "userGroup": "_epp1e8izg",
+        "taskGroup": "_q9daj8v9l",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_tkyxb1qrj": {
+        "title": "ingegneria",
+        "professor": "_twk74m5iv",
+        "userGroup": "_yd6mljzar",
+        "taskGroup": "_n1sj1xrk9",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_3624khzb5": {
+        "title": "ingegneria",
+        "professor": "_eyhyc2zbz",
+        "userGroup": "_824i9n9zc",
+        "taskGroup": "_2nbedwm3n",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_bkvxxc15q": {
+        "title": "ingegneria",
+        "professor": "_tpd4vhl3g",
+        "tasks": "_4f42kacg3",
+        "users": "_157cy5mgv",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_lyohjic4h": {
+        "title": "ingegneria",
+        "professor": "_6eingral0",
+        "userGroup": "_zrk7uoi7b",
+        "taskGroup": "_i0qbj6wbv",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_sa63c7a6y": {
+        "title": "filosofia",
+        "professor": "_spz0ifl5p",
+        "userGroup": "_bxf6s0ctg",
+        "taskGroup": "_v7ek25bo9",
+        "start": "13.00",
+        "deadline": "1"
+    },
+    "_b50fsxxzm": {
+        "title": "ingegneria",
+        "professor": "_vuwr4ql57",
+        "userGroup": "_d1elr5esv",
+        "taskGroup": "_8ojjswz3w",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_rpijrkewt": {
+        "title": "ingegneria",
+        "professor": "_q1u658mgu",
+        "userGroup": "_s40okfhb9",
+        "taskGroup": "_8a12f88s2",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_yto91ch7t": {
+        "title": "ingegneria",
+        "professor": "_2n39ax79i",
+        "userGroup": "_ufbzzighq",
+        "taskGroup": "_afpsi1ptu",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_ro2aqjzfj": {
+        "title": "ingegneria",
+        "professor": "_sra7vpfyz",
+        "userGroup": "_fzprusjdl",
+        "taskGroup": "_r5mng4s5l",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_5cceu5g4t": {
+        "title": "ingegneria",
+        "professor": "_1ab9o1dt7",
+        "userGroup": "_sh4txmusm",
+        "taskGroup": "_g4p0vm984",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_opej8n8cu": {
+        "title": "ingegneria",
+        "professor": "_ow135ij1t",
+        "userGroup": "_rl8vpnezs",
+        "taskGroup": "_l02i2gs40",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_cvwsepdi0": {
+        "title": "ingegneria",
+        "professor": "_m6k4zrmr0",
+        "userGroup": "_ocyyuel7e",
+        "taskGroup": "_j08sj0wej",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_jxz1npjt7": {
+        "title": "ingegneria",
+        "professor": "_o2q5mbkpz",
+        "userGroup": "_q4yslr8dq",
+        "taskGroup": "_dy0a0z0st",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_1rry5ulno": {
+        "title": "ingegneria",
+        "professor": "_itq4ysczp",
+        "tasks": "_3d981h5q7",
+        "users": "_lx9uy5eql",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_w2x94xgfy": {
+        "title": "ingegneria",
+        "professor": "_1m18rxuqq",
+        "userGroup": "_2utyh7uie",
+        "taskGroup": "_7345oipgs",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_jr0oxef0b": {
+        "title": "filosofia",
+        "professor": "_zzx89odgg",
+        "userGroup": "_3e0gy6pas",
+        "taskGroup": "_kbr7qoo55",
+        "start": "13.00",
+        "deadline": "1"
+    },
+    "_4m08jdn8g": {
+        "title": "ingegneria",
+        "professor": "_q6gcz2doa",
+        "userGroup": "_4ktrwrn9a",
+        "taskGroup": "_nsfzl24p1",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_v4pegi6jv": {
+        "title": "ingegneria",
+        "professor": "_a3d2ni7nm",
+        "userGroup": "_fb14prw47",
+        "taskGroup": "_rcrsxvnr3",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_uqjmd4bus": {
+        "title": "ingegneria",
+        "professor": "_h6u6g7i8l",
+        "userGroup": "_lew91p5b3",
+        "taskGroup": "_z0rwj8xm4",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_zkigca9s1": {
+        "title": "ingegneria",
+        "professor": "_kidosuix7",
+        "userGroup": "_zrlb8n9z3",
+        "taskGroup": "_bysysbepd",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_n1xsvn8om": {
+        "title": "ingegneria",
+        "professor": "_zz60sqtlt",
+        "userGroup": "_ew9k5ng7o",
+        "taskGroup": "_whw6rs9fh",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_pue2gibzz": {
+        "title": "ingegneria",
+        "professor": "_sk5l2hb5r",
+        "userGroup": "_3bsmagxi3",
+        "taskGroup": "_7m72dl0hl",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_s5u8d2dvb": {
+        "title": "ingegneria",
+        "professor": "_lmrlbvk2i",
+        "userGroup": "_xjxyao8j7",
+        "taskGroup": "_e6ocn0nqw",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_jceh6ltjs": {
+        "title": "ingegneria",
+        "professor": "_rdkw13nvq",
+        "userGroup": "_a34wcucs4",
+        "taskGroup": "_0dewi1vd9",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_eru3rzpo4": {
+        "title": "ingegneria",
+        "professor": "_7lkxpfcxd",
+        "tasks": "_wljmyeom9",
+        "users": "_dnsxupxaa",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_a2w458rm9": {
+        "title": "ingegneria",
+        "professor": "_3q99nxxz0",
+        "userGroup": "_e7achqwn0",
+        "taskGroup": "_70ijpkv6y",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_sdby05zwo": {
+        "title": "filosofia",
+        "professor": "_vtbw6i4iw",
+        "userGroup": "_jew2p007d",
+        "taskGroup": "_xh9c7b1nl",
+        "start": "13.00",
+        "deadline": "1"
+    },
+    "_4maplqbky": {
+        "title": "ingegneria",
+        "professor": "_us5rd2ns0",
+        "userGroup": "_yjda4qhet",
+        "taskGroup": "_6svmiiyem",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_8dg7kkol4": {
+        "title": "ingegneria",
+        "professor": "_nk7l3xsxp",
+        "userGroup": "_qyuj9b8il",
+        "taskGroup": "_c4yudrmga",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_arrj90eq5": {
+        "title": "ingegneria",
+        "professor": "_qev7qqzge",
+        "userGroup": "_c5xye34v0",
+        "taskGroup": "_x04zo9yxs",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_hfklg1i7c": {
+        "title": "ingegneria",
+        "professor": "_fgkcygk6g",
+        "userGroup": "_rbimf54xz",
+        "taskGroup": "_v81pbf26b",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_z6ejhdyad": {
+        "title": "ingegneria",
+        "professor": "_rjlze7l3h",
+        "userGroup": "_azq95xe6s",
+        "taskGroup": "_zja6ulq6t",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_4u7mqtpn5": {
+        "title": "ingegneria",
+        "professor": "_5a4ui77e9",
+        "userGroup": "_8hzgpbnoy",
+        "taskGroup": "_7fdcimur0",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_lztvxeyor": {
+        "title": "ingegneria",
+        "professor": "_y1x45uwp7",
+        "userGroup": "_okfcjrj94",
+        "taskGroup": "_qjl2lzyb9",
+        "start": "12.00",
+        "deadline": "2"
+    },
+    "_fflwq6sp2": {
+        "title": "ingegneria",
+        "professor": "_x84qyq14z",
+        "userGroup": "_djs7fg3iu",
+        "taskGroup": "_skev542hn",
+        "start": "12.00",
+        "deadline": "2"
     }
 }

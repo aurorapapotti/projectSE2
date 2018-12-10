@@ -161,9 +161,49 @@ describe ('POST /assignment invalid tests', () =>{
 		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(404).json("UserGroup not found"));
 	})
 
+	test('POST /assignment start undefined', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			deadline: "2"
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('POST /assignment start not string', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: 1,
+			deadline: "2"
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('POST /assignment deadline not string', () => {
+		var ass = {
+			title: "ingegneria",
+			professor: userFunc.createUser(newUser),
+			userGroup: userGroupFunc.writeUserGroup(newUserGroup),
+			taskGroup: taskGroupFunc.addTaskGroup(newTaskGroup),
+			start: "12.00",
+			deadline: 1
+		}	
+		expect(assignment.createAssignment({body: ass}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
 	test('POST /assignment req empty', () => {
 		var req = {}
 		expect(assignment.createAssignment({body: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('POST /assignment params undefined', () => {
+		var req = {}
+		expect(assignment.createAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 });
 
@@ -197,6 +237,11 @@ describe ('GET /assignment/:assignmentId invalid tests', () =>{
 			assignmentId: "not exist"
 		}
 		expect(assignment.getAssignmentById({params: req}, res)).toEqual(res.status(404).json("Assignment not found"));
+	})
+
+	test('GET /assignment/:assignmentId params undefined', () => {
+		var req = {}
+		expect(assignment.getAssignmentById({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 });
 
@@ -277,6 +322,11 @@ describe ('DELETE /assignment/:assignmentId invalid tests', () =>{
 	test('DELETE /assignment/:assignmentId req empty', () =>{
 		var req = {}
 		expect(assignment.deleteAssignment({params: req}, res)).toEqual(res.status(400).json("Bad request"));
+	})
+
+	test('DELETE /assignment/:assignmentId params undefined', () => {
+		var req = {}
+		expect(assignment.deleteAssignment({"": req}, res)).toEqual(res.status(400).json("Bad request"));
 	})
 
 	test('DELETE /assignment/:assignmentId assignment not exists', () =>{
