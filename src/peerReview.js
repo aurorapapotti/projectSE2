@@ -1,4 +1,5 @@
 const peerReviewFunctions = require('./functionsEntities/peerReviewFunctions.js');
+const taskAnswerFunctions = require('./functionsEntities/taskAnswerFunctions.js');
 const userFunctions = require('./functionsEntities/userFunctions.js');
 
 function listAllPeerReview(req, res){
@@ -23,6 +24,9 @@ function createPeerReview(req, res) {
   if(typeof req.body.user !== "string" ||typeof req.body.taskAnswer !== "string" || typeof req.body.comment !== "string")
     return res.status(400).json("Bad Request");
   //console.log("recived request: ",req.body);
+  idTaskAnswer = taskAnswerFunctions.getTaskAnswer(req.body.taskAnswer);
+  if (idTaskAnswer.id)
+    return res.status(404).json("TaskAnswer NOT found");
   let idPeerReview = peerReviewFunctions.addPeerReview(req.body);
 	console.log(idPeerReview);
   //console.log("wrote completed: ", userFunctions.getAllUsers());
@@ -48,6 +52,11 @@ function putPeerReview(req, res){
     return res.status(400).json("Bad Request");
   if (!req.body || !req.body.user || !req.body.taskAnswer || !req.body.comment)
     return res.status(400).json("Bad Request");
+  if (typeof req.body.user !== 'string' || typeof req.body.taskAnswer !== 'string' || typeof req.body.comment !== 'string')
+    return res.status(400).json("Bad Request");
+  idTaskAnswer = taskAnswerFunctions.getTaskAnswer(req.body.taskAnswer);
+  if (idTaskAnswer.id)
+    return res.status(404).json("TaskAnswer NOT found");
   peerReview_modify = new Object();
   peerReview_modify = peerReviewFunctions.modifyPeerReview(req.params.idPeerReview, req.body);
   if (!peerReview_modify.user || !peerReview_modify.taskAnswer || !peerReview_modify.comment)
