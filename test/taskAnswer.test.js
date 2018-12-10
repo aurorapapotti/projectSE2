@@ -19,11 +19,11 @@ const editStudent = require('../src/taskAnswer.js').editStudent;
 const editTaskGroup = require('../src/taskAnswer.js').editTaskGroup;
 
 const res = {
-	"status": (statuscode) => { 
+	"status": (statuscode) => {
 		return {
-	  		"json": (message) => { 
+	  		"json": (message) => {
 				  return {
-					"code": statuscode, 
+					"code": statuscode,
 					"message": message
 				}
 	   		}
@@ -39,6 +39,8 @@ describe ("POST /taskAnswers", () =>{
 			email: "a@a.com",
 			badgeNumber: "1234"
 		}
+
+		var userID = userFunctions.createUser(newStudent);
 
 		var newAssignment = {
 			title: "B",
@@ -56,7 +58,7 @@ describe ("POST /taskAnswers", () =>{
 		}
 
 		var newTaskAnswer = {
-			student: userFunctions.createUser(newStudent),
+			student: userID,
 			assignment: assignmentFunctions.addAssignment(newAssignment),
 			taskGroup: taskGroupFunctions.addTaskGroup(newTaskGroup)
 		}
@@ -392,7 +394,7 @@ describe("GET /taskAnswers/:taskAnswerId/taskGroup", () => {
 			author: "C",
 			tasks: ["1", "2"]
 		}
-		
+
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",

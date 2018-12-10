@@ -15,11 +15,11 @@ const editPeerReview = require("../src/review.js").editPeerReview;
 const editVote = require("../src/review.js").editVote;
 
 const res = {
-	"status": (statuscode) => { 
+	"status": (statuscode) => {
 		return {
-	  		"json": (message) => { 
+	  		"json": (message) => {
 				  return {
-					"code": statuscode, 
+					"code": statuscode,
 					"message": message
 				}
 	   		}
@@ -62,8 +62,14 @@ describe ("POST /reviews", () => {
 	});
 
 	test("return code 404 peerReview wrong", async () => {
+		var newTaskAnswer = {
+			answers: ["1", "2"],
+			student: "1",
+			assignment: "1",
+			task: "1"
+		}
 		var review = {
-			taskAnswer: ["1", "2"],
+			taskAnswer: [taskAnswerFunctions.writeTaskAnswer(newTaskAnswer), taskAnswerFunctions.writeTaskAnswer(newTaskAnswer)],
 			peerReview: ["a"],
 			vote: "3"
 		}
