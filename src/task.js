@@ -31,19 +31,20 @@ function createTask(req, res) {
 
 function createTaskByIdUser(req, res) {
   if(!req || !req.params.idUser || !req.body || !req.body.taskType || !req.body.argument || !req.body.correctAnswer)
-    return res.status(401).json("Bad Request");
+    return res.status(400).json("Bad Request");
   if(typeof req.params.idUser !== "string" ||typeof req.body.taskType !== "string" || typeof req.body.argument !== "string" || typeof req.body.correctAnswer !== "string" )
-    return res.status(401).json("Bad Request");
+    return res.status(400).json("Bad Request");
   //console.log("recived request: ",req.body);
-  req.body.author = req.params.idUser;
-  let idTask = taskFunctions.addTask(req.body);
-	console.log(idTask);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
+  let idUser = userFunctions.getUser(req.params.idUser);
+  if(idUser.id)
+    return res.status(404).json("User NOT found");
+  req.body.author = idUser;
+  taskFunctions.addTask(req.body);
   return res.status(201).json("Created Task");
 }
 
 function putTask(req, res){
-  if (!req || typeof req.params.idTask !== 'string')
+  if (!req || !req.params.idTask ||typeof req.params.idTask !== 'string')
     return res.status(400).json("Bad Request");
   if(!req || !req.body || !req.body.author || !req.body.taskType || !req.body.argument || !req.body.correctAnswer)
     return res.status(401).json("Bad Request");
@@ -57,17 +58,20 @@ function putTask(req, res){
 }
 
 function putTaskByIdUser(req, res){
-  if (!req || !req.params.idUser || typeof req.params.idTask !== 'string')
+  if (!req || !req.params.idUser || !req.params.idTask)
     return res.status(400).json("Bad Request");
   if (!req.body || !req.body.taskType || !req.body.argument|| !req.body.correctAnswer)
     return res.status(400).json("Bad Request");
-  if(typeof req.params.idUser !== "string" || typeof req.body.taskType !== "string" ||typeof req.body.argument !== "string" ||typeof req.body.correctAnswer !== "string")
+  if(typeof req.params.idUser !== "string" || typeof req.params.idTask !== 'string' || typeof req.body.taskType !== "string" ||typeof req.body.argument !== "string" ||typeof req.body.correctAnswer !== "string")
     return res.status(400).json("Bad Request");
+  let idUser = userFunctions.getUser(req.params.idUser);
+  if(idUser.id)
+    return res.status(404).json("User NOT found");
   task_modify = new Object();
   task_modify = userFunctions.getTasks(req.params.idUser, "author");
-  if (!task_modify[req.params.idTask].author || !task_modify[req.params.idTask].taskType || !task_modify[req.params.idTask].argument || !task_modify[req.params.idTask].correctAnswer)
+  if (!task_modify[req.params.idTask])
     return res.status(404).json("Task NOT found");
-  req.body.author = req.params.idUser;
+  req.body.author = idUser;
   taskFunctions.modifyTask(req.params.idTask, req.body);
   return res.status(200).json("Task modified");
 }
@@ -83,11 +87,16 @@ function deleteTask(req, res){
 }
 
 function deleteTaskByIdUser(req, res){
-  if (!req || !req.params.idUser || typeof req.params.idTask !== 'string')
+  if (!req || !req.params.idUser || !req.params.idTask)
     return res.status(400).json("Bad Request");
+  if(typeof req.params.idUser !== 'string' || typeof req.params.idTask !== 'string')
+    return res.status(400).json("Bad Request");
+  let idUser = userFunctions.getUser(req.params.idUser);
+  if(idUser.id)
+    return res.status(404).json("User NOT found");
   task_deleted = new Object();
   task_deleted = userFunctions.getTasks(req.params.idUser, "author");
-  if (!task_deleted[req.params.idTask].author || !task_deleted[req.params.idTask].taskType || !task_deleted[req.params.idTask].argument || !task_deleted[req.params.idTask].correctAnswer)
+  if (!task_deleted[req.params.idTask])
     return res.status(404).json("Task NOT found");
   taskFunctions.removeTask(req.params.idTask);
   return res.status(200).json("Task deleted");

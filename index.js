@@ -32,10 +32,10 @@ app.put('/user/:idUser', user.putUser); //testOK
 app.delete('/user/:idUser', user.deleteUser); //testOK
 
 app.get('/user/:idUser/tasks', user.getTasksByIdUser); //teskOK
-app.post('/user/:idUser/tasks', task.createTaskByIdUser);
+app.post('/user/:idUser/tasks', task.createTaskByIdUser); //testOK
 app.get('/user/:idUser/tasks/:idTask', user.getTaskByIdUser); //teskOK
-app.put('/user/:idUser/tasks/:idTask', task.putTaskByIdUser);
-app.delete('/user/:idUser/tasks/:idTask', task.deleteTaskByIdUser);
+app.put('/user/:idUser/tasks/:idTask', task.putTaskByIdUser); //testOK
+app.delete('/user/:idUser/tasks/:idTask', task.deleteTaskByIdUser); //testOK
 
 app.get('/user/:idUser/taskGroups', user.getTaskGroupsByIdUser); //testOK
 app.post('/user/:idUser/taskGroups', taskGroup.createTaskGroupByIdUser);
@@ -197,10 +197,10 @@ app.update ('/assignment/:assignmentId/tasks', function(req, res){
 
 //PEER REVIEW
 app.get('/peerReview', peerReview.listAllPeerReview); //testOK
-app.post('/peerReview', peerReview.createPeerReview);
-app.get('/peerReview/:idPeerReview', peerReview.getPeerReview);
-app.put('/peerReview/:idPeerReview', peerReview.putPeerReview);
-app.delete('/peerReview/:idPeerReview', peerReview.deletePeerReview);
+app.post('/peerReview', peerReview.createPeerReview); //testOK
+app.get('/peerReview/:idPeerReview', peerReview.getPeerReview); //testOK
+app.put('/peerReview/:idPeerReview', peerReview.putPeerReview); //testOK
+app.delete('/peerReview/:idPeerReview', peerReview.deletePeerReview); //testOK
 
 
 app.listen(PORT, () => console.log('App listening on port'+ PORT))
