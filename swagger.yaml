@@ -630,7 +630,7 @@ paths:
         200:
           description: Everything is ok!
           schema: 
-            $ref: '#/definitions/UserGroup'
+            $ref: "#/definitions/UserGroup"
         404:
           description: Error! User Group NOT found
     
@@ -649,6 +649,8 @@ paths:
       responses:
         200:
           description: The group of users was successfully updated!
+          schema:
+            $ref: "#/definitions/UserGroup"
         404:
           description: Error! The group of users to update was not found.
     
@@ -670,7 +672,7 @@ paths:
         404:
           description: The group of users to delete was not found
   
-  /userGroup/{Author}:
+  /userGroup/{author}:
     get:
       summary: Returns the author of the user group
       description: Returns the author of the user group
@@ -679,13 +681,15 @@ paths:
       
       parameters:
       - in: path
-        name: Author
+        name: author
         type: string
         required: true
       
       responses:
         200:
           description: Everything is ok!
+          schema:
+            $ref: "#/definitions/User"
         404:
           description: Error! Author NOT found
   
@@ -973,6 +977,7 @@ paths:
       summary: Returns an assignment with the given ID
       tags:
       - "Assignment"
+      
       responses:
         200:
           description: Everything is ok
@@ -986,6 +991,7 @@ paths:
       description: Updates a specific assignment mapping with the given id
       tags:
       - "Assignment"
+      
       parameters:
       - in: body
         name: data
@@ -1005,13 +1011,14 @@ paths:
       description: Deletes a specific assignment mapping with the given id
       tags:
       - "Assignment"
+      
       responses:
         204:
           description: Everything is ok!
         404: 
           description: Invalid request.
   
-  /assignment/{Professor}:
+  /assignment/{professor}:
     get:
       summary: Returns the professor of the assignment
       description: Returns the professor of the assignment
@@ -1020,13 +1027,15 @@ paths:
       
       parameters:
       - in: path
-        name: Professor
+        name: professor
         type: string
         required: true
       
       responses:
         200:
           description: Everything is ok!
+          schema:
+            $ref: "#/definitions/User"
         404:
           description: Error! Professor NOT found
   
@@ -1049,7 +1058,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"
+              $ref: "#/definitions/UserGroup"
         404:
           description: Error!
     
@@ -1069,7 +1078,7 @@ paths:
         200:
           description: Everything is ok!
           schema: 
-            $ref: "#/definitions/User"
+            $ref: "#/definitions/UserGroup"
         409:
           description: Error!
   
@@ -1092,7 +1101,7 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/Task"
+              $ref: "#/definitions/TaskGroup"
         404:
           description: Error!
     
@@ -1112,7 +1121,7 @@ paths:
         200:
           description: Everything is ok!
           schema: 
-            $ref: "#/definitions/Task"
+            $ref: "#/definitions/TaskGroup"
         409:
           description: Error!
   
