@@ -2,9 +2,13 @@ const taskFunctions = require('./functionsEntities/taskFunctions.js');
 const userFunctions = require('./functionsEntities/userFunctions.js');
 
 function listAllTasks(req, res){
-  if (!req)
-    return res.status(400).json("Bad Request");
-  return res.status(200).json(taskFunctions.getAllTasks());
+  if (req && req.query && req.query.taskArgument){
+    return getTasksByArgument(req, res);
+  }
+  else if (req){
+    return res.status(200).json(taskFunctions.getAllTasks());
+  }
+  return res.status(400).json("Bad Request");  
 }
 
 function getTask(req, res){
@@ -107,12 +111,30 @@ function deleteTaskByIdUser(req, res){
 }
 
 function getTasksByArgument(req, res){
-  if (!req || !req.query || req.query.taskArgument === undefined || typeof (req.query.taskArgument) !== 'string' )
+  if (!req || !req.query || !req.query.taskArgument|| typeof (req.query.taskArgument) !== 'string' )
     return res.status(400).json("Bad Request");
-  tasks = new Object();
+
   let param = "argument";
-  tasks = taskFunctions.getTasks(req.query.taskArgument, param);
-  return res.status(200).json(tasks);
+  var taskByArg = taskFunctions.getTasks(req.query.taskArgument, param);
+
+  return res.status(200).json(taskByArg);
+}
+
+function putTask(req, res){
+  if (!req || !req.params.idTask ||typeof req.params.idTask !== 'string')
+    return res.status(400).json("Bad Request");
+  if(!req || !req.body || !req.body.author || !req.body.taskType || !req.body.argument || !req.body.correctAnswer)
+    return res.status(400).json("Bad Request");
+  if(typeof req.body.author !== "string" || typeof req.body.taskType !== "string" || typeof req.body.argument !== "string" ||typeof req.body.correctAnswer !== "string")
+    return res.status(400).json("Bad Request");
+  let idAuthor = userFunctions.getUser(req.body.author);
+  if (idAuthor.id)
+    return res.status(404).json("User NOT found");
+  task_modify = new Object();
+  task_modify = taskFunctions.modifyTask(req.params.idTask, req.body);
+  if (!task_modify.author || !task_modify.taskType || !task_modify.argument || !task_modify.correctAnswer)
+    return res.status(404).json("Task NOT found");
+  return res.status(200).json("Task modified");
 }
 
 module.exports = {

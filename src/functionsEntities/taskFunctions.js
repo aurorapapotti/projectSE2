@@ -10,7 +10,6 @@ function getAllTasks(){
 }
 
 function getTaskById(idTask){
-  //console.log("Id passato:", Id);
   return persistencyLayer.getObject(idTask, dbTaskPath);
 }
 
@@ -26,12 +25,14 @@ function getTasks(taskArgument, param){
   return persistencyLayer.getObjectByQuery(taskArgument, param, dbTaskPath);
 }
 
-function getTaskByDescription(taskDescription){
-  console.log("Description passata:", taskDescription);
-  return persistencyLayer.getObject(taskDescription, dbTaskPath);
+function getTaskByArgument(taskArgument){
+  console.log("Argomento passato:", taskArgument);
+  return persistencyLayer.getObject(taskArgument, dbTaskPath);
 }
 
-
+function modifyTask(idTask, task){
+  return persistencyLayer.modifyObject(idTask, dbTaskPath, task);
+}
 
 module.exports = {
   getAllTasks: getAllTasks,
@@ -39,6 +40,6 @@ module.exports = {
   addTask: addTask,
   getTasks: getTasks,
   modifyTask: modifyTask,
-  getTaskByDescription: getTaskByDescription,
+  getTaskByArgument: getTaskByArgument,
   removeTask: removeTask
 }

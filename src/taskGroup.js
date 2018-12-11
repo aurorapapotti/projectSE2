@@ -38,7 +38,6 @@ function createTaskGroup(req, res) {
   //console.log("recived request: ",req.body);
   let idTaskGroup = taskGroupFunctions.addTaskGroup(req.body);
 	console.log(idTaskGroup);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
   return res.status(201).json("Created TaskGroup");
 }
 

@@ -108,7 +108,7 @@ app.delete ('/userGroup/:userGroupId/users/:userId', userGroup.deleteUserByIdUse
 
 //TASK
 app.get('/task', task.listAllTasks);
-app.get('/task', task.getTasksByArgument);
+//app.get('/task', task.getTasksByArgument);
 app.get('/task/:idTask', task.getTask);
 app.post('/task', task.createTask);
 app.delete('/task/:idTask', task.deleteTask);
