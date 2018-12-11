@@ -96,39 +96,15 @@ app.put("/taskAnswers/:taskAnswerId/student", taskAnswer.editAnswer); //testOK
 app.put("/taskAnswers/:taskAnswerId/answers", taskAnswer.editAnswer); //testOK
 
 
-/*
 //USER GROUP
-app.get ('/userGroup', function(req, res){
-	res.send(userGroup.listUserGroups(req, res));
-})
-
-app.post ('/userGroup', function(req, res){
-	res.send(userGroup.createUserGroup(req, res));
-})
-//---
-app.get ('/userGroup/:userGroupId', function(req, res){
-	res.send(userGroup.getUserGroupById(req, res));
-})
-
-app.put ('/userGroup/:userGroupId', function(req, res){
-	res.send(userGroup.updateUserGroup(req, res));
-})
-
-app.delete ('/userGroup/:userGroupId', function(req, res){
-	res.send(userGroup.deleteUserGroup(req, res));
-})
-//...
-app.get ('/userGroup/:userGroupId/author', function(req, res){
-	res.send(userGroup.getAuthorByIdUserGroup(req, res));
-})
-//...
-app.get ('/userGroup/:userGroupId/users', function(req, res){
-	res.send(userGroup.getUsersByIdUserGroup(req, res));
-})
-//...
-app.delete ('/userGroup/:userGroupId/users/:userId', function (req, res){
-	res.send(userGroup.deleteUserByIdUserGroup(req, res));
-})*/
+app.get ('/userGroup', userGroup.listUserGroups);
+app.post ('/userGroup', userGroup.createUserGroup);
+app.get ('/userGroup/:userGroupId', userGroup.getUserGroupById);
+app.put ('/userGroup/:userGroupId', userGroup.updateUserGroup);
+app.delete ('/userGroup/:userGroupId', userGroup.deleteUserGroup);
+app.get ('/userGroup/:userGroupId/author', userGroup.getAuthorByIdUserGroup);
+app.get ('/userGroup/:userGroupId/users', userGroup.getUsersByIdUserGroup);
+app.delete ('/userGroup/:userGroupId/users/:userId', userGroup.deleteUserByIdUserGroup);
 
 //TASK
 app.get('/task', task.listAllTasks);
