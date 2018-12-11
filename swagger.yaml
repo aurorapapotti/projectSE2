@@ -21,7 +21,7 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
+        type: string
         description: The id of the user, it univocally identifies the user
       name:
         type: string
@@ -183,7 +183,7 @@ definitions:
     type: object
     properties:
       id:
-        type: integer
+        type: string
         description: The id that univocally identifies a peer review
       student:
         $ref: "#/definitions/User"
@@ -247,16 +247,22 @@ paths:
                 type: integer
         400:
           description: Error! Could not insert the user. Probably something is missing
-        409:
-          description: Error! Probably the email address is already in use.
         
   /login/:
     post:
       summary: Login User
       tags:
       - "Authentication"
-      description: It allows a user to log in its profile.
       
+      parameters:
+      - in: body
+        name: data
+        description: The id of the user registered
+        schema:
+          type: object
+          properties:
+            id: 
+              type: string
       responses:
         201:
           description: The user is log in. 
@@ -270,288 +276,97 @@ paths:
       description: Returns all the users of the system
       tags:
       - "User"
-      
-      parameters:
-        - in: query
-          name: "user"
-          type: string
-          description: The names of the users
-      
+
       responses:
         200:
-          description: Everything is OK
+          description: The list of the users exists
           schema:
             type: array
             items:
               $ref: "#/definitions/User"
-        404:
-          description: Error!
-          
-  /user/{userId}:
+        400:
+          description: Something goes wrong!
+ 
+  /user/{idUser}:
+    parameters:
+    - in: path
+      name: "idUser"
+      required: true
+      type: string
+      description: The id of a specific user
+    
     get:
-      summary: Return a specific user
+      summary: Get a specific user
+      description: Returns tha data of a specif user mapping with the given id
       tags: 
       - "User"
-      parameters:
-      - in: path
-        name: "userId"
-        required: true
-        type: integer
-        description: The id of a specific user
-        
       responses:
         200:
-          description: Everything is ok!
+          description: The user searched exists!
           schema:
             $ref: "#/definitions/User"
         404:
           description: User not found!
-  
-  /user/{userId}/assignments:
-    get:
-      summary: Returns a list of assignments that are associated to the specified user
-      tags:
-      - User
-      
-      parameters:
-      - in: path
-        required: true
-        name: "userId"
-        type: integer
-        description: The id of a specific user
-        
-      responses:
-        200:
-          description: Everything is ok!
-
-#PERSONAL AREA USER
-      
-  /user/me/:
-    get:
-      summary: It returns the information about the register user
-      description: By the user's id it returns it's data
-      tags: 
-      - "Personal User Area"
-      
-      responses:
-        200:
-          description: User found
-          schema:
-            $ref: "#/definitions/User"
-        404:
-          description: Error! User NOT found
     
     put:
-      summary: Update the information for the authentication
+      summary: Put a specific user
+      description: Modifies the data of a specific user
       tags:
-      - "Personal User Area"
+      - "User"
       
       parameters:
       - in: body
-        name: "data"
+        name: data
+        description: the new data for the user
         schema:
           type: object
           properties:
             name:
-              type: string 
-              description: The new name of the user
+              type: string
             surname:
               type: string
-              description: The new surname of the user
+            email:
+              type: string
             badgeNumber:
-              type: string
-              
-      responses:
-        200:
-          description: Everything is ok!
-        409: 
-          description: Error! Impossible to update
-
-  /user/me/email:
-    put:
-      summary: Change the email for the authentication
-      tags:
-      - "Personal User Area"
-      
-      parameters:
-      - in: body
-        required: true
-        name: "data"
-        schema:
-          type: object
-          properties:
-            newEmail:
-              type: string
+              type: integer
       
       responses:
         200:
-          description: Email changed!
-        409:
-          description: The email is already used by another user
-
-  /user/me/password:
-    put:
-      summary: Change the password for the authentication
-      tags:
-      - "Personal User Area"
-      
-      parameters:
-      - in: body
-        required: true
-        name: "data"
-        schema:
-          type: object
-          properties:
-            newPassword:
-              type: string
-      
-      responses:
-        200:
-          description: Password changed!
-        409:
-          description: Error! Invalid password
-  
-  /user/me/assignments:
-    get:
-      summary: Returns a list of assignments that are associated to the registered user
-      tags:
-      - "Personal User Area"
-      responses:
-        200:
-          description: Everything is ok!
+          description: The user is modified
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Assignment"
-  
-  /user/me/assignments/{assignmentId}:
-    get:
-      summary: Returns a specif assignment assigned to the current user
-      tags:
-      - "Personal User Area"
-      
-      parameters:
-      - in: path
-        required: true
-        name: "assignmentId"
-        type: integer
-      
-      responses:
-        200:
-          description: Everything is ok!
-          schema:
-            $ref: "#/definitions/Assignment"
+            $ref: "#/definitions/User"
         404:
-          description: Assignement NOT found
-  
-  /user/me/assignments/{assignmentId}/tasks:
-    get:
-      summary: Assignment's tasks
-      description: Returns all tasks of an assignment
-      tags:
-      - "Personal User Area"
-      
-      parameters:
-      - in: path
-        required: true
-        name: assignmentId
-        type: integer
-      
-      responses:
-        200:
-          description: Everything is OK
+          description: User NOT found
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/Task"
-        404:
-          description: Assignment NOT found
-  
-  /user/me/assignments/{assignmentId}/taskAnswer:
-    parameters:
-      - in: path
-        required: true
-        name: "assignmentId"
-        type: integer
-      - in: body
-        name: data
-        required: true
-        schema:
-          $ref: "#/definitions/TaskAnswer"
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The id of the user not found
+        400:
+          description: Bad Request, maybe something is missing
     
-    get:
-      summary: Task Assignment's answers
-      tags:
-      - "Personal User Area"
+    delete:
+      summary: Delete a specific user
+      description: removes a specific user mapping with the given id
+      tags: 
+      - "User"
       
       responses:
         200:
-          description: Everything is ok
+          description: The user is deleted
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/TaskAnswer"
+              $ref: "#/definitions/User"
         404:
-          description: Assignment NOT found
-  
-    put:
-      summary: Submit the answers to a task assignment
-      tags:
-      - "Personal User Area"
-      
-      responses:
-        200:
-          description: Everything is ok
-        404:
-          description: Task Assignment NOT found
-  
-  /user/me/taskAnswer:
-    get:
-      summary: All user's task answers
-      tags:
-      - "Personal User Area"
-      responses:
-        200:
-          description: Everything is ok
+          description: User NOT found
           schema:
-            type: array
-            items:
-              $ref: "#/definitions/TaskAnswer"
-  
-  /user/me/peerReviews:
-    get:
-      summary: All user's peer reviews
-      description: Returns all the peer reviews of a user
-      tags:
-      - "Personal User Area"
-      responses:
-        200:
-          description: Everything is ok
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/PeerReview"
-  
-  /user/me/assignments/{assignmentId}/peerReviews:
-    parameters:
-    - in: path
-      required: true
-      name: assignmentId
-      type: integer
-    
-    get:
-      summary: The peer reviews associated to a specific assignment
-      tags:
-      - "Personal User Area"
-      responses:
-        200:
-          description: Everything is ok
-          schema:
-            type: array
-            items:
-              $ref: "#/definitions/PeerReview"
-        404:
-          description: Assignment NOT found
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The id of the user not found
+        400:
+          description: Bad Request, maybe something is missing
   
 #USER GROUP
   /userGroup:
@@ -1294,36 +1109,132 @@ paths:
 #PEER REVIEW
   /peerReview:
     get:
-      summary: All peer reviews
-      description: Return the list of all peer reviws
+      summary: All the PeerReviews
+      description: Returns all the PeerReviews of the system
       tags:
-      - "Peer Review"
-      
+      - "PeerReview"
+
       responses:
         200:
-          description: Everything is ok
+          description: The list of the existing PeerReviews
           schema:
             type: array
             items:
               $ref: "#/definitions/PeerReview"
-        404: 
-          description: Error
+        400:
+          description: Bad Request! Something goes wrong!
     
     post:
-      summary: Add a new peer review
+      summary: Create a PeerReview
+      description: The creation of a new PeerReview
       tags:
-      - "Peer Review"
+      - "PeerReview"
+      
       parameters:
       - in: body
-        name: "data"
-        required: true
+        name: data
+        description: The data of the new PeerReview
         schema:
-          $ref: "#/definitions/PeerReview"
+          type: object
+          properties:
+            author:
+              type: string
+            name:
+              type: string
+            taskAnswer:
+              type: string
+            comment:
+              type: string
+      
       responses:
-        201:
-          description: Peer Review created
-        400: 
-          description: Invalid request
+        200:
+          description: The PeerReviews is created
+          schema:
+            $ref: "#/definitions/PeerReview"
+        400:
+          description: Bad Request! Maybe something is missing
+              
+ 
+  /peerReview/{idPeerReview}:
+    parameters:
+    - in: path
+      name: "idPeerReview"
+      required: true
+      type: string
+      description: The id of a specific PeerReview
+    
+    get:
+      summary: Get a specific PeerReview
+      description: Returns tha data of a specif PeerReview mapping with the given id
+      tags: 
+      - "PeerReview"
+      responses:
+        200:
+          description: The PeerReview searched exists!
+          schema:
+            $ref: "#/definitions/PeerReview"
+        404:
+          description: PeerReview not found!
+    
+    put:
+      summary: Put a specific PeerReview
+      description: Modifies the data of a specific PeerReview mapping with the given id
+      tags:
+      - "PeerReview"
+      
+      parameters:
+      - in: body
+        name: data
+        description: the new data for the PeerReview
+        schema:
+          type: object
+          properties:
+            author:
+              type: string
+            name:
+              type: string
+            taskAnswer:
+              type: string
+            comment:
+              type: integer
+      
+      responses:
+        200:
+          description: The PeerReview is modified
+          schema:
+            $ref: "#/definitions/PeerReview"
+        404:
+          description: PeerReview NOT found
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The id of the PeerReview not found
+        400:
+          description: Bad Request, maybe something is missing
+    
+    delete:
+      summary: Delete a specific PeerReview
+      description: removes a specific PeerReview mapping with the given id
+      tags: 
+      - "User"
+      
+      responses:
+        200:
+          description: The PeerReview is deleted
+          schema:
+              $ref: "#/definitions/PeerReview"
+        404:
+          description: PeerReview NOT found
+          schema:
+            type: object
+            properties:
+              id:
+                type: integer
+                description: The id of the PeerReview not found
+        400:
+          description: Bad Request, maybe something is missing
 
 #REVIEW
   /reviews:
