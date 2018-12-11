@@ -26,6 +26,10 @@ function getTaskByArgument(taskArgument){
   return persistencyLayer.getObject(taskArgument, dbTaskPath);
 }
 
+function modifyTask(idTask, task){
+  return persistencyLayer.modifyObject(idTask, dbTaskPath, task);
+}
+
 
 
 module.exports = {
@@ -34,5 +38,6 @@ module.exports = {
   createTask: createTask,
   getTasks: getTasks,
   getTaskByArgument: getTaskByArgument,
-  removeTask: removeTask
+  removeTask: removeTask,
+  modifyTask: modifyTask
 }

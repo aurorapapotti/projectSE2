@@ -1,5 +1,7 @@
 const taskFunctions = require('../src/functionsEntities/taskFunctions.js');
+const userFunctions = require('../src/functionsEntities/userFunctions.js')
 
+const putTask = require('../src/task.js').putTask;
 const listAllTasks = require ('../src/task.js').listAllTasks;
 const deleteTask = require('../src/task.js').deleteTask;
 const getTask = require('../src/task.js').getTask;
@@ -18,6 +20,169 @@ const task = {
   argument: "Algoritmi",
   correctAnswer: "ciao"
 }
+
+const newUser = {
+  name: "Martina",
+  surname: "Ciao",
+  email: "a@a.it",
+  badgeNumber: "1234"
+}
+
+// PUT
+describe('PUT /task/:idTask valid tests', () =>{
+  test('PUT /task return code 200', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: "multiple1",
+      argument: "Algoritmi1",
+      correctAnswer: "ciao1"
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(200).json("Task modified"));
+  })
+});
+
+describe('PUT /task/:idTask invalid tests', () =>{
+  test('PUT /task return code 400 idTask number', () =>{
+    var idTask = 1234;
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: "multiple1",
+      argument: "Algoritmi1",
+      correctAnswer: "ciao1"
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 author number', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: 1234,
+      taskType: "multiple1",
+      argument: "Algoritmi1",
+      correctAnswer: "ciao1"
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 taskType number', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: 1234,
+      argument: "Algoritmi1",
+      correctAnswer: "ciao1"
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 argument number', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: "multiple1",
+      argument: 1234,
+      correctAnswer: "ciao1"
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 correctAnswer number', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: "multiple1",
+      argument: "Algoritmi1",
+      correctAnswer: 1234
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 idTask undefined', () =>{
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: 1234,
+      argument: "Algoritmi1",
+      correctAnswer: "ciao1"
+    }
+    var req = {};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 author undefined', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      taskType: "multiple1",
+      argument: "Algoritmi1",
+      correctAnswer: 1234
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 taskType undefined', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      argument: "Algoritmi1",
+      correctAnswer: 1234
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 argument undefined', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: "multiple1",
+      correctAnswer: 1234
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 correctAnswer undefined', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: "multiple1",
+      argument: "Algoritmi1",
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+  
+  test('PUT /task return code 400 body undefined', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var req = {idTask: idTask};
+    expect(putTask({params: req}, res)).toEqual(res.status(400).json("Bad Request"));
+  });
+
+  test('PUT /task return code 400 req undefined', () =>{
+    var idTask = taskFunctions.createTask(task);
+    var req = {idTask: idTask};
+    expect(putTask("", res)).toEqual(res.status(400).json("Bad Request"));
+  });
+  
+  test('PUT /task return code 404 idTask wrong', () =>{
+    var idTask = "a";
+    var newTask = {
+      author: userFunctions.createUser(newUser),
+      taskType: "multiple1",
+      argument: "Algoritmi1",
+      correctAnswer: "ciao1"
+    }
+    var req = {idTask: idTask};
+    expect(putTask({params: req, body: newTask}, res)).toEqual(res.status(404).json("Task NOT found"));
+  })
+});
 
 // GET ALL TASKS
 
