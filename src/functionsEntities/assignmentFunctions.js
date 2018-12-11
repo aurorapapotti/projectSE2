@@ -33,8 +33,5 @@ module.exports = {
     getAllAssignments: getAllAssignments,
     getAssignmentById: getAssignmentById,
     deleteAssignment: deleteAssignment,
-    modifyAssignment: modifyAssignment,
-    getUserById: getUserById,
-    getTaskGroupById: getTaskGroupById,
-    getUserGroupById: getUserGroupById
+    modifyAssignment: modifyAssignment
 }
