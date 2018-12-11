@@ -3,6 +3,7 @@ const userFunctions = require('../src/functionsEntities/userFunctions.js');
 const taskGroupFunctions = require('../src/functionsEntities/taskGroupFunctions.js');
 const createTaskGroupByIdUser = require ('../src/taskGroup.js').createTaskGroupByIdUser;
 const putTaskGroupByIdUser = require('../src/taskGroup.js').putTaskGroupByIdUser;
+const deleteTaskGroupByIdUser = require('../src/taskGroup.js').deleteTaskGroupByIdUser;
 
 const res = {
   "status": (statuscode) =>{ return {
@@ -166,5 +167,147 @@ describe('PUT /user/:idUser/taskGroups/:idTaskGroup invalid tests', () => {
     var userID = userFunctions.createUser(user);
     var taskGroupID = null;
     expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup params idUser is undefined', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(putTaskGroupByIdUser({"params": {"": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup params idTaskGroup is undefined', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup body is undefined', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "": taskGroupID}, "body":undefined}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup params body is null', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "": taskGroupID}, "body":null}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup req is undefined', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(putTaskGroupByIdUser(undefined, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup name is a number', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    invalidTask = {
+      name: 4468243479,
+      tasks: ["ghsdg682x", "gdusdc"]
+    }
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":invalidTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup tasks are numbers', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    invalidTask = {
+      name: "SEMA",
+      tasks: [34638428, 438743289]
+    }
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":invalidTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup no tasks', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    invalidTask = {
+      name: "SEMA",
+    }
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":invalidTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup no names', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    invalidTask = {
+      tasks: ["ghsdg682x", "gdusdc"]
+    }
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":invalidTask}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+});
+
+describe('DELETE /user/:idUser/taskGroups/:idTaskGroup valid tests', () => {
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup return code 200', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(200).json("TaskGroup deleted"));
+  })
+});
+
+describe('DELETE /user/:idUser/taskGroups/:idTaskGroup invalid tests', () => {
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup return code 404 user NOT found', () => {
+    var userID = "_ciao";
+    var taskGroupID = "_sgds537x";
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(404).json("User NOT found"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup return code 404 taskGroup NOT found', () => {
+    var userID = userFunctions.createUser(user);
+    var taskGroupID = "_ciao";
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(404).json("TaskGroup NOT found"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup userID is undefined', () => {
+    var userID = undefined;
+    var taskGroupID = "_sgds537x";
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup taskID is undefined', () => {
+    var userID = userFunctions.createUser(user);
+    var taskGroupID = undefined;
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup userID is null', () => {
+    var userID = null;
+    var taskGroupID = "_sgds537x";
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup taskID is null', () => {
+    var userID = userFunctions.createUser(user);
+    var taskGroupID = null;
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup params idUser is null', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(deleteTaskGroupByIdUser({"params": {"": userID, "idTaskGroup": taskGroupID}}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup params idTaskGroup is null', () => {
+    var userID = userFunctions.createUser(user);
+    taskGroup.author = userID;
+    var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
+    expect(deleteTaskGroupByIdUser({"params": {"idUser": userID, "": taskGroupID}}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('DELETE /user/:idUser/taskGroups/:idTaskGroup req is undefined', () => {
+    expect(deleteTaskGroupByIdUser(undefined, res)).toEqual(res.status(400).json("Bad Request"));
   })
 });

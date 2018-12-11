@@ -40,8 +40,8 @@ app.delete('/user/:idUser/tasks/:idTask', task.deleteTaskByIdUser); //testOK
 app.get('/user/:idUser/taskGroups', user.getTaskGroupsByIdUser); //testOK
 app.post('/user/:idUser/taskGroups', taskGroup.createTaskGroupByIdUser); //testOK
 app.get('/user/:idUser/taskGroups/:idTaskGroup', user.getTaskGroupByIdUser); //testOK
-app.put('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.putTaskGroupByIdUser);
-app.delete('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.deleteTaskGroupByIdUser);
+app.put('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.putTaskGroupByIdUser); //testOK
+app.delete('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.deleteTaskGroupByIdUser); //testOK
 
 //app.get('/user/:idUser/userGroup', user.getUserGroupsByIdUser);
 //app.post('/user/:idUser/userGroup', userGroup.createUserGroup);

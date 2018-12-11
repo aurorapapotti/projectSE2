@@ -134,7 +134,7 @@ function deleteTaskGroupByIdUser(req, res){
     return res.status(404).json("User NOT found");
   taskGroup_deleted = new Object();
   taskGroup_deleted = userFunctions.getTaskGroups(req.params.idUser, "author");
-  if (!taskGroup_deleted[req.params.idTaskGroup].name || !taskGroup_deleted[req.params.idTaskGroup].author|| !taskGroup_deleted[req.params.idTaskGroup].tasks)
+  if (!taskGroup_deleted[req.params.idTaskGroup])
     return res.status(404).json("TaskGroup NOT found");
   taskGroupFunctions.removeTaskGroup(req.params.idTaskGroup);
   return res.status(200).json("TaskGroup deleted");
