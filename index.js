@@ -62,10 +62,10 @@ app.delete('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.deleteTaskGroupByI
 //app.delete('/user/:idUser/reviews/:idReview', review.deleteReview);
 
 app.get('/user/:idUser/peerReviews', user.getPeerReviewsByIdUser); //testOK
-app.post('/user/:idUser/taskAnswers/:idTaskAnswer/peerReviews', peerReview.createPeerReviewByIdUser);
+//app.post('/user/:idUser/taskAnswers/:idTaskAnswer/peerReviews', peerReview.createPeerReviewByIdUser);
 app.get('/user/:idUser/peerReviews/:idPeerReview', user.getPeerReviewByIdUser); //testOk
-app.put('/user/:idUser/taskAnswers/:idTaskAnswer/peerReviews/:idPeerReview', peerReview.putPeerReviewByIdUser);
-app.delete('/user/:idUser/peerReviews/:idPeerReview', peerReview.deletePeerReviewByIdUser);
+//app.put('/user/:idUser/taskAnswers/:idTaskAnswer/peerReviews/:idPeerReview', peerReview.putPeerReviewByIdUser);
+//app.delete('/user/:idUser/peerReviews/:idPeerReview', peerReview.deletePeerReviewByIdUser);
 
 //REVIEW
 app.post("/reviews", review.createReview); //testOK

@@ -25,6 +25,9 @@ function createPeerReview(req, res) {
     return res.status(400).json("Bad Request");
   //console.log("recived request: ",req.body);
   idTaskAnswer = taskAnswerFunctions.getTaskAnswer(req.body.taskAnswer);
+  let idUser = userFunctions.getUser(req.body.user);
+  if (idUser.id)
+    return res.status(404).json("User NOT found");
   if (idTaskAnswer.id)
     return res.status(404).json("TaskAnswer NOT found");
   let idPeerReview = peerReviewFunctions.addPeerReview(req.body);
@@ -54,6 +57,9 @@ function putPeerReview(req, res){
     return res.status(400).json("Bad Request");
   if (typeof req.body.user !== 'string' || typeof req.body.taskAnswer !== 'string' || typeof req.body.comment !== 'string')
     return res.status(400).json("Bad Request");
+  let idUser = userFunctions.getUser(req.body.user);
+  if (idUser.id)
+    return res.status(404).json("User NOT found");
   idTaskAnswer = taskAnswerFunctions.getTaskAnswer(req.body.taskAnswer);
   if (idTaskAnswer.id)
     return res.status(404).json("TaskAnswer NOT found");

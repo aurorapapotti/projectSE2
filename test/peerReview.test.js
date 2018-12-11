@@ -80,6 +80,15 @@ describe('POST /peerReview invalid tests', () => {
     expect(createPeerReview({"body": invalidPeerReview}, res)).toEqual(res.status(400).json("Bad Request"));
   })
 
+  test ('POST /peerReview user NOT exists', () => {
+    var invalidPeerReview ={
+      user: "_ciao",
+      taskAnswer: "_4bcdbi4x",
+      comment: "Poco dettagliata"
+    }
+    expect(createPeerReview({"body": invalidPeerReview}, res)).toEqual(res.status(404).json("User NOT found"));
+  })
+
   test ('POST /peerReview taskAnswer NOT exists', () => {
     var invalidPeerReview ={
       user: userFunctions.createUser(user),
@@ -155,6 +164,16 @@ describe('PUT /peerReview/:idPeerReview invalid tests', () => {
   test('PUT /peerReview/:idPeerReview return code 404 peerReview NOT found', () => {
     var peerReviewID = "_ciao"
     expect(putPeerReview({"params": {"idPeerReview": peerReviewID},"body":newPeerReview},res)).toEqual(res.status(404).json("PeerReview NOT found"));
+  })
+
+  test('PUT /peerReview/:idPeerReview return code 404 user NOT found', () => {
+    var peerReviewID = peerReviewFunctions.addPeerReview(peerReview);
+    var invalidPeerReview = {
+      user: "_ciao",
+      taskAnswer: "_jhdsd4783x",
+      comment: "Molto dettagliata"
+    }
+    expect(putPeerReview({"params": {"idPeerReview": peerReviewID},"body":invalidPeerReview},res)).toEqual(res.status(404).json("User NOT found"));
   })
 
   test('PUT /peerReview/:idPeerReview return code 404 taskAnswer NOT found', () => {
