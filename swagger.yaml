@@ -568,8 +568,6 @@ paths:
             type: array
             items:
               $ref: "#/definitions/UserGroup"
-        404:
-          description: Error!
           
     post:
       summary: New User Group
@@ -587,32 +585,10 @@ paths:
                 type: integer
                 example: 30
         400:
-          description: Error!
+          description: Bad request
+        404:
+          description: Author not found
           
-    put:
-      summary: Update the informations of the User Group
-      description: Update a group of users
-      tags:
-      - "User Group"
-      
-      parameters:
-      - in: body
-        name: "data"
-        required: true
-        schema:
-          $ref: "#/definitions/UserGroup"
-      
-      responses:
-        201:
-          description: The new group of users is created
-          schema:
-            type: object
-            properties:
-              userGroupId:
-                type: integer
-        400:
-          description: Error!
-  
   /userGroup/{userGroupId}:
     get:
       summary: User Group by ID
@@ -645,12 +621,19 @@ paths:
         name: userGroupId
         type: integer
         required: true
+      - in: body
+        name: "data"
+        required: true
+        schema:
+          $ref: "#/definitions/UserGroup"
         
       responses:
         200:
           description: The group of users was successfully updated!
           schema:
             $ref: "#/definitions/UserGroup"
+        400: 
+          description: Bad request
         404:
           description: Error! The group of users to update was not found.
     
@@ -667,12 +650,14 @@ paths:
         required: true
       
       responses:
-        204:
-          description: The group of users was successfully deleted
+        200:
+          description: Deleted with success
+        400: 
+          description: Bad request
         404:
-          description: The group of users to delete was not found
+          description: UserGroup not found
   
-  /userGroup/{author}:
+  /userGroup/{userGroupId}/author:
     get:
       summary: Returns the author of the user group
       description: Returns the author of the user group
@@ -681,7 +666,7 @@ paths:
       
       parameters:
       - in: path
-        name: author
+        name: userGroupId
         type: string
         required: true
       
@@ -713,6 +698,8 @@ paths:
             type: array
             items:
               $ref: "#/definitions/User"
+        400: 
+          description: Bad request
         404:
           description: Error!
   
@@ -738,7 +725,9 @@ paths:
         204:
           description: The user was successfully remove from the group of users
         400:
-          description: Could not remove the user from the group of users
+          description: Bad request
+        404:
+          description: User not found
 
   #TASK
   /task:
@@ -1101,8 +1090,6 @@ paths:
             type: array
             items: 
               $ref: "#/definitions/Assignment"
-        404: 
-          description: Error!
   
     post:
       summary: New Assignment
@@ -1127,7 +1114,7 @@ paths:
                 type: integer
                 example: 30
         400:
-          description: Invalid request
+          description: Bad request
   
   /assignment/{assignmentId}:
     parameters:
@@ -1146,8 +1133,10 @@ paths:
           description: Everything is ok
           schema:
             $ref: "#/definitions/Assignment"
+        400:
+          description: Bad request
         404:
-          description: No assignment with the specified ID.
+          description: Assignment not found
     
     put:
       summary: Updates an Assignment
@@ -1166,8 +1155,10 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Assignment'
+        400:
+          description: Bad request
         404:
-          description: Invalid request
+          description: Assignment not found
 
     delete:
       summary: Deletes an Assignment
@@ -1176,12 +1167,14 @@ paths:
       - "Assignment"
       
       responses:
-        204:
+        200:
           description: Everything is ok!
+        400:
+          description: Bad request
         404: 
-          description: Invalid request.
+          description: Assignment not found
   
-  /assignment/{professor}:
+  /assignment/{assignmentId}/professor:
     get:
       summary: Returns the professor of the assignment
       description: Returns the professor of the assignment
@@ -1190,7 +1183,7 @@ paths:
       
       parameters:
       - in: path
-        name: professor
+        name: assignmentId
         type: string
         required: true
       
@@ -1199,8 +1192,10 @@ paths:
           description: Everything is ok!
           schema:
             $ref: "#/definitions/User"
+        400:
+          description: Bad request
         404:
-          description: Error! Professor NOT found
+          description: Professor not found
   
   /assignment/{assignmentId}/users:
     get:
@@ -1222,8 +1217,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/UserGroup"
+        400:
+          description: Bad request
         404:
-          description: Error!
+          description: Assignment not found
     
     put:
       summary: Update the User Group of the assignment
@@ -1242,8 +1239,10 @@ paths:
           description: Everything is ok!
           schema: 
             $ref: "#/definitions/UserGroup"
-        409:
-          description: Error!
+        400:
+          description: Bad request
+        404:
+          description: Assignment not found
   
   /assignment/{assignmentId}/tasks:
     get:
@@ -1265,8 +1264,10 @@ paths:
             type: array
             items:
               $ref: "#/definitions/TaskGroup"
+        400:
+          description: Bad request
         404:
-          description: Error!
+          description: Assignment not found
     
     put:
       summary: Update the task group of an assignment
@@ -1276,7 +1277,7 @@ paths:
       
       parameters:
       - in: path
-        name: "assignmentId"
+        name: assignmentId
         required: true
         type: integer
       
@@ -1285,8 +1286,10 @@ paths:
           description: Everything is ok!
           schema: 
             $ref: "#/definitions/TaskGroup"
-        409:
-          description: Error!
+        400:
+          description: Bad request
+        404:
+          description: Assignment not found
   
 #PEER REVIEW
   /peerReview:
