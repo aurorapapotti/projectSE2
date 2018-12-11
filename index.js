@@ -38,7 +38,7 @@ app.put('/user/:idUser/tasks/:idTask', task.putTaskByIdUser); //testOK
 app.delete('/user/:idUser/tasks/:idTask', task.deleteTaskByIdUser); //testOK
 
 app.get('/user/:idUser/taskGroups', user.getTaskGroupsByIdUser); //testOK
-app.post('/user/:idUser/taskGroups', taskGroup.createTaskGroupByIdUser);
+app.post('/user/:idUser/taskGroups', taskGroup.createTaskGroupByIdUser); //testOK
 app.get('/user/:idUser/taskGroups/:idTaskGroup', user.getTaskGroupByIdUser); //testOK
 app.put('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.putTaskGroupByIdUser);
 app.delete('/user/:idUser/taskGroups/:idTaskGroup', taskGroup.deleteTaskGroupByIdUser);

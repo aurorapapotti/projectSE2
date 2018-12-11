@@ -22,10 +22,11 @@ function createTask(req, res) {
     return res.status(401).json("Bad Request");
   if(typeof req.body.author !== "string" || typeof req.body.taskType !== "string" || typeof req.body.argument !== "string" || typeof req.body.correctAnswer !== "string" )
     return res.status(401).json("Bad Request");
-  //console.log("recived request: ",req.body);
-  let idTask = taskFunctions.addTask(req.body);
+  let idAuthor = userFunctions.getUser(req.body.author);
+  if (idAuthor.id)
+    return res.status(404).json("User NOT found");
+  taskFunctions.addTask(req.body);
 	console.log(idTask);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
   return res.status(201).json("Created Task");
 }
 
@@ -50,6 +51,9 @@ function putTask(req, res){
     return res.status(401).json("Bad Request");
   if(typeof req.body.author !== "string" || typeof req.body.taskType !== "string" || typeof req.body.argument !== "string" ||typeof req.body.correctAnswer !== "string")
     return res.status(400).json("Bad Request");
+  let idAuthor = userFunctions.getUser(req.body.author);
+  if (idAuthor.id)
+    return res.status(404).json("User NOT found");
   task_modify = new Object();
   task_modify = taskFunctions.modifyTask(req.params.idTask, req.body);
   if (!task_modify.author || !task_modify.taskType || !task_modify.argument || !task_modify.correctAnswer)

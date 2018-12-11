@@ -1,4 +1,5 @@
 const taskGroupFunctions = require('./functionsEntities/taskGroupFunctions.js');
+const taskFunctions = require('./functionsEntities/taskFunctions.js');
 const userFunctions = require('./functionsEntities/userFunctions.js');
 
 function listAllTaskGroups(req, res){
@@ -22,10 +23,18 @@ function createTaskGroup(req, res) {
     return res.status(400).json("Bad Request");
   if(typeof req.body.name !== "string" || typeof req.body.author !== "string")
     return res.status(400).json("Bad Request");
-	Object.keys(req.body.tasks).forEach(function(key){
-		if (typeof req.body.tasks[key] !== 'string')
-			return res.status(400).json("Bad Request");
-	});
+  for (key in req.body.tasks) {
+    if (typeof req.body.tasks[key] !== "string")
+    	return res.status(400).json("Bad Request");
+  }
+  let idAuthor = userFunctions.getUser(req.body.author);
+  if (idAuthor.id)
+    return res.status(404).json("User NOT found");
+  for (key in req.body.tasks){
+    task = taskFunctions.getTaskById(req.body.tasks[key])
+  	if (task.id)
+  		return res.status(404).json("Task NOT found");
+  }
   //console.log("recived request: ",req.body);
   let idTaskGroup = taskGroupFunctions.addTaskGroup(req.body);
 	console.log(idTaskGroup);
@@ -38,15 +47,20 @@ function createTaskGroupByIdUser(req, res) {
     return res.status(400).json("Bad Request");
   if(typeof req.params.idUser !== 'string' || typeof req.body.name !== "string")
     return res.status(400).json("Bad Request");
-	Object.keys(req.body.tasks).forEach(function(key){
-		if (typeof req.body.tasks[key] !== 'string')
+  for (key in req.body.tasks) {
+    if (typeof req.body.tasks[key] !== "string")
 			return res.status(400).json("Bad Request");
-	});
-  //console.log("recived request: ",req.body);
-  req.body.author = req.params.idUser;
-  let idTaskGroup = taskGroupFunctions.addTaskGroup(req.body);
-	console.log(idTaskGroup);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
+  }
+  let idUser = userFunctions.getUser(req.params.idUser);
+  if (idUser.id)
+    return res.status(404).json("User NOT found");
+  for (key in req.body.tasks){
+    task = taskFunctions.getTaskById(req.body.tasks[key])
+  	if (task.id)
+  		return res.status(404).json("Task NOT found");
+  }
+  req.body.author = idUser;
+  taskGroupFunctions.addTaskGroup(req.body);
   return res.status(201).json("Created TaskGroup");
 }
 
@@ -55,13 +69,21 @@ function putTaskGroup(req, res){
     return res.status(400).json("Bad Request");
   if(typeof req.body.name !== "string" || typeof req.body.author !== "string")
     return res.status(400).json("Bad Request");
-  Object.keys(req.body.tasks).forEach(function(key){
-  	if (typeof req.body.tasks[key] !== 'string')
-  		return res.status(400).json("Bad Request");
-  });
+  for (key in req.body.tasks) {
+    if (typeof req.body.tasks[key] !== "string")
+      return res.status(400).json("Bad Request");
+  }
+  let idAuthor = userFunctions.getUser(req.body.author);
+  if (idAuthor.id)
+    return res.status(404).json("User NOT found");
+  for (key in req.body.tasks){
+    task = taskFunctions.getTaskById(req.body.tasks[key])
+  	if (task.id)
+  		return res.status(404).json("Task NOT found");
+  }
   taskGroup_modify = new Object();
   taskGroup_modify = taskGroupFunctions.modifyTaskGroup(req.params.idTaskGroup, req.body);
-  if (!task_modify.author || !task_modify.name || !task_modify.tasks)
+  if (!taskGroup_modify)
     return res.status(404).json("TaskGroup NOT found");
   return res.status(200).json("TaskGroup modified");
 }
@@ -73,13 +95,21 @@ function putTaskGroupByIdUser(req, res){
     return res.status(400).json("Bad Request");
   if(typeof req.params.idUser !== "string" || typeof req.body.name !== "string")
     return res.status(400).json("Bad Request");
-  Object.keys(req.body.tasks).forEach(function(key){
-    if (typeof req.body.tasks[key] !== 'string')
-    	return res.status(400).json("Bad Request");
-  });
+  for (key in req.body.tasks) {
+    if (typeof req.body.tasks[key] !== "string")
+      return res.status(400).json("Bad Request");
+  }
+  let idUser = userFunctions.getUser(req.params.idUser);
+  if (idUser.id)
+    return res.status(404).json("User NOT found");
+  for (key in req.body.tasks){
+    task = taskFunctions.getTaskById(req.body.tasks[key])
+  	if (task.id)
+  		return res.status(404).json("Task NOT found");
+  }
   taskGroup_modify = new Object();
   taskGroup_modify = userFunctions.getTaskGroups(req.params.idUser, "author");
-  if (!task_modify[req.params.idTaskGroup].author || !task_modify[req.params.idTaskGroup].name || !task_modify[req.params.idTaskGroup].tasks)
+  if (!taskGroup_modify)
     return res.status(404).json("TaskGroup NOT found");
   req.body.author = req.params.idUser;
   taskGroupFunctions.modifyTaskGroup(req.params.idTaskGroup, req.body);
@@ -99,6 +129,9 @@ function deleteTaskGroup(req, res){
 function deleteTaskGroupByIdUser(req, res){
   if (!req || !req.params.idUser || !req.params.idTaskGroup || typeof req.params.idTaskGroup !== 'string')
     return res.status(400).json("Bad Request");
+  let idUser = userFunctions.getUser(req.params.idUser);
+  if (idUser.id)
+    return res.status(404).json("User NOT found");
   taskGroup_deleted = new Object();
   taskGroup_deleted = userFunctions.getTaskGroups(req.params.idUser, "author");
   if (!taskGroup_deleted[req.params.idTaskGroup].name || !taskGroup_deleted[req.params.idTaskGroup].author|| !taskGroup_deleted[req.params.idTaskGroup].tasks)
