@@ -126,9 +126,6 @@ function updateAssignment(req, res){
 			if(typeof title === 'string'){
 				ass["title"] = title;
 			}
-			else{
-				return res.status(400).json("Bad request");
-			}
 
 			if(professor["id"]){
 				return res.status(404).json("Professor not found");
@@ -154,15 +151,9 @@ function updateAssignment(req, res){
 			if(typeof start === 'string'){
 				ass["start"] = start;
 			}
-			else{
-				return res.status(400).json("Bad request");
-			}
 
 			if(typeof deadline === 'string'){
 				ass["deadline"] = deadline;
-			}
-			else{
-				return res.status(400).json("Bad request");
 			}
 
 			assignmentFunc.modifyAssignment(id, ass);
