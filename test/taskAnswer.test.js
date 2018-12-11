@@ -31,30 +31,36 @@ const res = {
 	}
 }
 
+var newStudent = {
+	name: "A",
+	surname: "a",
+	email: "a@a.com",
+	badgeNumber: 1234
+}
+
+var newAssignment = {
+	title: "B",
+	professor: "b",
+	tasks: "b",
+	userGroup: "b",
+	start: "12.00",
+	deadline: "3"
+}
+
+var newTaskGroup = {
+	name: "c",
+	author: "C",
+	tasks: ["1", "2"]
+}
+
+var newTask = {
+	argument: "a",
+	taskType: "a",
+	author: userFunctions.createUser(newStudent)
+}
+
 describe ("POST /taskAnswers", () =>{
 	test("return code 201", async () => {
-		var newStudent = {
-			name: "A",
-			surname: "a",
-			email: "a@a.com",
-			badgeNumber: "1234"
-		}
-
-		var newAssignment = {
-			title: "B",
-			professor: "b",
-			tasks: "b",
-			userGroup: "b",
-			start: "12.00",
-			deadline: "3"
-		}
-
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", ""]
-		}
-
 		var newTaskAnswer = {
 			student: userFunctions.createUser(newStudent),
 			assignment: assignmentFunctions.addAssignment(newAssignment),
@@ -65,21 +71,7 @@ describe ("POST /taskAnswers", () =>{
 	});
 
 	test("return code 404 student wrong", async () => {
-		var newAssignment = {
-			title: "B",
-			professor: "b",
-			tasks: "b",
-			userGroup: "b",
-			start: "12.00",
-			deadline: "3"
-		}
-
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", ""]
-		}
-
+		
 		var newTaskAnswer = {
 			student: "a",
 			assignment: assignmentFunctions.addAssignment(newAssignment),
@@ -90,18 +82,6 @@ describe ("POST /taskAnswers", () =>{
 	});
 
 	test("return code 404 assignment wrong", async () => {
-		var newStudent = {
-			name: "A",
-			surname: "a",
-			email: "a@a.com",
-			badgeNumber: "1234"
-		}
-
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", ""]
-		}
 
 		var newTaskAnswer = {
 			student: userFunctions.createUser(newStudent),
@@ -113,22 +93,6 @@ describe ("POST /taskAnswers", () =>{
 	});
 
 	test("return code 404 TaskGroup wrong", async () => {
-		var newStudent = {
-			name: "A",
-			surname: "a",
-			email: "a@a.com",
-			badgeNumber: "1234"
-		}
-
-		var newAssignment = {
-			title: "B",
-			professor: "b",
-			tasks: "b",
-			userGroup: "b",
-			start: "12.00",
-			deadline: "3"
-		}
-
 		var newTaskAnswer = {
 			student: userFunctions.createUser(newStudent),
 			assignment: assignmentFunctions.addAssignment(newAssignment),
@@ -175,9 +139,9 @@ describe ("GET /taskAnswers", () => {
 describe("GET /taskAnswers/:taskAnswerId", () => {
 	test("return code 200", async () => {
 		var newTaskAnswer = {
-			student: "1",
-			assignment: "1",
-			taskGroup: "1"
+			student: userFunctions.createUser(newStudent),
+			assignment: assignmentFunctions.addAssignment(newAssignment),
+			taskGroup: taskGroupFunctions.addTaskGroup(newTaskGroup)
 		}
 
 		var req = {
@@ -203,16 +167,16 @@ describe("GET /taskAnswers/:taskAnswerId", () => {
 describe("GET /taskAnswers/:taskAnswerId/answers", () => {
 	test ("return code 200", async () => {
 		var newTaskAnswer = {
-			student: "1",
-			assignment: "1",
-			taskGroup: "1"
+			student: userFunctions.createUser(newStudent),
+			assignment: assignmentFunctions.addAssignment(newAssignment),
+			taskGroup: taskGroupFunctions.addTaskGroup(newTaskGroup)
 		}
 
 		var id = taskAnswerFunctions.writeTaskAnswer(newTaskAnswer);
 		var taskAnswer = taskAnswerFunctions.getTaskAnswer(id);
 
 		taskAnswer["answers"] = new Array();
-		taskAnswer["answers"].push({task: "1", response: "a"});
+		taskAnswer["answers"].push({task: taskFunctions.addTask(newTask), response: "a"});
 		taskAnswer["answers"].push({task: "2", response: "b"});
 
 		taskAnswerFunctions.modifyTaskAnswer(id, taskAnswer)
@@ -315,13 +279,6 @@ describe("GET /taskAnswers/:taskAnswerId/answers/:answerId", () => {
 
 describe("GET /taskAnswers/:taskAnswerId/student", () => {
 	test("return code 200", async () => {
-		var newStudent = {
-			name: "A",
-			surname: "a",
-			email: "a@a.com",
-			badgeNumber: "1234"
-		}
-
 		var newTaskAnswer = {
 			student: userFunctions.createUser(newStudent),
 			assignment: "1",
@@ -350,15 +307,6 @@ describe("GET /taskAnswers/:taskAnswerId/student", () => {
 
 describe("GET /taskAnswers/:taskAnswerId/assignment", () => {
 	test("return code 200", async () => {
-		var newAssignment = {
-			title: "B",
-			professor: "b",
-			tasks: "b",
-			userGroup: "b",
-			start: "12.00",
-			deadline: "3"
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: assignmentFunctions.addAssignment(newAssignment),
@@ -386,13 +334,7 @@ describe("GET /taskAnswers/:taskAnswerId/assignment", () => {
 });
 
 describe("GET /taskAnswers/:taskAnswerId/taskGroup", () => {
-	test("return code 200", async () => {
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", "2"]
-		}
-		
+	test("return code 200", async () => {		
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",
@@ -449,12 +391,6 @@ describe("DELETE /taskAnswers/:taskAnswerId", () => {
 
 describe("PUT /taskAnswers/:taskAnswerId/answers", () => {
 	test("return code 200 add", async () => {
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", "2"]
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",
@@ -517,12 +453,6 @@ describe("PUT /taskAnswers/:taskAnswerId/answers", () => {
 	});
 
 	test("return code 404 add task wrong", async () => {
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", "2"]
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",
@@ -585,12 +515,6 @@ describe("PUT /taskAnswers/:taskAnswerId/answers", () => {
 	});
 
 	test("return code 400 add task undefined", async () => {
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", "2"]
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",
@@ -611,11 +535,6 @@ describe("PUT /taskAnswers/:taskAnswerId/answers", () => {
 	});
 
 	test("return code 400 add answer undefined", async () => {
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", "2"]
-		}
 
 		var newTaskAnswer = {
 			student: "1",
@@ -637,12 +556,6 @@ describe("PUT /taskAnswers/:taskAnswerId/answers", () => {
 	});
 
 	test("return code 400 add undefined", async () => {
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", "2"]
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",
@@ -787,15 +700,6 @@ describe("PUT /taskAnswers/:taskAnswerId/answers", () => {
 
 describe("PUT /taskAnswers/:taskAnswerId/assignment", () => {
 	test("return code 201", async () => {
-		var newAssignment = {
-			title: "B",
-			professor: "b",
-			tasks: "b",
-			userGroup: "b",
-			start: "12.00",
-			deadline: "3"
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",
@@ -870,12 +774,6 @@ describe("PUT /taskAnswers/:taskAnswerId/assignment", () => {
 
 describe("PUT /taskAnswers/:taskAnswerId/taskGroup", () => {
 	test("return code 201", async () => {
-		var newTaskGroup = {
-			name: "c",
-			author: "C",
-			tasks: ["1", ""]
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",
@@ -950,13 +848,6 @@ describe("PUT /taskAnswers/:taskAnswerId/taskGroup", () => {
 
 describe("PUT /taskAnswers/:taskAnswerId/student", () => {
 	test("return code 201", async () => {
-		var newStudent = {
-			name: "A",
-			surname: "a",
-			email: "a@a.com",
-			badgeNumber: "1234"
-		}
-
 		var newTaskAnswer = {
 			student: "1",
 			assignment: "1",

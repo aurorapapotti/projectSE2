@@ -23,14 +23,14 @@ const newUser = {
 	name: "a",
 	surname: "a",
 	email: "a@a.it",
-	badgeNumber: "1234"
+	badgeNumber: 1234
 }
 
 const newUser2 = {
 	name: "b",
 	surname: "b",
 	email: "a@gmail.it",
-	badgeNumber: "65"
+	badgeNumber: 65
 }
 
 const newTaskGroup = {
