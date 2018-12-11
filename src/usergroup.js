@@ -198,44 +198,6 @@ function deleteUserByIdUserGroup(req, res){
 	else{
 		return res.status(400).json("Bad request");
 	}
-	const idUserGroup = req.params.userGroupId;
-	const idUser = req.params.userId;
-
-	var trovato = -1;
-	
-	if(idUser == null || idUser == undefined){
-		return res.status(400).json("Id user invalid");
-	}
-	else if(idUserGroup == null || idUserGroup == undefined){
-		return res.status(400).json("Id userGroup invalid");
-	}
-	else{
-		var userGroup = userGroupFunctions.getUserGroupById(idUserGroup);
-		var users = new Array();
-		users = userGroup["users"];
-		//console.log("Lunghezza: ", users.length);
-		for(var i = 0; i<(users.length) && (trovato ==-1); i++){
-			if(users[i] == idUser){			
-				trovato = i;
-				if(i == 0 && users.length == 1){
-					users = new Array();
-				}
-				else{
-					users.splice(i, 1);
-				}
-
-				userGroup["users"] = users;
-				console.log("Deleted.");
-				console.log("Users: ", users);
-				userGroupFunctions.modifyUserGroup(idUserGroup, userGroup);	//UPDATE
-				res.status(200).send(userGroup);	
-			}
-		}
-		
-		if(trovato == -1){
-			res.status(400).json("Bad request");
-		}
-	}	
 }
 
 module.exports = {

@@ -28,25 +28,10 @@ function modifyAssignment(id, ass){
   return persistencyLayer.modifyObject(id, dbAssignmentPath, ass);
 }
 
-function getUserById(id){
-  return persistencyLayer.getObject(id, dbUserPath);
-}
-
-function getTaskGroupById(id){
-  return persistencyLayer.getObject(id, dbTaskGroupPath);
-}
-
-function getUserGroupById(id){
-  return persistencyLayer.getObject(id, dbUserGroupPath);
-}
-
 module.exports = {
     addAssignment: addAssignment,
     getAllAssignments: getAllAssignments,
     getAssignmentById: getAssignmentById,
     deleteAssignment: deleteAssignment,
-    modifyAssignment: modifyAssignment,
-    getUserById: getUserById,
-    getTaskGroupById: getTaskGroupById,
-    getUserGroupById: getUserGroupById
+    modifyAssignment: modifyAssignment
 }
