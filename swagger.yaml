@@ -78,9 +78,9 @@ definitions:
       argument:
         type: string
         description: The argument of the task
-      text:
+      description:
         type: string
-        description: The text of the task, the question
+        description: The description of the task
       taskType: 
         type: string
         enum: [multiple_choice, normal]
@@ -91,7 +91,7 @@ definitions:
     required:
     - id
     - argument
-    - text
+    - description
     - taskType
     - author
     
@@ -740,15 +740,178 @@ paths:
         400:
           description: Could not remove the user from the group of users
 
-
-
+  #TASK
+  /task:
+    post:
+      summary: Create Task
+      description: Adds a new Task
+      tags:
+      - "Task"
+    
+      parameters:
+      - in: body
+        name: data
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+    
+      responses:
+        204:
+          description: The new Task is created
+        400:
+          description: Error!    
+    get:
+      summary: List of all the tasks
+      description: Returns a list of all the tasks
+      tags:
+      - "Task"
+    
+      parameters:
+        - in: query
+          name: "task"
+          type: string
+          description: The names of the tasks
+    
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        404:
+          description: Error!
+  
+  /task/{Id}:
+    parameters:
+    - in: path
+      required: true
+      name: "Id"
+      type: integer
+      
+    get:
+      summary: Task by Id
+      description: Returns a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        404: 
+          description: Task NOT found
+    
+    put:
+      summary: Update Task
+      description: Updates a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        409:
+          description: Impossible to update the task
+    
+    delete:
+      summary: Delete Task
+      description: Deletes a specific task mapping with the given id
+      tags:
+      - "Task"
+      
+      responses:
+        200: 
+          description: Everything is ok
+        409:
+          description: Error
           
+  /task/{Argument}:
+    parameters:
+    - in: path
+      required: true
+      name: "Argument"
+      type: string
+      
+    get:
+      summary: Task by Argument
+      description: Returns a specific task mapping with the given argument
+      tags:
+      - "Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        404: 
+          description: Task NOT found
+    
+    put:
+      summary: Update Argument
+      description: Update a new Task Argument
+      tags:
+      - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        409:
+          description: Impossible to update the argument
+    
+  
+  /task/{Type}:
+    parameters:
+    - in: path
+      required: true
+      name: "Type"
+      type: string
+      
+    put:
+      summary: Update Type
+      description: Update a new Task Type
+      tags:
+      - "Task"
+      
+      parameters:
+      - in: body
+        name: "data"
+        schema:
+          $ref: "#/definitions/Task"
+      
+      responses:
+        200:
+          description: Everything is ok
+          schema:
+            $ref: "#/definitions/Task"
+        409:
+          description: Impossible to update the type
+  
+  #TASKGROUP
+  
   /taskGroup:
     get:
       summary: List of all task groups
       description: Returns the list of all task groups
       tags:
-      - "Task Group"
+      - "Task Group" 
       responses:
         200:
           description: Everything is ok
