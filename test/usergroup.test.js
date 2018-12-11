@@ -1,4 +1,3 @@
-
 const userGroupFunc = require('../src/functionsEntities/userGroupFunctions.js');
 const userFunc = require('../src/functionsEntities/userFunctions.js');
 const usergroup = require("../src/usergroup.js");

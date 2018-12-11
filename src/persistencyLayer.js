@@ -38,11 +38,9 @@ function deleteObject(idObject, dbpath){
       let object = Object.keys(db).filter(x => x == idObject);
       object_deleted = new Object();
       if (object.length > 0) {
-        //console.log("Object found :)");
         object_deleted = db[idObject];
         delete db[idObject];
         fs.writeFileSync(dbpath,JSON.stringify(db,null, 4));
-        console.log(object_deleted);
         return object_deleted;
       }
       else

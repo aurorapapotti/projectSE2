@@ -23,7 +23,6 @@ function createPeerReview(req, res) {
     return res.status(400).json("Bad Request");
   if(typeof req.body.user !== "string" ||typeof req.body.taskAnswer !== "string" || typeof req.body.comment !== "string")
     return res.status(400).json("Bad Request");
-  //console.log("recived request: ",req.body);
   idTaskAnswer = taskAnswerFunctions.getTaskAnswer(req.body.taskAnswer);
   let idUser = userFunctions.getUser(req.body.user);
   if (idUser.id)
@@ -31,8 +30,6 @@ function createPeerReview(req, res) {
   if (idTaskAnswer.id)
     return res.status(404).json("TaskAnswer NOT found");
   let idPeerReview = peerReviewFunctions.addPeerReview(req.body);
-	console.log(idPeerReview);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
   return res.status(201).json("Created Peer Review");
 }
 
@@ -41,12 +38,9 @@ function createPeerReviewByIdUser(req,res){
     return res.status(400).json("Bad Request");
   if(typeof req.params.idUser !== "string" || typeof req.params.idTaskAnswer !== "string" || typeof req.body.comment !== "string")
     return res.status(400).json("Bad Request");
-  //console.log("recived request: ",req.body);
   req.body.user = req.params.idUser;
   req.body.taskAnswer = req.params.idTaskAnswer;
   let idPeerReview = peerReviewFunctions.addPeerReview(req.body);
-	console.log(idPeerReview);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
   return res.status(201).json("Created Peer Review");
 }
 
@@ -75,7 +69,6 @@ function putPeerReviewByIdUser(req, res){
     return res.status(400).json("Bad Request");
   if(typeof req.params.idUser !== "string" ||  typeof req.params.idTaskAnswer !== "string" ||typeof req.params.idPeerReview !== "string" || typeof req.body.comment !== "string")
     return res.status(400).json("Bad Request");
-  //console.log("recived request: ",req.body);
   req.body.user = req.params.idUser;
   req.body.taskAnswer = req.params.idTaskAnswer;
   peerReview_modify = new Object();

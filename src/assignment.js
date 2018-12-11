@@ -4,8 +4,6 @@ const userFunc = require('./functionsEntities/userFunctions.js');
 const taskGroupFunc = require('./functionsEntities/taskGroupFunctions.js');
 const userGroupFunc = require('./functionsEntities/userGroupFunctions.js');
 
-const bodyParser = require("body-parser");
-
 function createAssignment(req, res) {
 	if(req && req.body && 
 		req.body.title && req.body.professor && req.body.taskGroup && req.body.userGroup && req.body.start && req.body.deadline){
@@ -58,7 +56,6 @@ function createAssignment(req, res) {
 
 			assignmentFunc.addAssignment(ass);
 			
-			console.log("Created: ",assignmentFunc.getAllAssignments());
 			return res.status(201).json("Created");
 		}
 	}
@@ -72,23 +69,6 @@ function listAllAssignments(req, res){
     	return res.status(400).json("Bad Request");
   	return res.status(200).json(assignmentFunc.getAllAssignments());
 }
-
-/*
-function createAssignment(req, res) {
-  if(!req || !req.body || !req.body.title|| !req.body.professor || !req.body.tasks || !req.body.userGroup || !req.body.start || !req.body.deadline )
-    return res.status(401).json("Bad Request");
-  if(typeof req.body.title !== "string" || typeof req.body.professor !== "string" || typeof req.body.userGroup !== "string" || typeof req.body.start !== "string" || typeof req.body.deadline !== "string")
-    return res.status(401).json("Bad Request");
-	Object.keys(req.body.tasks).forEach(function(key){
-		if (typeof req.body.tasks[key] !== 'string')
-			return res.status(401).json("Bad Request");
-	});
-	
-  let idAssignment = assignmentFunctions.addAssignment(req.body);
-	console.log(idAssignment);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
-  return res.status(201).json("Created Assignment");
-}*/
 
 function getAssignmentById(req, res){
 	if(req && req.params && req.params.assignmentId){

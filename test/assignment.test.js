@@ -4,12 +4,8 @@ const userFunc = require('../src/functionsEntities/userFunctions.js');
 const assignmentFunc = require('../src/functionsEntities/assignmentFunctions.js');
 const taskGroupFunc = require('../src/functionsEntities/taskGroupFunctions.js');
 
-const usergroup = require("../src/usergroup.js");
-const user = require("../src/user.js");
 const assignment = require('../src/assignment.js');
 
-
-const req = {}
 const res = {
 	"status": (statuscode) =>{ return {
 		"json": (message) => {return {

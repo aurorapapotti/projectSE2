@@ -5,9 +5,7 @@ function registerUser(req, res) {
     return res.status(400).send("Bad Request");
   if(typeof req.body.name !== "string" ||typeof req.body.surname !== "string" ||typeof req.body.email !== "string" || !Number.isInteger(req.body.badgeNumber) )
     return res.status(400).send("Bad Request");
-  //console.log("recived request: ",req.body);
   let idUser = userFunctions.createUser(req.body);
-  //console.log("wrote completed: ", userFunctions.getAllUsers());
   return res.status(201).send("Created User");
 }
 

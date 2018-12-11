@@ -1,5 +1,3 @@
-const bodyParser = require("body-parser");
-
 const taskAnswerFunc = require("./functionsEntities/taskAnswerFunctions.js");
 const userFunc = require("./functionsEntities/userFunctions.js");
 const assignmentFunc = require("./functionsEntities/assignmentFunctions.js");
@@ -205,7 +203,6 @@ function editAnswer (req, res){
 			}
 			else if (req.body.edit && req.body.task && req.body.newAnswer){
 				for (let i=0; i<taskAnswer["answers"].length; i++){
-					console.log((taskAnswer));
 					if (taskAnswer["answers"][i]["task"] == req.body.task){
 						taskAnswer["answers"][i]["response"] = req.body.newAnswer;
 						taskAnswerFunc.modifyTaskAnswer(req.params.taskAnswerId, taskAnswer)

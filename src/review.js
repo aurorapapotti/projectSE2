@@ -7,25 +7,20 @@ function createReview (req, res) {
 		let taskAnswer = req.body.taskAnswer;
 		let peerReview = req.body.peerReview;
 
-		//if (taskAnswer.isArray() && peerReview.isArray()){
-			for (var i=0; i<taskAnswer.length; i++){
-				let found = taskAnswerFunc.getTaskAnswer(taskAnswer[i]);
-				if (found["id"])
-					return res.status(404).json("taskAnswer " + taskAnswer[i] + " doesn't exist");
-			}
+		for (var i=0; i<taskAnswer.length; i++){
+			let found = taskAnswerFunc.getTaskAnswer(taskAnswer[i]);
+			if (found["id"])
+				return res.status(404).json("taskAnswer " + taskAnswer[i] + " doesn't exist");
+		}
 
-			for (var j=0; j<peerReview.length; j++){
-				let found = peerReviewFunc.getPeerReviewById(peerReview[j]);
-				if (found["id"])
-					return res.status(404).json("peerReview " + peerReview[j] + " doesn't exist");
-			}
+		for (var j=0; j<peerReview.length; j++){
+			let found = peerReviewFunc.getPeerReviewById(peerReview[j]);
+			if (found["id"])
+				return res.status(404).json("peerReview " + peerReview[j] + " doesn't exist");
+		}
 
-			reviewFunc.writeReview(req.body);
-			return res.status(201).json("Created");
-		/*}
-		else {
-			return res.status(400).json("Invalid request: taskAnswer e peerRevie devono essere array")
-		}*/
+		reviewFunc.writeReview(req.body);
+		return res.status(201).json("Created");
 	}
 	else {
 		return res.status(400).json("Invalid request");
@@ -164,9 +159,7 @@ function getTaskAnswer (req, res) {
 
 function deleteReview (req, res) {
 	if (req.params.reviewId){
-		console.log(req.params.reviewId)
 		const deleted = reviewFunc.deleteReview(req.params.reviewId);
-		console.log("Deleted: "+deleted)
 		if (!deleted["vote"]){
 			return res.status(204).json("");
 		}
