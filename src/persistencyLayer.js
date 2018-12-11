@@ -93,10 +93,10 @@ function getObjectByQuery(query, param, dbpath){
   let data = fs.readFileSync(dbpath, 'utf8');
   let db = JSON.parse(data);
   object_filtered = new Object();
-  Object.keys(db).forEach(function(key){
+  for (key in db){
     if(db[key][param] == query)
       object_filtered[key] = db[key];
-  });
+  }
   return object_filtered;
 }
 

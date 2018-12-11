@@ -77,26 +77,28 @@ describe ('GET /task/:idTask invalid tests', () => {
 
 //GET TASKGROUP BY ARGUMENT
 
+
 describe ('GET /task/:taskArgument', () => {
 	test('GET /task/:taskArgument return code 200', () => {
-	  expect(getTasksByArgument({query: {"taskArgument": "a"}},res)).toEqual(res.status(200).json(taskFunctions.getTasks("a", "argument")));
-	})
-
-  describe ('GET /taskArgument/:taskArgument invalid tests', () => {
-	test('GET /taskArgument/:taskArgument return code 404', () => {
-	  expect(getTasksByArgument({query: {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
-	})
+    taskFunctions.createTask(task);
+	  expect(getTasksByArgument({query: {"taskArgument": "Algoritmi"}},res)).toEqual(res.status(200).json(taskFunctions.getTasks("Algoritmi", "argument")));
+  })
   
+  test('GET /taskArgument/:taskArgument return code 200 empty set', () => {
+	  expect(getTasksByArgument({query: {"taskArgument": "ciao"}},res)).toEqual(res.status(200).json(taskFunctions.getTasks("ciao", "argument")));
+	})
+});
+
+describe ('GET /taskArgument/:taskArgument invalid tests', () => {
 	test('GET /task/:TaskArgument taskArgument is undefined', () => {
-	  expect(getTasksByArgument({query: {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+	  expect(getTasksByArgument({query: {}},res)).toEqual(res.status(400).json("Bad Request"));
 	})
   
 	test('GET /task/:taskArgument taskArgument is null', () => {
-	  expect(getTasksByArgument({query: {"taskArgument": taskArgument}},res)).toEqual(res.status(400).json("Bad Request"));
+	  expect(getTasksByArgument({query: {"taskArgument": null}},res)).toEqual(res.status(400).json("Bad Request"));
   })
-});
-  
-  
+});  
+
 
 //DELETE TASK
 

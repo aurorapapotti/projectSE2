@@ -1,9 +1,13 @@
 const taskFunctions = require('./functionsEntities/taskFunctions.js');
 
 function listAllTasks(req, res){
-  if (!req)
-    return res.status(400).json("Bad Request");
-  return res.status(200).json(taskFunctions.getAllTasks());
+  if (req && req.query && req.query.taskArgument){
+    return getTasksByArgument(req, res);
+  }
+  else if (req){
+    return res.status(200).json(taskFunctions.getAllTasks());
+  }
+  return res.status(400).json("Bad Request");  
 }
 
 function getTask(req, res){
@@ -37,12 +41,13 @@ function deleteTask(req, res){
 }
 
 function getTasksByArgument(req, res){
-  if (!req || !req.query || req.query.taskArgument === undefined || typeof (req.query.taskArgument) !== 'string' )
+  if (!req || !req.query || !req.query.taskArgument|| typeof (req.query.taskArgument) !== 'string' )
     return res.status(400).json("Bad Request");
-  tasks = new Object();
+
   let param = "argument";
-  tasks = taskFunctions.getTasks(req.query.taskArgument, param);
-  return res.status(200).json(tasks);
+  var taskByArg = taskFunctions.getTasks(req.query.taskArgument, param);
+
+  return res.status(200).json(taskByArg);
 }
 
 module.exports = {

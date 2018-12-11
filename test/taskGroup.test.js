@@ -79,7 +79,8 @@ describe ('GET /taskGroup/:idTaskGroup invalid tests', () => {
 
 describe ('GET /taskGroup/:taskGroupName', () => {
 	test('GET /taskGroup/:taskGroupName return code 200', () => {
-    expect(getTaskGroupByName({query: {"TaskGroupName": "sema"}},res)).toEqual(res.status(200).json(taskFunctions.getTasks("sema", "name")));
+    taskGroupFunctions.createTaskGroup(taskGroup);
+    expect(getTaskGroupByName({query: {"TaskGroupName": "SEMA"}},res)).toEqual(res.status(200).json(taskFunctions.getTasks("SEMA", "name")));
 	})
   });
   

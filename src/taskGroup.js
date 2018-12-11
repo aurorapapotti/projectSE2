@@ -31,7 +31,7 @@ function createTaskGroup(req, res) {
 }
 
 function getTaskGroupByName(req, res){
-  if (!req || !req.query || req.query.taskGroupName === undefined || typeof (req.query.taskGroupName) !== 'string' )
+  if (!req || !req.query || !req.query.TaskGroupName || typeof (req.query.TaskGroupName) !== 'string' )
     return res.status(400).json("Bad Request");
   taskGroup = new Object();
   let param = "name";

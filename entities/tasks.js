@@ -1,221 +1,125 @@
 {
-    "_xt7guc9e0": {
-        "author": "1",
-        "taskType": "2",
-        "argument": "eret",
-        "correctAnswer": "sdfsdf"
-    },
-    "_mzjl3o7ig": {
-        "author": "_dheuy46x",
-        "taskType": "multiple",
-        "argument": "algoritmi",
-        "correctAnswer": "vivere"
-    },
-    "_h8mvjtp7p": {
-        "author": "_dheuy46x",
-        "taskType": "multiple",
-        "argument": "algoritmi",
-        "correctAnswer": "vivere"
-    },
-    "_esp21goxf": {
-        "author": "_dheuy46x",
-        "taskType": "multiple",
-        "argument": "algoritmi",
-        "correctAnswer": "vivere"
-    },
-    "_nulh6l00t": {
-        "author": "_dheuy46x",
-        "taskType": "multiple",
-        "argument": "algoritmi",
-        "correctAnswer": "vivere"
-    },
-    "_77c0rt6q2": {
-        "author": "_dheuy46x",
-        "taskType": "multiple",
-        "argument": "algoritmi",
-        "correctAnswer": "vivere"
-    },
-    "_1fv511u1n": {
-        "author": "_dheuy46x",
-        "taskType": "multiple",
-        "argument": "algoritmi",
-        "correctAnswer": "vivere"
-    },
-    "_zk8r31lk3": {
+    "_6czhwc5ew": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_xkkcyd243": {
+    "_x4xwj4vq4": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_50u47i4mu": {
+    "_v0enm6x0l": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_4u1pyem7c": {
+    "_yriylxkez": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_wm3cy8ko8": {
+    "_hmsdimlei": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_1xfjl0mo6": {
+    "_zek65pki8": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_fkhqt0zzn": {
+    "_7u09r7ejk": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_tu86e2r81": {
+    "_xp9yy0q8l": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_lrif74l1o": {
+    "_pm9x4xo30": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_f3j2zibj3": {
+    "_zv2q9lb80": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_j56smpkbv": {
+    "_sksm3lshe": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_znbtxw02s": {
+    "_i8pcj8bhq": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_2k5y07g1i": {
+    "_197qrsbn5": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_cngdeg6cj": {
+    "_n7a3kzegn": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_1dxjsdpvl": {
+    "_n7a3kzegs": {
         "author": "Martina",
         "taskType": "multiple",
-        "argument": "Algoritmi",
-        "correctAnswer": "ciao"
-    },
-    "_6q7bw1uxi": {
-        "author": "Martina",
-        "taskType": "multiple",
-        "argument": "Algoritmi",
-        "correctAnswer": "ciao"
-    },
-    "_uc8z4dstk": {
-        "author": "Martina",
-        "taskType": "multiple",
-        "argument": "Algoritmi",
-        "correctAnswer": "ciao"
-    },
-    "_39gqopo6e": {
-        "author": "a",
-        "taskType": "a",
         "argument": "a",
-        "correctAnswer": "a"
+        "correctAnswer": "ciao"
     },
-    "_4i3rrz6py": {
-        "author": "a",
-        "taskType": "a",
-        "argument": "a",
-        "correctAnswer": "a"
-    },
-    "_p8wd4nbul": {
+    "_hdzb383l4": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_zdfj571gs": {
-        "author": "a",
-        "taskType": "a",
-        "argument": "a",
-        "correctAnswer": "a"
-    },
-    "_5fmlxhrot": {
-        "author": "a",
-        "taskType": "a",
-        "argument": "a",
-        "correctAnswer": "a"
-    },
-    "_5zmtizm7m": {
+    "_l2fyrl26c": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_135boz8ua": {
-        "author": "a",
-        "taskType": "a",
-        "argument": "a",
-        "correctAnswer": "a"
-    },
-    "_z6exbtk7s": {
-        "author": "a",
-        "taskType": "a",
-        "argument": "a",
-        "correctAnswer": "a"
-    },
-    "_25qexjhnl": {
+    "_tbk50ha6g": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_karmidc4i": {
-        "author": "a",
-        "taskType": "a",
-        "argument": "a",
-        "correctAnswer": "a"
-    },
-    "_xpvrg4wop": {
-        "author": "a",
-        "taskType": "a",
-        "argument": "a",
-        "correctAnswer": "a"
-    },
-    "_jcyx9e9xo": {
+    "_ypuz1wfwd": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
         "correctAnswer": "ciao"
     },
-    "_9srlpjble": {
+    "_o0fupywcv": {
+        "author": "Martina",
+        "taskType": "multiple",
+        "argument": "Algoritmi",
+        "correctAnswer": "ciao"
+    },
+    "_yxv01xr5y": {
         "author": "Martina",
         "taskType": "multiple",
         "argument": "Algoritmi",
