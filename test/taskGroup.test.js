@@ -3,6 +3,8 @@ const userFunctions = require('../src/functionsEntities/userFunctions.js');
 const taskGroupFunctions = require('../src/functionsEntities/taskGroupFunctions.js');
 const createTaskGroupByIdUser = require ('../src/taskGroup.js').createTaskGroupByIdUser;
 const putTaskGroupByIdUser = require('../src/taskGroup.js').putTaskGroupByIdUser;
+const putTaskGroup = require('../src/taskGroup.js').putTaskGroup;
+
 
 const res = {
   "status": (statuscode) =>{ return {
@@ -27,6 +29,7 @@ const task = {
 
 const taskGroup = {
   name : "SEMA",
+  author: userFunctions.createUser(user),
   tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
 }
 
@@ -166,5 +169,183 @@ describe('PUT /user/:idUser/taskGroups/:idTaskGroup invalid tests', () => {
     var userID = userFunctions.createUser(user);
     var taskGroupID = null;
     expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+});
+
+describe('PUT /taskGroup/:idTaskGroup valid test', () => {
+  test ('PUT /taskGroup/:idTaskGroup return code 200', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : "SEMA1",
+      author: userFunctions.createUser(user),
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(200).json("Task modified"));
+  })
+});
+
+describe('PUT /taskGroup/:idTaskGroup invalid test', () => {
+  test ('PUT /taskGroup/:idTaskGroup return code 400 idTaskGroup number2', () => {
+    let idTaskGroup = 1234;
+    let reqBody = {
+      name : "SEMA1",
+      author: userFunctions.createUser(user),
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 name number', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : 1234,
+      author: userFunctions.createUser(user),
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 author number', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : "SEMA1",
+      author: 1234,
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 tasks number', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : "SEMA1",
+      author: userFunctions.createUser(user),
+      tasks: [1234, taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 404 author wrong', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : "SEMA1",
+      author: "a",
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(404).json("User NOT found"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 404 task wrong', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : "SEMA1",
+      author: userFunctions.createUser(user),
+      tasks: ["a", taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(404).json("Task NOT found"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 404 idTaskGroup wrong', () => {
+    let idTaskGroup = "a";
+    let reqBody = {
+      name : "SEMA1",
+      author: userFunctions.createUser(user),
+      tasks: [taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(404).json("TaskGroup NOT found"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 req undefined', () => {
+    expect(putTaskGroup("", res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 idTaskGroup undefined', () => {
+    let reqBody = {
+      name : "SEMA1",
+      author: userFunctions.createUser(user),
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+
+    expect(putTaskGroup({params: {}, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 name undefined', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      author: userFunctions.createUser(user),
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 author undefined', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : "SEMA1",
+      tasks: [taskFunctions.addTask(task), taskFunctions.addTask(task)]
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 tasks undefined', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let reqBody = {
+      name : "SEMA1",
+      author: userFunctions.createUser(user)
+    }
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req, body: reqBody}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test ('PUT /taskGroup/:idTaskGroup return code 400 body undefined', () => {
+    let idTaskGroup = taskGroupFunctions.addTaskGroup(taskGroup);
+    let req = {
+      idTaskGroup: idTaskGroup
+    }
+
+    expect(putTaskGroup({params: req}, res)).toEqual(res.status(400).json("Bad Request"));
   })
 });

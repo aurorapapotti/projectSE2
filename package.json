@@ -4,7 +4,7 @@
   "description": "Project for SEII class. Group SEMA.",
   "main": "index.js",
   "scripts": {
-    "test": "mkdir -p entities && jest --runInBand",
+    "test": "jest",
     "start": "node index.js"
   },
   "repository": {
