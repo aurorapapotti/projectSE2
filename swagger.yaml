@@ -1280,7 +1280,7 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       responses:
         200: 
           description: Everything is ok
@@ -1299,7 +1299,7 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Deleted
@@ -1317,7 +1317,7 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       responses:
         200: 
           description: Everything is OK
@@ -1337,11 +1337,11 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       - in: path
         name: "peerReviewId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1360,11 +1360,11 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       - in: path
         name: "peerReviewId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: PeerReview added or deleted
@@ -1382,7 +1382,7 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1402,11 +1402,11 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1425,11 +1425,11 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: TaskAnswer added or deleted
@@ -1447,7 +1447,7 @@ paths:
       - in: path
         name: "reviewId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Vote edited
@@ -1495,7 +1495,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1514,7 +1514,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: TaskAnswer deleted
@@ -1532,7 +1532,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1548,7 +1548,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200: 
           description: Answer edited
@@ -1566,11 +1566,11 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       - in: path
         name: "answerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1588,7 +1588,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1607,7 +1607,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Student of a TaskAnswer edited
@@ -1625,7 +1625,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1644,7 +1644,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Assignment of a TaskAnswer edited
@@ -1662,7 +1662,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: Everything is OK
@@ -1679,7 +1679,7 @@ paths:
       - in: path
         name: "taskAnswerId"
         required: true
-        type: integer
+        type: string
       responses:
         200:
           description: TaskGroup of a TaskAnswer edited
