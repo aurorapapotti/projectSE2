@@ -66,7 +66,7 @@ function createTaskGroupByIdUser(req, res) {
 function putTaskGroup(req, res){
   if (!req || typeof req.params.idTaskGroup !== 'string')
     return res.status(400).json("Bad Request");
-  if(typeof req.body.name !== "string" || typeof req.body.author !== "string")
+  if(!req.body||!req.body.author||!req.body.name||!req.body.tasks||typeof req.body.name !== "string" || typeof req.body.author !== "string")
     return res.status(400).json("Bad Request");
   for (key in req.body.tasks) {
     if (typeof req.body.tasks[key] !== "string")
