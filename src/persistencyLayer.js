@@ -127,10 +127,10 @@ function getObjectByParam(idObject, param, dbPathidObject, dbPathObjectToFind){
         else {
           let db2 = JSON.parse(data2);
           object_filtered = new Object();
-          Object.keys(db2).forEach(function(key){
+          for (key in db2){
             if (db2[key][param] == idObject)
               object_filtered[key] = db2[key];
-          });
+          }
           return object_filtered;
         }
       }
@@ -149,10 +149,10 @@ function getObjectByQuery(query, param, dbpath){
     if (data == "")
       return object_filtered;
     else {
-      Object.keys(db).forEach(function(key){
+      for (key in db){
         if(db[key][param] == query)
           object_filtered[key] = db[key];
-      });
+      }
       return object_filtered;
     }
   }

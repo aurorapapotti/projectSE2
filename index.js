@@ -97,14 +97,14 @@ app.put("/taskAnswers/:taskAnswerId/answers", taskAnswer.editAnswer); //testOK
 
 
 //USER GROUP
-app.get ('/userGroup', userGroup.listUserGroups);
-app.post ('/userGroup', userGroup.createUserGroup);
-app.get ('/userGroup/:userGroupId', userGroup.getUserGroupById);
-app.put ('/userGroup/:userGroupId', userGroup.updateUserGroup);
-app.delete ('/userGroup/:userGroupId', userGroup.deleteUserGroup);
-app.get ('/userGroup/:userGroupId/author', userGroup.getAuthorByIdUserGroup);
-app.get ('/userGroup/:userGroupId/users', userGroup.getUsersByIdUserGroup);
-app.delete ('/userGroup/:userGroupId/users/:userId', userGroup.deleteUserByIdUserGroup);
+app.get ('/userGroup', userGroup.listUserGroups); //testOK
+app.post ('/userGroup', userGroup.createUserGroup); //testOK
+app.get ('/userGroup/:userGroupId', userGroup.getUserGroupById); //testOK
+app.put ('/userGroup/:userGroupId', userGroup.updateUserGroup); //testOK
+app.delete ('/userGroup/:userGroupId', userGroup.deleteUserGroup); //testOK
+app.get ('/userGroup/:userGroupId/author', userGroup.getAuthorByIdUserGroup); //testOK
+app.get ('/userGroup/:userGroupId/users', userGroup.getUsersByIdUserGroup); //testOK
+app.delete ('/userGroup/:userGroupId/users/:userId', userGroup.deleteUserByIdUserGroup); //testOK
 
 //TASK
 app.get('/task', task.listAllTasks);
@@ -122,17 +122,16 @@ app.put('/taskGroup/:idTaskGroup', taskGroup.putTaskGroup);
 app.delete('/taskGroup/:idTaskGroup', taskGroup.deleteTaskGroup);
 
 //ASSIGNMENT
-app.get ('/assignment', assignment.listAllAssignments);
-app.post('/assignment', assignment.createAssignment);
-app.get('/assignment/:assignmentId', assignment.getAssignmentById);
-app.put('/assignment/:assignmentId', assignment.updateAssignment);
-app.delete ('/assignment/:assignmentId', assignment.deleteAssignment);
-app.get ('/assignment/:assignmentId/professor', assignment.getProfessorByIdAssignment);
-app.get ('/assignment/:assignmentId/users', assignment.getUsersByIdAssignment);
-app.put ('/assignment/:assignmentId/users', assignment.updateUsers);
-app.get ('/assignment/:assignmentId/tasks', assignment.getTasksByIdAssignment);
-app.put ('/assignment/:assignmentId/tasks', assignment.updateTasks);
-
+app.get ('/assignment', assignment.listAllAssignments); //testOK
+app.post('/assignment', assignment.createAssignment); //testOK
+app.get('/assignment/:assignmentId', assignment.getAssignmentById); //testOK
+app.put('/assignment/:assignmentId', assignment.updateAssignment); //testOK
+app.delete ('/assignment/:assignmentId', assignment.deleteAssignment); //testOK
+app.get ('/assignment/:assignmentId/professor', assignment.getProfessorByIdAssignment); //testOK
+app.get ('/assignment/:assignmentId/users', assignment.getUsersByIdAssignment); //testOK
+app.put ('/assignment/:assignmentId/users', assignment.updateUsers); //testOK
+app.get ('/assignment/:assignmentId/tasks', assignment.getTasksByIdAssignment); //testOK
+app.put ('/assignment/:assignmentId/tasks', assignment.updateTasks); //testOK
 
 
 

@@ -83,9 +83,9 @@ function putTaskGroup(req, res){
   }
   taskGroup_modify = new Object();
   taskGroup_modify = taskGroupFunctions.modifyTaskGroup(req.params.idTaskGroup, req.body);
-  if (!taskGroup_modify)
+  if (!taskGroup_modify.author || !taskGroup_modify.name || !taskGroup_modify.tasks)
     return res.status(404).json("TaskGroup NOT found");
-  return res.status(200).json("TaskGroup modified");
+  return res.status(200).json("Task modified");
 }
 
 function putTaskGroupByIdUser(req, res){
@@ -107,9 +107,9 @@ function putTaskGroupByIdUser(req, res){
   	if (task.id)
   		return res.status(404).json("Task NOT found");
   }
-  taskGroup_modify = new Object();
-  taskGroup_modify = userFunctions.getTaskGroups(req.params.idUser, "author");
-  if (!taskGroup_modify)
+  taskGroups = new Object();
+  taskGroups = userFunctions.getTaskGroups(req.params.idUser, "author");
+  if (!taskGroups[req.params.idTaskGroup])
     return res.status(404).json("TaskGroup NOT found");
   req.body.author = req.params.idUser;
   taskGroupFunctions.modifyTaskGroup(req.params.idTaskGroup, req.body);

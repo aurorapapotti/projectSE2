@@ -123,10 +123,48 @@ describe('POST /user/:idUser/taskGroups invalid tests', () => {
 });
 
 describe('PUT /user/:idUser/taskGroups/:idTaskGroup valid tests', () => {
-  test('PUT /user/:idUser/taskGroups return code 200', () => {
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup return code 200', () => {
     var userID = userFunctions.createUser(user);
-    taskGroup.athor = userID;
+    taskGroup.author = userID;
     var taskGroupID = taskGroupFunctions.addTaskGroup(taskGroup);
     expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(200).json("TaskGroup modified"));
+  })
+});
+
+describe('PUT /user/:idUser/taskGroups/:idTaskGroup invalid tests', () => {
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup return code 404 user NOT found', () => {
+    var userID = "_ciao";
+    var taskGroupID = "_373bdfgx";
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(404).json("User NOT found"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup return code 404 TaskGroup NOT found', () => {
+    var userID = userFunctions.createUser(user);
+    var taskGroupID = "ciao";
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(404).json("TaskGroup NOT found"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup userID is undefined', () => {
+    var userID = undefined;
+    var taskGroupID = "dfvd73bc";
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup taskID is undefined', () => {
+    var userID = userFunctions.createUser(user);
+    var taskGroupID = undefined;
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup userID is null', () => {
+    var userID = null;
+    var taskGroupID = "dfvd73bc";
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
+  })
+
+  test('PUT /user/:idUser/taskGroups/:idTaskGroup taskID is null', () => {
+    var userID = userFunctions.createUser(user);
+    var taskGroupID = null;
+    expect(putTaskGroupByIdUser({"params": {"idUser": userID, "idTaskGroup": taskGroupID}, "body":newTaskGroup}, res)).toEqual(res.status(400).json("Bad Request"));
   })
 });
