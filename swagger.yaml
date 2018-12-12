@@ -368,6 +368,704 @@ paths:
         400:
           description: Bad Request, maybe something is missing
   
+  /user/{idUser}/tasks:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+    
+    get:
+      summary: The list of tasks created by the specific user
+      description: Returns the list of all tasks created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Task"
+        400:
+          description: Bad Request!
+          
+    post:
+      summary: Created a task
+      description: The user mapping with given id created a task
+      tags:
+      - "User"
+      
+      parameters:
+      - in: body
+        name: data
+        schema:
+          type: object
+          properties:
+            taskType:
+              description: The type of the task (multiple choice or open question)
+            argument:
+              description: The argument of the question and the question
+            correctAnswer:
+              description: The correct answer of the question
+      
+      responses:
+        201:
+          description: Task created!
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The id of the task created
+        404:
+          description: User NOT found!
+        400:
+          description: Bad request!
+    
+  /user/{idUser}/tasks/{idTask}:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+        
+      - in: path
+        name: "idTask"
+        required: true
+        type: string
+        description: The id of a specific task
+    
+    get:
+      summary: Get a task
+      description: Get the specific task created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Task"
+        404:
+          description: User or Task NOT found!
+        400:
+          description: Bad Request!
+    
+    put:
+      summary: Modify a task
+      description: The user can modify a specific task created by him
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: The task is modified
+          schema:
+            $ref: "#/definitions/Task"
+        404:
+          description: Task or User not found!
+        400:
+          description: Bad Request!
+    
+    delete:
+      summary: Delete a task
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: Task deleted!
+        404:
+          description:
+            Task NOT found!
+        400:
+          description: Bad Request!
+  
+  /user/{idUser}/taskGroups:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+    
+    get:
+      summary: The list of taskGroups created by the specific user
+      description: Returns the list of all taskGroups created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskGroup"
+        400:
+          description: Bad Request!
+          
+    post:
+      summary: Created a taskGroup
+      description: The user mapping with given id created a taskGroup
+      tags:
+      - "User"
+      
+      parameters:
+      - in: body
+        name: data
+        schema:
+          type: object
+          properties:
+            name:
+              description: The name of the taskGroups
+            tasks:
+              description: The array of tasks in the taskGroup
+      
+      responses:
+        201:
+          description: TaskGroup created!
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The id of the taskGroup created
+        404:
+          description: User NOT found!
+        400:
+          description: Bad request!
+    
+  /user/{idUser}/taskGroups/{idTaskGroup}:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+        
+      - in: path
+        name: "idTaskGroup"
+        required: true
+        type: string
+        description: The id of a specific taskGroup
+    
+    get:
+      summary: Get a taskGroup
+      description: Get the specific taskGroups created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/TaskGroup"
+        404:
+          description: User or TaskGroup NOT found!
+        400:
+          description: Bad Request!
+    
+    put:
+      summary: Modify a taskGroup
+      description: The user can modify a specific taskGroup created by him
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: The taskgroup is modified
+          schema:
+            $ref: "#/definitions/TaskGroup"
+        404:
+          description: Task or User not found!
+        400:
+          description: Bad Request!
+    
+    delete:
+      summary: Delete a taskGroup
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: TaskGroup deleted!
+        404:
+          description:
+            TaskGroup NOT found!
+        400:
+          description: Bad Request!
+  
+  /user/{idUser}/userGroups:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+    
+    get:
+      summary: The list of userGroups created by the specific user
+      description: Returns the list of all userGroups created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/UserGroup"
+        400:
+          description: Bad Request!
+          
+    post:
+      summary: Created a userGroup
+      description: The user mapping with given id created a userGroup
+      tags:
+      - "User"
+      
+      parameters:
+      - in: body
+        name: data
+        schema:
+          type: object
+          properties:
+            name:
+              description: The name of the userGroups
+            user:
+              description: The array of user in the userGroup
+      
+      responses:
+        201:
+          description: UserGroup created!
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The id of the userGroup created
+        404:
+          description: User NOT found!
+        400:
+          description: Bad request!
+    
+  /user/{idUser}/userGroups/{idUserGroup}:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+        
+      - in: path
+        name: "idUserGroup"
+        required: true
+        type: string
+        description: The id of a specific userGroup
+    
+    get:
+      summary: Get a userGroup
+      description: Get the specific userGroups created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/UserGroup"
+        404:
+          description: User or UserGroup NOT found!
+        400:
+          description: Bad Request!
+    
+    put:
+      summary: Modify a UserGroup
+      description: The user can modify a specific UserGroup created by him
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: The UserGroup is modified
+          schema:
+            $ref: "#/definitions/UserGroup"
+        404:
+          description: UserGroup or User not found!
+        400:
+          description: Bad Request!
+    
+    delete:
+      summary: Delete a UserGroup
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: UserGroup deleted!
+        404:
+          description:
+            UserGroup or User NOT found!
+        400:
+          description: Bad Request!
+  
+  /user/{idUser}/peerReview:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+    
+    get:
+      summary: The list of peerReviews created by the specific user
+      description: Returns the list of all peerReviews created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/PeerReview"
+        400:
+          description: Bad Request!
+          
+    post:
+      summary: Created a peerReviews
+      description: The user mapping with given id created a peerReview
+      tags:
+      - "User"
+      
+      parameters:
+      - in: body
+        name: data
+        schema:
+          type: object
+          properties:
+            taskAnswer:
+              description: The taskAnswer commented
+            comment:
+              description: The comment by the user of the task answer of another user
+      
+      responses:
+        201:
+          description: peerReview created!
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The id of the peerReview created
+        404:
+          description: User NOT found!
+        400:
+          description: Bad request!
+    
+  /user/{idUser}/peerReviews/{idPeerReview}:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+        
+      - in: path
+        name: "idPeerReview"
+        required: true
+        type: string
+        description: The id of a specific peerReview
+    
+    get:
+      summary: Get a peerReview
+      description: Get a specific peerReview created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/PeerReview"
+        404:
+          description: User or peerReview NOT found!
+        400:
+          description: Bad Request!
+    
+    put:
+      summary: Modify a peerReview
+      description: The user can modify a specific UserGroup created by him
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: The peerReview is modified
+          schema:
+            $ref: "#/definitions/PeerReview"
+        404:
+          description: peerReview or User not found!
+        400:
+          description: Bad Request!
+    
+    delete:
+      summary: Delete a peerReview
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: peerReview deleted!
+        404:
+          description:
+            peerReview or User NOT found!
+        400:
+          description: Bad Request!
+  
+  /user/{idUser}/taskAnswer:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+    
+    get:
+      summary: The list of taskAnswers created by the specific user
+      description: Returns the list of all taskAnswers created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/TaskAnswer"
+        400:
+          description: Bad Request!
+          
+    post:
+      summary: Created a taskAnswer
+      description: The user mapping with given id created a taskAnswer
+      tags:
+      - "User"
+      
+      parameters:
+      - in: body
+        name: data
+        schema:
+          type: object
+          properties:
+            assignment:
+              description: The exams
+            taskGroup:
+              description: the taskGroup of the tasks in the assignment
+      
+      responses:
+        201:
+          description: taskAnswer created!
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The id of the taskAnswer created
+        404:
+          description: User NOT found!
+        400:
+          description: Bad request!
+    
+  /user/{idUser}/taskAnswers/{idTaskAnswer}:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+        
+      - in: path
+        name: "idTaskAnswer"
+        required: true
+        type: string
+        description: The id of a specific taskAnswer
+    
+    get:
+      summary: Get a taskAnswer
+      description: Get a specific taskAnswer created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/TaskAnswer"
+        404:
+          description: User or taskAnswer NOT found!
+        400:
+          description: Bad Request!
+    
+    put:
+      summary: Modify a taskAnswer
+      description: The user can modify a specific taskAnswer created by him
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: The peerReview is modified
+          schema:
+            $ref: "#/definitions/TaskAnswer"
+        404:
+          description: taskAnswer or User not found!
+        400:
+          description: Bad Request!
+    
+    delete:
+      summary: Delete a taskAnswer
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: taskAnswer deleted!
+        404:
+          description:
+            taskAnswer or User NOT found!
+        400:
+          description: Bad Request!
+  
+  /user/{idUser}/assignments:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+    
+    get:
+      summary: The list of assignments created by the specific user
+      description: Returns the list of all assignments created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Assignment"
+        400:
+          description: Bad Request!
+          
+    post:
+      summary: Created a assignment
+      description: The user mapping with given id created a assignment
+      tags:
+      - "User"
+      
+      parameters:
+      - in: body
+        name: data
+        schema:
+          type: object
+          properties:
+            title:
+              description: The title of the exams
+            taskgroup:
+              description: the taskGroup of the tasks in the assignment
+            userGroup:
+              description: the userGroup that do the exam
+            start:
+              description: The start of the exam
+            deadline:
+              description: The end of the exam
+      
+      responses:
+        201:
+          description: assignment created!
+          schema:
+            type: object
+            properties:
+              id:
+                type: string
+                description: The id of the assignment created
+        404:
+          description: User NOT found!
+        400:
+          description: Bad request!
+    
+  /user/{idUser}/assignments/{idAssignment}:
+    parameters:
+      - in: path
+        name: "idUser"
+        required: true
+        type: string
+        description: The id of a specific user
+        
+      - in: path
+        name: "idAssignment"
+        required: true
+        type: string
+        description: The id of a specific assignment
+    
+    get:
+      summary: Get a assignment
+      description: Get a specific assignment created by the user mapping with the given id
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: "#/definitions/Assignment"
+        404:
+          description: User or assignment NOT found!
+        400:
+          description: Bad Request!
+    
+    put:
+      summary: Modify a assignment
+      description: The user can modify a specific assignment created by him
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: The assignment is modified
+          schema:
+            $ref: "#/definitions/Assignment"
+        404:
+          description: assignment or User not found!
+        400:
+          description: Bad Request!
+    
+    delete:
+      summary: Delete a assignment
+      tags:
+      - "User"
+      
+      responses:
+        200:
+          description: assignment deleted!
+        404:
+          description:
+            assignment or User NOT found!
+        400:
+          description: Bad Request!
+              
 #USER GROUP
   /userGroup:
     get:
